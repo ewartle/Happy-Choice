@@ -1,5 +1,24 @@
-// import axios from "axios";
+import axios from "axios";
 
+
+export default {
+saveAdmin: function(adminData) {
+	return axios.post("api/admins", adminData);
+},
+//Gets all surveys
+getSurveys: function() {
+	return axios.get("/api/surveys");
+},
+//Get a survey by Id
+getSurvey: function() {
+	return axios.get("/api/surveys/"+id);
+},
+//Saves a survey to the database
+saveSurvey: function(surveyData) {
+	return axios.post("api/surveys", surveyData);
+}
+
+};
 // export default {
 //   // Gets all books
 //   getBooks: function() {
