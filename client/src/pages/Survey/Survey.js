@@ -10,7 +10,7 @@ import axios from "axios"
 class Survey extends Component {
   
   state = {
-
+    
      admin: "Julie",
      decision: "Family Vacation",
      totalPoints: 0,
@@ -33,13 +33,15 @@ class Survey extends Component {
     //return preVal + elem.votes;}, 0);
 
 //loadChoices function --this function loads the choices submitted by the Admin.
- // loadChoice = () => {
- //  API.getChoices()
-  //    .then(res =>
-  //      this.setState({choice: res.data, name: ""}ate)
-  //    )
-    //  .catch(err => console.log(err));
- //   };
+// loadChoice = () => {
+
+   // axios.get("/api/choices", { params: { q: query}})
+    //.then((res => this.setState (res.data {  ""})
+   // console.log(res.data)}).catch((err)=> {
+    //console.log(err));
+
+ // };
+ 
 
 
  handleInputChange = (event) => {
@@ -125,8 +127,8 @@ class Survey extends Component {
               <FormBtn onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
               <br/>
               <br/>
-              <FormBtn><Link to="/" style={{ color: "black"}} > Back to User Page</Link></FormBtn> 
-                   
+              <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
+                  
             </Col>
           </Row>  
 
