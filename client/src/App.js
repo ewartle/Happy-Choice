@@ -10,6 +10,7 @@ class App extends Component {
 
 handleFormSubmit = event => {
     event.preventDefault();
+    console.log(document.getElementById("password").value);
     if (document.getElementById("username").value && document.getElementById("password").value) {
         API.saveAdmin({
                 name: document.getElementById("username").value,
@@ -56,8 +57,10 @@ render() {
         <input className = "form-control"
         id = "password"
         placeholder = "password" / >
+        <button onClick = { this.handleFormSubmit } >
+        SignUp </button>
         <button onClick = { this.loginAdmin } >
-        Submit </button>
+        Login </button>
 
 
         <Route exact path = "/form" component = { Form } /> 
