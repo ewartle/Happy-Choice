@@ -2,7 +2,7 @@ import React from "react";
 import "./RedirectBtn.css";
 
 const RedirectBtn = props => (
-  <span className="redirect-btn" {...props}>
+  <span className="btn redirect-btn" {...props}>
     
   </span>
 );
