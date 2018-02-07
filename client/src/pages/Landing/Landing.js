@@ -33,7 +33,7 @@ class Landing extends Component {
 
   render() {
     return (
-      <Container fluid>
+      <Container>
         <Row>
           <Col size="md-12">
             <h1>Happy Choice App</h1>

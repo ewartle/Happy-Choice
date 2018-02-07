@@ -4,6 +4,7 @@ import Landing from "./pages/Landing/Landing";
 import Survey from "./pages/Survey/Survey";
 import User from "./pages/User/User";
 import Form from "./pages/Form/Form";
+import Verify from "./pages/Verify/Verify";
 import './App.css';
 
 
@@ -16,6 +17,7 @@ const App = () =>
        <Route exact path="/Survey" component={Survey} />
        <Route exact path="/User" component={User} />
        <Route exact path="/Form" component={Form} />     
+       <Route exact path="/Verify" component={Verify} />     
      </Switch>
    </div>
  </Router>;

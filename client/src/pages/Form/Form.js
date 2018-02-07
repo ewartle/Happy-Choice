@@ -9,8 +9,8 @@ class Form extends Component {
   state = {
     name: "",
     description: "",
-    choices: {},
-    participants: {}
+    choices: [],
+    participants: []
   };
 
   handleInputChange = event => {
@@ -23,7 +23,7 @@ class Form extends Component {
   verifyForm = () => {
     API.getSurvey()
       .then(res =>
-        this.setState({ name: "", description: "", choices: {}, participants: {} })
+        this.setState({ name: "", description: "", choices: [], participants: [] })
       )
       .catch(err => console.log(err));
   };
@@ -57,7 +57,7 @@ class Form extends Component {
 
   render() {
     return (
-      <Container fluid>
+      <Container>
         <Row>
           <Col size="md-12">
             <form>
