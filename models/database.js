@@ -3,48 +3,33 @@ const Schema = mongoose.Schema;
 
 mongoose.Promise = global.Promise;
 
-const ParticipantsSchema = new Schema({
-    email: {
-        type: String,
-        unique: true,
-        validate: {
-            validator: function(v) {
-                return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(v);
-            },
-            message: '{VALUE} is not a valid email address!'
-        }
-    }
-});
+// const ParticipantsSchema = new Schema({
+//     email: {
+//         type: String,
+//         unique: true,
+//         validate: {
+//             validator: function(v) {
+//                 return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(v);
+//             },
+//             message: '{VALUE} is not a valid email address!'
+//         }
+//     }
+// });
 
-const ChoicesSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    score: [{ type: Number }]
-});
+// const ChoicesSchema = new Schema({
+//     name: { type: String, required: true },
+//     score: [{ type: Number }]
+// });
 
-const SurveysSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    participants: {
-        type: Schema.Types.Object,
-        ref: "Participants"
-    },
-    surveyActive: true,
-    choices: {
-        type: Schema.Types.ObjectId,
-        ref: "Choices"
-    }
-});
+// const SurveySchema = new Schema({
+//     name: { type: String, required: true },
+//     description: { type: String, required: true },
+//     participants: { type: Schema.Types.Object, ref: "Participants" },
+//     surveyActive: true,
+//     choices: { type: Schema.Types.ObjectId, ref: "Choices" }
+// });
 
-const AdminsSchema = new Schema({
+const AdminSchema = new Schema({
     name: String,
     email: {
         type: String,
@@ -55,27 +40,17 @@ const AdminsSchema = new Schema({
                 return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(v);
             },
             message: '{VALUE} is not a valid email address!'
-        }
+        },
     },
-    password: {
-        type: String,
-        required: [true, "Password is required"]
-    },
-    adminActive: false,
-    surveys: {
-        type: Schema.Types.ObjectId,
-        ref: "Surveys"
-    }
+    password: { type: String, required: [true, "Password is required"] },
+    adminActive: {type: Boolean, default: true}
+    // surveys: { type: Schema.Types.ObjectId, ref: "Surveys" }
 });
 
-const Admins = mongoose.model("Admin", AdminSchema);
-const Surveys = mongoose.model("Survey", SurveySchema);
-const Choices = mongoose.model("Choice", ChoicesSchema);
-const Participants = mongoose.model("Participant", ParticipantsSchema);
+const Admin = mongoose.model("Admin", AdminSchema);
+// const Survey = mongoose.model("Survey", SurveySchema);
+// const Choice = mongoose.model("Choice", ChoicesSchema);
+// const Participant = mongoose.model("Participant", ParticipantsSchema);
 
-module.exports = {
-    Admin: Admins,
-    Survey: Surveys,
-    Choices: Choices,
-    Participants: Participants
-};
+module.exports = Admin;
+

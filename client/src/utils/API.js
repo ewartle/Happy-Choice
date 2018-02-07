@@ -3,20 +3,24 @@ import axios from "axios";
 
 export default {
 saveAdmin: function(adminData) {
-	return axios.post("api/admins", adminData);
+return axios.post("api/admin", adminData);
 },
-//Gets all surveys
-getSurveys: function() {
-	return axios.get("/api/surveys");
-},
-//Get a survey by Id
-getSurvey: function() {
-	return axios.get("/api/surveys/"+id);
-},
-//Saves a survey to the database
-saveSurvey: function(surveyData) {
-	return axios.post("api/surveys", surveyData);
+getAdmin: function(email) {
+return axios.get("/api/admin/"+email);
 }
+
+//Gets all surveys
+// getSurveys: function() {
+// 	return axios.get("/api/survey");
+// },
+// //Get a survey by Id
+// getSurvey: function() {
+// 	return axios.get("/api/survey/"+id);
+// },
+// //Saves a survey to the database
+// saveSurvey: function(surveyData) {
+// 	return axios.post("api/survey", surveyData);
+// }
 
 };
 // export default {

@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const routes = require("./routes");
 const app = express();
 
 mongoose.Promise = global.Promise;
@@ -17,7 +18,7 @@ connection.on('error', (err) => {
 }); 
 
 app.use(bodyParser.json());
-
+app.use(routes);
 
 app.use(express.static(__dirname + '/client/build/'));
 app.get('/', (req,res) => {

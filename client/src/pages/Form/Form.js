@@ -1,35 +1,14 @@
 import React, { Component } from "react";
-import RedirectBtn from "../../components/RedirectBtn";
-import API from "../../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 
-class Forms extends Component {
+// update inputs???????????????????????????????
+class Form extends Component {
   state = {
-    books: [],
-    title: "",
-    author: "",
-    synopsis: ""
-  };
-
-  componentDidMount() {
-    this.loadBooks();
-  }
-
-  loadBooks = () => {
-    API.getBooks()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-      )
-      .catch(err => console.log(err));
-  };
-
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
+    name: "",
+    description: "",
+    choices: {},
+    participants: {}
   };
 
   handleInputChange = event => {
@@ -39,51 +18,58 @@ class Forms extends Component {
     });
   };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
-      })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
+  // handleFormSubmit = event => {
+  //   event.preventDefault();
+  //   if (this.state.title && this.state.author) {
+  //     API.saveForm({
+  //       title: this.state.title,
+  //       author: this.state.author,
+  //       synopsis: this.state.synopsis
+  //     })
+  //       .then(res => this.loadBooks())
+  //       .catch(err => console.log(err));
+  //   }
+  // };
 
   render() {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-6">
-            <Jumbotron>
-              <h1>What Books Should I Read?</h1>
-            </Jumbotron>
+          <Col size="md-12">
             <form>
+              <label for="name">Title Name</label>
               <Input
-                value={this.state.title}
+                value={this.state.name}
                 onChange={this.handleInputChange}
-                name="title"
-                placeholder="Title (required)"
+                name="name"
+                placeholder="Title Name (required)"
               />
-              <Input
-                value={this.state.author}
-                onChange={this.handleInputChange}
-                name="author"
-                placeholder="Author (required)"
-              />
+              <label for="description">Description</label>
               <TextArea
-                value={this.state.synopsis}
+                value={this.state.description}
                 onChange={this.handleInputChange}
-                name="synopsis"
-                placeholder="Synopsis (Optional)"
+                name="description"
+                placeholder="Description (Required)"
+              />
+              <label for="choice">Choices</label>
+              <Input
+                value={this.state.choice}
+                onChange={this.handleInputChange}
+                name="choice"
+                placeholder="Choice (required)"
+              />
+              <label for="email">Participant Emails</label>
+              <Input
+                value={this.state.particiapant}
+                onChange={this.handleInputChange}
+                name="email"
+                placeholder="Email (required)"
               />
               <FormBtn
-                disabled={!(this.state.author && this.state.title)}
+                disabled={!(this.state.name && this.state.description && this.state.choices && this.state.participants)}
                 onClick={this.handleFormSubmit}
               >
-                Submit Book
+                Create Survey
               </FormBtn>
             </form>
           </Col>
