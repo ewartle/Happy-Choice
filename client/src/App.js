@@ -48,13 +48,13 @@ render() {
         <div>
 
         <input className = "form-control"
-        id = "adminName"
+        id = "username"
         placeholder = "name" / >
         <input className = "form-control"
         id = "adminEmail"
         placeholder = "email" / >
         <input className = "form-control"
-        id = "adminPassword"
+        id = "password"
         placeholder = "password" / >
         <button onClick = { this.loginAdmin } >
         Submit </button>
