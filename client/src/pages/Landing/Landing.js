@@ -22,7 +22,7 @@ class Landing extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.name && this.state.password) {
-      API.saveUser({
+      API.saveAdmin({
         name: this.state.name,
         password: this.state.password,
         email: this.state.email
