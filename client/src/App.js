@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Form from "./pages/Form/Form";
+import User from "./pages/User/User";
+import Survey from "./pages/Survey/Survey";
+import Landing from "./pages/Landing/Landing";
 import API from "./utils/API";
 import './App.css';
 
@@ -24,8 +27,6 @@ handleFormSubmit = event => {
     }
 };
 
-// const adminId = sessionStorage.getItem("id");
-// console.log(adminId);
 
 loginAdmin = event => {
     event.preventDefault();
@@ -48,22 +49,15 @@ render() {
       <Router>
         <div>
 
-        <input className = "form-control"
-        id = "username"
-        placeholder = "name" / >
-        <input className = "form-control"
-        id = "adminEmail"
-        placeholder = "email" / >
-        <input className = "form-control"
-        id = "password"
-        placeholder = "password" / >
-        <button onClick = { this.handleFormSubmit } >
-        SignUp </button>
-        <button onClick = { this.loginAdmin } >
-        Login </button>
-
-
-        <Route exact path = "/form" component = { Form } /> 
+       
+         <Switch>
+       <Route exact path="/" component={Landing} />     
+       <Route exact path="/Form" component={Form} />   
+        <Route exact path="/User" component={User} /> 
+         <Route exact path="/Survey" component={Survey} /> 
+       
+        
+     </Switch>
         </div> 
         </Router>
     );

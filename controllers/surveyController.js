@@ -2,6 +2,8 @@ const db = require("../models");
 
 // Defining methods for the surveyController
 module.exports = {
+
+   
   // findAll: function(req, res) {
   //   db.Survey
   //     .find(req.query)

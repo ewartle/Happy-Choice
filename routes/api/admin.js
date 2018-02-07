@@ -10,8 +10,21 @@ router
 // Matches with "/api/admin/:id"
 router
   .route("/:email")
-  .get(adminController.findOne)
+  .get(adminController.findOne);
 //   .put(adminController.update)
 //   .delete(adminController.remove);
+router
+  .route("/:id")
+  .post(adminController.createsurvey);
+
+// router
+//   .route("/survey/:id")
+//   // .get(adminController.findAll)
+//   .post(adminController.createchoices);
+
+router
+  .route("/admin/:id")
+  // .get(adminController.findAll)
+  .post(adminController.updatevotes);
 
 module.exports = router;

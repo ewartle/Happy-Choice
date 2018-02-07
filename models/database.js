@@ -3,31 +3,32 @@ const Schema = mongoose.Schema;
 
 mongoose.Promise = global.Promise;
 
-// const ParticipantsSchema = new Schema({
-//     email: {
-//         type: String,
-//         unique: true,
-//         validate: {
-//             validator: function(v) {
-//                 return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(v);
-//             },
-//             message: '{VALUE} is not a valid email address!'
-//         }
-//     }
-// });
+const ParticipantsSchema = new Schema({
+    email: {
+        type: String,
+        unique: true,
+        validate: {
+            validator: function(v) {
+                return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(v);
+            },
+            message: '{VALUE} is not a valid email address!'
+        }
+    },
+    score: [{ type: Number }]
+});
 
-// const ChoicesSchema = new Schema({
-//     name: { type: String, required: true },
-//     score: [{ type: Number }]
-// });
+const ChoicesSchema = new Schema({
+    name: { type: String, required: true },
 
-// const SurveySchema = new Schema({
-//     name: { type: String, required: true },
-//     description: { type: String, required: true },
-//     participants: { type: Schema.Types.Object, ref: "Participants" },
-//     surveyActive: true,
-//     choices: { type: Schema.Types.ObjectId, ref: "Choices" }
-// });
+});
+
+const SurveySchema = new Schema({
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    participant: [{ type: Schema.Types.Array, ref: "Participant" }],
+    surveyActive: { type: Boolean, default: true },
+    choice: [{ type: Schema.Types.ObjectId, ref: "Choice" }]
+});
 
 const AdminSchema = new Schema({
     name: String,
@@ -43,14 +44,13 @@ const AdminSchema = new Schema({
         },
     },
     password: { type: String, required: [true, "Password is required"] },
-    adminActive: {type: Boolean, default: true}
-    // surveys: { type: Schema.Types.ObjectId, ref: "Surveys" }
+    adminActive: { type: Boolean, default: true },
+    surveys: [{ type: Schema.Types.ObjectId, ref: "Survey" }]
 });
 
 const Admin = mongoose.model("Admin", AdminSchema);
-// const Survey = mongoose.model("Survey", SurveySchema);
-// const Choice = mongoose.model("Choice", ChoicesSchema);
-// const Participant = mongoose.model("Participant", ParticipantsSchema);
+const Survey = mongoose.model("Survey", SurveySchema);
+const Choice = mongoose.model("Choice", ChoicesSchema);
+const Participant = mongoose.model("Participant", ParticipantsSchema);
 
-module.exports = Admin;
-
+module.exports = { Admin, Survey, Choice, Participant };

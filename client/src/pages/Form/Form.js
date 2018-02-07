@@ -1,23 +1,39 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+import axios from "axios";
 
 // update inputs???????????????????????????????
 class Form extends Component {
-  state = {
-    name: "",
-    description: "",
-    choices: {},
-    participants: {}
-  };
+    state = {
+        name: "test",
+        description: "test",
+        choice: [],
+        participant: ["go@gmail.com"],
+    };
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
 
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value,
+            
+        });
+    };
+
+    handleFormSubmit = event => {
+     event.preventDefault();
+     const payload = this.state;
+     console.log(payload);
+     axios.post("/api/admin/" + sessionStorage.getItem("id"), payload)
+         .then((response) => {
+             console.log(response);
+
+         })
+         .catch((err) => {
+             console.log(err.message);
+         })
+ };
   // handleFormSubmit = event => {
   //   event.preventDefault();
   //   if (this.state.title && this.state.author) {
@@ -53,20 +69,21 @@ class Form extends Component {
               />
               <label for="choice">Choices</label>
               <Input
-                value={this.state.choice}
+                value={[this.state.choice]}
                 onChange={this.handleInputChange}
                 name="choice"
                 placeholder="Choice (required)"
               />
               <label for="email">Participant Emails</label>
               <Input
-                value={this.state.particiapant}
+                value={[this.state.participant]}
                 onChange={this.handleInputChange}
-                name="email"
+                name="participant"
                 placeholder="Email (required)"
               />
               <FormBtn
-                disabled={!(this.state.name && this.state.description && this.state.choices && this.state.participants)}
+                disabled={!(this.state.name && this.state.description)}
+                // disabled={!(this.state.name && this.state.description && this.state.choices && this.state.participants)}
                 onClick={this.handleFormSubmit}
               >
                 Create Survey
