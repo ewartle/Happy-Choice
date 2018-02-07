@@ -4,37 +4,29 @@ import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
 import Alert from "../../components/Alert/Alert";
 import {FormBtn, Input, Slider, TextArea} from "../../components/Form"
+import { Col, Row, Container } from "../../components/Grid";
 
 class Survey extends Component {
   
   state = {
-    choices: [
-      {
-        title: "Disney World",
-        votes: 0
-      }, 
-      {
-        title: "Disney World",
-        votes: 0 
-      }, 
-      {
-        title: "Disney World",
-        votes: 0
-      }, 
-      {
-        title: "Disney World",
-        votes: 0
-      }, 
-      {
-        title: "Barcelona",
-        votes: 0
-      }] 
+   
+     choice: [{ name:'US', votes:1 },
+     { name:'China', votes:1 },
+     { name:'Europe(ESA)', votes:1 },
+     { name:'India', votes:1 },
+     { name:'Japan', votes:1 }
+     ]
+     
   };
 
   componentDidMount() {
-    //this.loadChoices();
+   // this.loadChoice();
     console.log("hello")
   }
+
+ 
+  //var total = choice.reduce (function(preVal, elem) {
+    //return preVal + elem.votes;}, 0);
 
 //var slider = document.getElementById("myRange");
 //var output = document.getElementById("demo");
@@ -45,14 +37,14 @@ class Survey extends Component {
 //}
 
 
-
-//  loadChoices = () => {
-//    API.getChoices()
-//    .then(res =>
-//      this.setState({choices: res.data})
-//    )
-//    .catch(err => console.log(err));
-//  };
+//loadChoices function --this function loads the choices submitted by the Admin.
+ // loadChoice = () => {
+ //  API.getChoices()
+  //    .then(res =>
+  //      this.setState({choice: res.data, name: ""})
+  //    )
+    //  .catch(err => console.log(err));
+ //   };
 
 // handleSlide = () => {
 //   
@@ -69,55 +61,49 @@ class Survey extends Component {
   //output.innerHTML = this.value;
 //}
 
-
-
-
   render(){
     return(
       <div>
-      <div>
-          <div>
-            <h1> Instructions go here </h1>
-          </div>
-      
-               
-          <Alert style={{ opacity: this.state.match ? 1 : 0 }} type="success">
-              Your Results were successfully submitted
-          </Alert>
+        <Container fluid>
+        <Container>
+          <Row>
+            <Col size="md-12">
+            <h1> Decision Title </h1>
+            <h4> Instructions </h4>
+            <p> You have 100 points total that you can allocate to the following options.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col size = "md-12">  
+              <List>
+                {this.state.choice.map((choice, i) => (
+                  <ListItem>
+                      <strong>
+                           Option {i+1}: {choice.name}
+                      </strong>
+                            
+                      <Slider
+                        onChange = {this.handleSlide}
+                            
+                      />
+                      Value: <span id="demo">{choice.votes} </span> 
+                     
+                  </ListItem>
+                ))}
+                Total Points:
+                      <div> 100 </div>
+              </List>
+              <FormBtn>Submit Survey</FormBtn>
+              <br/>
+              <Link to="/"> Back to User Page</Link> 
+            </Col>
+          </Row>  
 
-          <Alert style={{ opacity: this.state.match ? 1 : 0 }} type="success">
-              Your survey was successfully created.
-          </Alert>
+          </Container>
+        </Container>
       </div>
-     
-       <List>
-          {this.state.choices.map((choice, i) => (
-          <ListItem key={choice._id}>
-              <strong>
-                {choice.title}                 
-              </strong>
-
-              <Input
-                min = {1}
-                max = {100}
-                value = {choice.votes}
-                onChange = {this.handleSlide}
-                //type: "range" 
-                //name: "slide"
-              />
-              
-         </ListItem>
-
-
-        ))}
-     </List>
-
-     <Link to="/">← Back to User Page</Link> 
-
-</div>
     );
   }
-
 
 }
 export default Survey;
