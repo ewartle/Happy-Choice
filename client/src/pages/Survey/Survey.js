@@ -9,18 +9,14 @@ import axios from "axios"
 
 class Survey extends Component {
   
-  state = {
-    
+   state = {
+
+     participantId: "5a7b695873e45c3dbc6c1dfd",
      admin: "Julie",
      decision: "Family Vacation",
      totalPoints: 0,
-     choice: [
-     { name:'US', votes:"" },
-     { name:'China', votes:"" },
-     { name:'Europe(ESA)', votes:"" },
-     { name:'India', votes:"" },
-     { name:'Japan', votes:"" }
-     ]
+     choice: [{ votes:""}, {votes:""}, {votes:""}, {votes:""}, {votes:"" }],
+     options: []
 
   };
 
@@ -71,22 +67,26 @@ class Survey extends Component {
 
   handleFormSubmit= event => {
     event.preventDefault();
+    const payload =[];
     //we will add a post route here to send all the points.
-    const payload = this.state
-    console.log(payload.choice);
-    axios.post("/api/survey/:id", payload.choice).then((response)=>{
-    console.log(response)}).catch((err)=> {
-    console.log(err);
-   });
+    for (let i = 0; i<this.state.choice.length; i++) {
+        payload.push(parseInt(this.state.choice[i].votes));
+    }
+    console.log(payload);
+    axios.post("/api/admin/admin/"+this.state.participantId, payload).then((response)=>{
+      console.log(response)}).catch((err)=> {
+      console.log(err.message);
+    });
    
     alert(`Thank you for casting your votes!  ${this.state.admin} will be in touch with you about the results.`)
     this.setState({
       admin: "",
       decision: "",
       totalPoints: "",
-      choice: {}
+      choice: [],
+      options: [],
     });       
-   this.props.history.push("/");
+   //this.props.history.push("/");
   };
 
   render(){
@@ -107,9 +107,7 @@ class Survey extends Component {
               <List>
                 {this.state.choice.map((choice, i) => (
                   <ListItem key={choice._id}>
-                      <strong>
-                           Option {i+1}: {choice.name}
-                      </strong>
+                     
                       <Input
                       id={i}
                       value={this.state.choice.votes}
