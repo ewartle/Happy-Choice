@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
+import API from "../../utils/API";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+import { RedirectBtn } from "../../components/RedirectBtn";
 
 // update inputs???????????????????????????????
 class Form extends Component {
@@ -18,18 +20,40 @@ class Form extends Component {
     });
   };
 
-  // handleFormSubmit = event => {
-  //   event.preventDefault();
-  //   if (this.state.title && this.state.author) {
-  //     API.saveForm({
-  //       title: this.state.title,
-  //       author: this.state.author,
-  //       synopsis: this.state.synopsis
-  //     })
-  //       .then(res => this.loadBooks())
-  //       .catch(err => console.log(err));
-  //   }
-  // };
+  verifyForm = () => {
+    API.getSurvey()
+      .then(res =>
+        this.setState({ name: "", description: "", choices: {}, participants: {} })
+      )
+      .catch(err => console.log(err));
+  };
+
+ handleFormSubmit = event => {
+   event.preventDefault();
+   if (this.state.name && this.state.description) {
+     API.saveForm({
+       name: this.state.name,
+       description: this.state.description,
+       choices: this.state.choices,
+       participants: this.state.participants
+     })
+       .then(res => this.verifyForm())
+       .catch(err => console.log(err));
+   }
+ };
+
+//  addChoice = () => {
+//               <Input
+//                 value={this.state.choice}
+//                 onChange={this.handleInputChange}
+//                 name="choice{this++}"
+//                 placeholder="Choice (required)"
+//               />
+//               <RedirectBtn onClick={() => this.addChoice()}>
+//               Add Choice
+//               </RedirectBtn>
+//  };
+
 
   render() {
     return (
@@ -55,9 +79,13 @@ class Form extends Component {
               <Input
                 value={this.state.choice}
                 onChange={this.handleInputChange}
-                name="choice"
+                name="choice1"
                 placeholder="Choice (required)"
               />
+              {/* <RedirectBtn onClick={() => this.addChoice()}>
+              Add Choice
+              </RedirectBtn> */}
+
               <label for="email">Participant Emails</label>
               <Input
                 value={this.state.particiapant}
