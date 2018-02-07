@@ -2,10 +2,10 @@ import React, {Component} from "react";
 //import API from "../../utils/API";
 import {Link, Redirect} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
-import Alert from "../../components/Alert/Alert";
 import {FormBtn, Input, Slider, TextArea} from "../../components/Form"
 import { Col, Row, Container } from "../../components/Grid";
 import Wrapper from "../../components/Wrapper";
+import axios from "axios"
 
 class Survey extends Component {
   
@@ -13,8 +13,9 @@ class Survey extends Component {
 
      admin: "Julie",
      decision: "Family Vacation",
-     totalPoints: "0",
-     choice: [{ name:'US', votes:"" },
+     totalPoints: 0,
+     choice: [
+     { name:'US', votes:"" },
      { name:'China', votes:"" },
      { name:'Europe(ESA)', votes:"" },
      { name:'India', votes:"" },
@@ -24,9 +25,9 @@ class Survey extends Component {
   };
 
   componentDidMount() {
-   // this.loadChoice();
+   //this.loadChoice();
     console.log("hello")
-  }
+     }
 
 //var total = choice.reduce (function(preVal, elem) {
     //return preVal + elem.votes;}, 0);
@@ -35,34 +36,47 @@ class Survey extends Component {
  // loadChoice = () => {
  //  API.getChoices()
   //    .then(res =>
-  //      this.setState({choice: res.data, name: ""})
+  //      this.setState({choice: res.data, name: ""}ate)
   //    )
     //  .catch(err => console.log(err));
  //   };
 
 
- handleInputChange = event => {
+ handleInputChange = (event) => {
     // Getting the value and name of the input which triggered the change
-    let value = event.target.value;
-    if (value >100){
-      alert(`You can only cast 100 votes.`);
-      value === 0
-    }
-    //console.log(value);
-    //const name = event.target.name;
-    //console.log(name);
-    //this.setState({
-   //   [name]: value
-      
-   // });
+   const id = event.target.id
+   const choice = this.state.choice
+   let totalPoints=this.state.totalPoints
+   console.log(totalPoints);
+   console.log(choice[id]);
+   let value= event.target.value;
+   choice[id].votes = value;
+  // const array1 = [1, 2, 3, 4];
+  // const array = [choice[id].votes]
+   //totalPoints = array.forEach(function(element){
+   // console.log(element);
+  // });
+    //total = choice.reduce (function(preVal, elem) {
+    //return preVal + elem.votes;}, 0);
    
- 
+   let newState = {...this.state}
+   newState.choice = choice;
+   newState.totalPoints=totalPoints
+
+   this.setState(newState)
+   
   };
 
   handleFormSubmit= event => {
-   
     event.preventDefault();
     //we will add a post route here to send all the points.
+    const payload = this.state
+    console.log(payload.choice);
+    axios.post("/api/survey/:id", payload.choice).then((response)=>{
+    console.log(response)}).catch((err)=> {
+    console.log(err);
+   });
+   
     alert(`Thank you for casting your votes!  ${this.state.admin} will be in touch with you about the results.`)
     this.setState({
       admin: "",
@@ -70,7 +84,7 @@ class Survey extends Component {
       totalPoints: "",
       choice: {}
     });       
-    this.props.history.push("/");
+   this.props.history.push("/");
   };
 
   render(){
@@ -94,15 +108,15 @@ class Survey extends Component {
                       <strong>
                            Option {i+1}: {choice.name}
                       </strong>
-                      <Input id = {i} 
+                      <Input
+                      id={i}
                       value={this.state.choice.votes}
                       name="votes"
                       onChange={this.handleInputChange}
                       type="number"
                       placeholder="Enter your votes here"
-
                   />      
-                      
+              
                   </ListItem>
                 ))}
                 Total Points:

@@ -1,8 +1,6 @@
 import React, {Component} from "react";
-//import API from "../../utils/API";
 import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
-import Alert from "../../components/Alert/Alert";
 import {FormBtn, Input, Slider, TextArea} from "../../components/Form"
 import { Col, Row, Container } from "../../components/Grid";
 import { Panel, Table, TableHead, TableBody } from "../../components/Table";

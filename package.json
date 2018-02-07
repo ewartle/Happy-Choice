@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/ewartle/Happy-Choice#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "body-parser": "^1.18.2",
     "concurrently": "^3.5.1",
     "express": "^4.16.2",
