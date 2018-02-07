@@ -4,6 +4,10 @@ import "./Slider.css";
 export const Slider  = props =>
 
 <div class="slidecontainer">
- <input class="slider" {...props} />
- <p>Value: <span class="demo"></span></p>
+  <input type="range" min="1" max="100" value="50" class="slider" id="myRange" {...props} />
+  
 </div>
+
+
+
+
