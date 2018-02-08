@@ -22,32 +22,21 @@ class Survey extends Component {
   };
 
   componentDidMount() {
-   //this.loadChoice();
+   this.loadChoice();
     console.log("hello")
   }
 
- //loadChoice function --this function loads the choices submitted by the Admin.
-  //loadChoice = (event) => {
- //
-    //  axios.get("/api/admin/admin/").then(res=>
-    //    this.setState({               })
-        
-     //   console.log(res)
-     // )  
-  //   .catch(err=> {
-  //    console.log(err.message);
- //   });
+  loadChoice = () => {
+   axios.get("/api/admin/adminpage/"+ sessionStorage.getItem("id"))
+       .then((response) => {
+           console.log(response);
+           this.setState({ surveys: response.data.surveys})
+       })
+       .catch(err => {
+           console.log(err.message);
+       })
+ };
 
-
-//  API.getChoices()
-  //    .then(res =>
-  //      this.setState({choice: res.data, name: ""})
-  //    )
-    //  .catch(err => console.log(err));
- //   };
-
- // Getting the value and name of the input which triggered the change
- //Need to add user Validation to make sure do not go over 100 points.
 
  handleInputChange = (event) => {
    const reducer = (accumulator, currentValue) => accumulator + currentValue;

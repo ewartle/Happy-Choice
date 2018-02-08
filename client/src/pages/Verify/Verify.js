@@ -10,17 +10,17 @@ import axios from "axios"
     state = {
       admin: "Julie",
       decision: "Family Vacation",
-      link: "www.google.com",
       participants: [
       { email:"ewartle@hotmail.com" },
       { email:"ewartle@yahoo.com" },
       { email:"ewartle@gmail.com" }
       
-      ]
+      ],
+      surveyId: "15"
       
    };
- 
-   componentDidMount() {
+
+componentDidMount() {
  //   API.________________()
 //      .then(res =>
  //       this.setState({
@@ -31,35 +31,41 @@ import axios from "axios"
  //       })
  //     )
  //     .catch(err => console.log(err));
- console.log("hello")
-  }
-    
- 
- 
-   handleSubmit= event => {
+      console.log("hello")
+};
+
+handleSubmit= event => {
  
      event.preventDefault();
+     const id = event.target.id
+     console.log(id);
+     const emailRecip = this.state.participants[id].email;
+     console.log(emailRecip);
      const payload = this.state
      console.log(payload);
+     const link = `http://localhost:3000/${payload.surveyId}/${emailRecip}`
+     console.log(link);
+     const NodeMailerInput = [emailRecip, link, payload.admin, payload.decision];
+     console.log(NodeMailerInput);
+
      
-     axios.post("/send", payload).then((response)=>{
+    axios.post("/send", NodeMailerInput).then((response)=>{
          console.log(response)}).catch((err)=> {
          console.log(err);
      });
  
- 
-    alert(`Thank you ${this.state.admin} submitting your survey.  Your survey has been emailed to ${this.state.admin} .`);
-    
-    this.setState({
-        admin: "",
-        decision: "",
-        //link: ""
-        //emails: [],
-      
-     });       
-    //this.props.history.push("/");
-   };
+    alert(`Thank you ${this.state.admin} submitting your survey.  Your survey has been emailed to ${emailRecip}.`);
 
+    this.setState({
+            admin: "",
+            decision: "",
+            //participants: [],
+            //surveyId: ""
+          });
+    
+          
+    //this.props.history.push("/");
+};
 
  
    render(){
@@ -78,41 +84,33 @@ import axios from "axios"
            <Row>
                    <Col size = "md-12">  
 
-                    {this.state.choices.length ? (
+                    {this.state.participants.length ? (
                            <List>
- 
-                           
-                               <ListItem key={this.state.link._id}>
-                                  <strong>
-                                        Link:  {this.state.link}
-                                   </strong>
-                               </ListItem>
- 
-                                <ListItem key={this.state.link._id}>
+                                    
+                                <ListItem>
                                   <strong>
                                         Emails:
                                    </strong>
                                </ListItem>
                         
-                             {this.state.emails.map((emails, i) => (
-                               <ListItem key={emails._id}>
-                                  
-                                 
-                                        {emails.email}
-                               
-                           
+                             {this.state.participants.map((emails, i) => (
+                               <ListItem key={this.state.participants._id}>
+                                    {this.state.participants[i].email}
+
+                                    <button id = {i} onClick={this.handleSubmit}>Send Email</button>
+                            
                                </ListItem>
                              ))}
                              
                            </List>
                      
 
-                      ) : (
+                      ): (
               <h3>No Participants</h3>
             )}     
 
 
-                     <button onClick={this.handleSubmit}>Send Email</button>
+                    
                      <br/>
                      <br/>
                      <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
@@ -134,3 +132,5 @@ import axios from "axios"
 
 
 
+
+    

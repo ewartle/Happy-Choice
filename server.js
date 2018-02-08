@@ -28,18 +28,12 @@ app.get('/', (req,res) => {
 
 app.post("/send", (req, res) => {
     
-const emailList = [];
 
-for (let i = 0; i<req.body.emails.length; i++) {
-        emailList.push(req.body.emails[i].email);
-    }
 
-const recipients = emailList.toString();
-console.log(recipients);
-
-let link = req.body.link;
-let name = req.body.admin;
-let decision = req.body.decision;
+let link = req.body[1];
+let name = req.body[2];
+let email = req.body[0];
+let decision = req.body[3]
 
     var transporter = nodemailer.createTransport({
        service: 'gmail',
@@ -56,9 +50,9 @@ let decision = req.body.decision;
     
     let mailOptions = {
         from: '"Nodemailer Contact" <smartgroupdecision@gmail.com>', // sender address
-        to: recipients, // list of receivers
+        to: email, // list of receivers
         subject: 'Time to Make a Decision', // Subject line
-        html: "You have been requested by  " + name + " to cast your votes relating to " + decision + ". Follow the instructions included in the link" + link + ", and happy voting!" // html body
+        html: "You have been requested by  " + name + " to cast your votes relating to " + decision + ". Follow the instructions included in the link " + link + ", and happy voting!" // html body
     };
 
     
