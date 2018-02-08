@@ -12,7 +12,7 @@ class Survey extends Component {
    
    state = {
 
-     participantId: "5a7b695873e45c3dbc6c1dfd",
+     participantEmail: "miki@gmail.com",
      admin: "Julie",
      decision: "",
      totalPoints: 0,

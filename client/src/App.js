@@ -23,7 +23,9 @@ render() {
       <Route exact path="/User" component={User} /> 
       <Route exact path="/Survey" component={Survey} /> 
       <Route path="/Result/:id" component={Result} /> 
-      <Route exact path="/Verify" component={Verify} />     
+      <Route path="/Survey/:id" component={Survey} />
+      <Route path="/Verify/:id" component={Verify} />
+ 
        
         
      </Switch>

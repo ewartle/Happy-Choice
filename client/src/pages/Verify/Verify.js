@@ -80,8 +80,8 @@ handleSubmit= event => {
     this.setState({
             admin: "",
             decision: "",
-            //participants: [],
-            //surveyId: ""
+            participant: [],
+            surveyId: ""
           });
     
           
@@ -105,30 +105,10 @@ handleSubmit= event => {
            <Row>
                    <Col size = "md-12">  
 
-                    {this.state.participants.length ? (
-                           <List>
-                                    
-                                <ListItem>
-                                  <strong>
-                                        Emails:
-                                   </strong>
-                               </ListItem>
+                   
                         
-                             {this.state.participants.map((emails, i) => (
-                               <ListItem key={this.state.participants._id}>
-                                    {this.state.participants[i].email}
-
-                                    <button id = {i} onClick={this.handleSubmit}>Send Email</button>
-                            
-                               </ListItem>
-                             ))}
-                             
-                           </List>
-                     
-
-                      ): (
               <h3>No Participants</h3>
-            )}     
+   
 
 
                     

@@ -49,7 +49,7 @@ module.exports = {
             .create(req.body)
             .then(function(dbSurvey) {
                 console.log("You successfully created a new survey")
-                console.log(dbSurvey.id)
+                console.log(dbSurvey)
                 Admin.findOneAndUpdate({ _id: req.params.id }, { $push: { surveys: dbSurvey._id } }, { new: true })
                     .then((dbAdmin) => {
                         console.log("Successfully updated Admin")
@@ -81,7 +81,7 @@ module.exports = {
     },
 
     findresults: function(req, res) {
-console.log("Hit the survey get results route");
+        console.log("Hit the survey get results route");
         console.log(req.params.id);
         Survey
             .findById({ _id: req.params.id })
