@@ -60,13 +60,13 @@ handleSubmit= event => {
      event.preventDefault();
      const id = event.target.id
      console.log(id);
-     const emailRecip = this.state.participants[id].email;
+     const emailRecip = this.state.emails[id];
      console.log(emailRecip);
-     const payload = this.state
-     console.log(payload);
-     const link = `http://localhost:3000/${payload.surveyId}/${emailRecip}`
+     const emailOutput = this.state
+     console.log(emailOutput);
+     const link = `http://localhost:3000/${emailOutput.surveyId}/${emailRecip}`
      console.log(link);
-     const NodeMailerInput = [emailRecip, link, payload.admin, payload.decision];
+     const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.decision];
      console.log(NodeMailerInput);
 
      
@@ -80,12 +80,10 @@ handleSubmit= event => {
     this.setState({
             admin: "",
             decision: "",
-            participant: [],
-            surveyId: ""
+            //participants: [],
+            //surveyId: ""
           });
     
-          
-    //this.props.history.push("/");
 };
 
  
@@ -97,22 +95,44 @@ handleSubmit= event => {
          <Container>
            <Row>
              <Col size="md-12">
-             <h1> {this.state.decision} </h1>
-            
+                 <h1> {this.state.name} </h1>
+                 <p> {this.state.description} </p>
+                 <p> You have selected the following choices </p>
+                 <ul> 
+                   {this.state.choice.map((choice, i) => (
+                    <li> {choice} </li>
+                   ))}
+                 </ul>
              </Col>
            </Row>
- 
-           <Row>
+          <br/>
+          
+          <Row>
                    <Col size = "md-12">  
 
-                   
+                    {this.state.emails.length ? (
+                           <List>
+                                    
+                                <ListItem>
+                                 Click on the button next to the email to send your survey!
+                               </ListItem>
                         
+                             {this.state.emails.map((emails, i) => (
+                               <ListItem key={this.state.emails._id}>
+                                    {emails}
+
+                                    <button id = {i} onClick={this.handleSubmit} style={{ margin: "15px"}} >Send Email</button>
+                            
+                               </ListItem>
+                             ))}
+                             
+                           </List>
+                     
+
+                      ): (
               <h3>No Participants</h3>
-   
+            )}     
 
-
-                    
-                     <br/>
                      <br/>
                      <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
                          
@@ -129,3 +149,5 @@ handleSubmit= event => {
  
  }
  export default Verify;
+
+
