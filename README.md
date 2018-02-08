@@ -1,7 +1,5 @@
 # Happy-Choice
 
-# Decision-Application
-
 ## Members in your group.
 Miki Collins, Julie Shockley, Peter Perreiah, Lisa Ewart
 
