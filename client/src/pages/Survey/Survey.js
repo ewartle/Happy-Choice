@@ -65,31 +65,40 @@ class Survey extends Component {
    newState.totalPoints = array.reduce(reducer);
 
    this.setState(newState);
+   if (newState.totalPoints > 100 ) {
+    alert ("Your vote total cannot exceed 100 points");
+   }
    
 
   };
 
   handleFormSubmit= event => {
     event.preventDefault();
-    const payload =[];
-    for (let i = 0; i<this.state.choice.length; i++) {
-        payload.push(parseInt(this.state.choice[i].votes));
-    }
-    console.log(payload);
-    axios.post("/api/admin/admin/"+this.state.participantId, payload).then((response)=>{
-      console.log(response)}).catch((err)=> {
-      console.log(err.message);
-    });
-   
-    alert(`Thank you for casting your votes!  ${this.state.admin} will be in touch with you about the results.`)
-    this.setState({
-      admin: "",
-      decision: "",
-      totalPoints: "",
-      choice: [],
-      options: [],
-    });       
-   this.props.history.push("/");
+          if (this.state.totalPoints <=100 ){
+          const payload =[];
+          for (let i = 0; i<this.state.choice.length; i++) {
+              payload.push(parseInt(this.state.choice[i].votes));
+          }
+          console.log(payload);
+          axios.post("/api/admin/admin/"+this.state.participantId, payload).then((response)=>{
+            console.log(response)}).catch((err)=> {
+            console.log(err.message);
+          });
+         
+          alert(`Thank you for casting your votes!  ${this.state.admin} will be in touch with you about the results.`)
+          this.setState({
+            admin: "",
+            decision: "",
+            totalPoints: "",
+            choice: [],
+            options: [],
+          });       
+         this.props.history.push("/");
+       } 
+       else {
+        alert("Your vote total must be less than 100.");
+
+       }
   };
 
   render(){

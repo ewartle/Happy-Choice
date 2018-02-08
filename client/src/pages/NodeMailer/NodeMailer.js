@@ -53,7 +53,7 @@ class NodeMailer extends Component {
     });
 
 
-    alert(`Thank you ${this.state.admin}.  Your survey has been sent.`);
+    alert(`Thank you ${this.state.admin}.  Your survey has been emailed.`);
    
      this.setState({
      admin: "",
