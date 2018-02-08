@@ -1,48 +1,15 @@
 
 function calculateSurveyResults(survey){
 
-  // var survey = {
-  //   name: "VanWilder Family Vacation",
-  //   id: 4545,
-  //   participants: [
-  //     {name: "johnny",
-  //       scores: [70, 30, 0, 0]
-  //     },
-  //     {name: "jenny",
-  //       scores: [10, 70, 10, 10]
-  //     },
-  //     {name: "mommy",
-  //       scores: [0, 10, 45, 45]
-  //     },
-  //     {name: "daddy",
-  //       scores: [10, 10, 10, 70]
-  //     }
-  //   ]
-  // };
-
-  var surveyCalculatedResults = {
-    id: "",
-    roundResultsHistory: []
-  }
-  surveyCalculatedResults.id = survey.id;
-
   var options_ct = 0;
   var participant_ct = 0;
-  var participantScoreHistory = [];
-
-  //Get option scores by participant from db and load into <participants_opt_scores></participants_opt_scores>
-  // mongoose db.survey.findById({req.params.id})
-  //   .then {
-
-          var participants = survey.participants;
-          var participants_opt_scores = participants.map((participant) => {
-            var participantScores = participant.scores;
-            participant_ct = survey.participants.length;
-            options_ct = participantScores.length;
-            participantScoreHistory.push(participantScores);
-            return participantScores;
-        });
-  // };
+  var participants = survey.participants;
+  var participants_opt_scores = participants.map((participant) => {
+    var participantScores = participant.scores;
+    participant_ct = survey.participants.length;
+    options_ct = participantScores.length;
+    return participantScores;
+  });
 
   var surveyDone = false;
   var min_opt_score = 100;
@@ -168,8 +135,8 @@ function calculateSurveyResults(survey){
     }
   }  //function checkForWinners()
 
-  surveyCalculatedResults.roundResultsHistory = roundResultsHistory;
-  return surveyCalculatedResults;
+  // surveyCalculatedResults.roundResultsHistory = roundResultsHistory;
+  return roundResultsHistory;
 
 }  //function wrapper calculateSurveyResults
 
