@@ -1,59 +1,79 @@
 import React, { Component } from "react";
+import {Link, Redirect} from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import API from "../../utils/API";
 import { Input, TextArea, FormBtn } from "../../components/Form";
-import { RedirectBtn } from "../../components/RedirectBtn";
 
-// update inputs???????????????????????????????
 class Form extends Component {
-  state = {
-    name: "",
-    description: "",
-    choices: [],
-    participants: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      description: "",
+      choices: [],
+      participants: [],
+      choiceInputs: ["input-0"],
+      emailInputs: ["input-0"]
+    };
+  }
 
   handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
+    const { name, value, key } = event.target;
+     this.setState({
+       [name]: value
+     });
   };
 
-  verifyForm = () => {
-    API.getSurvey()
-      .then(res =>
-        this.setState({ name: "", description: "", choices: [], participants: [] })
-      )
-      .catch(err => console.log(err));
+  // verifyForm = () => {
+  //   API.getSurvey()
+  //     .then(res =>
+  //       this.setState({
+  //         name: "",
+  //         description: "",
+  //         choices: [],
+  //         participants: []
+  //       })
+  //     )
+  //     .catch(err => console.log(err));
+  // };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    let input = document.getElementsByClassName("choices");
+    for (let i = 0; i < input.length; i++) {
+      let newChoice = input[i].value;
+      this.state.choices.push(newChoice);
+    }
+
+    let input2 = document.getElementsByClassName("email");
+    for (let i = 0; i < input2.length; i++) {
+      let newEmail = input2[i].value;
+      this.state.participants.push(newEmail);
+    }
+
+    const formData = {
+      name: this.state.name,
+      description: this.state.description,
+      choices: this.state.choices,
+      participants: this.state.participants
+    };
+    console.log(formData);
+    if (this.state.name && this.state.description) {
+      API.saveForm(formData)
+        .then(res => this.props.history.push("/Verify"))
+        .catch(err => console.log(err));
+    }
   };
 
- handleFormSubmit = event => {
-   event.preventDefault();
-   if (this.state.name && this.state.description) {
-     API.saveForm({
-       name: this.state.name,
-       description: this.state.description,
-       choices: this.state.choices,
-       participants: this.state.participants
-     })
-       .then(res => this.verifyForm())
-       .catch(err => console.log(err));
-   }
- };
+  addChoice = () => {
+    const newInput = `input-${this.state.choiceInputs.length}`;
+    this.setState({ choiceInputs: [...this.state.choiceInputs, newInput] });
+  };
 
-//  addChoice = () => {
-//               <Input
-//                 value={this.state.choice}
-//                 onChange={this.handleInputChange}
-//                 name="choice{this++}"
-//                 placeholder="Choice (required)"
-//               />
-//               <RedirectBtn onClick={() => this.addChoice()}>
-//               Add Choice
-//               </RedirectBtn>
-//  };
-
+  addEmail = () => {
+    const newInput = `input-${this.state.emailInputs.length}`;
+    this.setState({ emailInputs: [...this.state.emailInputs, newInput] });
+  };
 
   render() {
     return (
@@ -61,40 +81,73 @@ class Form extends Component {
         <Row>
           <Col size="md-12">
             <form>
-              <label for="name">Title Name</label>
+              <label htmlFor="name">Title Name</label>
               <Input
+                key="title-input"
                 value={this.state.name}
                 onChange={this.handleInputChange}
                 name="name"
                 placeholder="Title Name (required)"
               />
-              <label for="description">Description</label>
+              <label htmlFor="description">Description</label>
               <TextArea
+                key="description"
                 value={this.state.description}
                 onChange={this.handleInputChange}
                 name="description"
                 placeholder="Description (Required)"
               />
-              <label for="choice">Choices</label>
-              <Input
-                value={this.state.choice}
-                onChange={this.handleInputChange}
-                name="choice1"
-                placeholder="Choice (required)"
-              />
-              {/* <RedirectBtn onClick={() => this.addChoice()}>
-              Add Choice
-              </RedirectBtn> */}
-
-              <label for="email">Participant Emails</label>
-              <Input
-                value={this.state.particiapant}
-                onChange={this.handleInputChange}
-                name="email"
-                placeholder="Email (required)"
-              />
+              <label htmlFor="choice">Choices</label>
+              <button
+                onClick={e => {
+                  e.preventDefault();
+                  this.addChoice();
+                }}
+              >
+                Add Choice
+              </button>
+              {this.state.choiceInputs.map(choiceInput => {
+                return (
+                  <div className="form-control" key={choiceInput}>
+                    <Input
+                      key={choiceInput}
+                      className="choices"
+                      value={this.state.choice}
+                      name="choices"
+                      placeholder="Choice (required)"
+                    />
+                  </div>
+                );
+              })}
+              <label htmlFor="email">Participant Emails</label>
+              <button
+                onClick={e => {
+                  e.preventDefault();
+                  this.addEmail();
+                }}
+              >
+                Add Participant
+              </button>
+              {this.state.emailInputs.map(emailInput => {
+                return (
+                  <div className="form-control" key={emailInput}>
+                    <Input
+                      key={emailInput}
+                      className="email"
+                      value={this.state.participant}
+                      name="participants"
+                      placeholder="Email (required)"
+                    />
+                  </div>
+                );
+              })}
               <FormBtn
-                disabled={!(this.state.name && this.state.description && this.state.choices && this.state.participants)}
+                 disabled={
+                   !(
+                     this.state.name &&
+                     this.state.description
+                   )
+                 }
                 onClick={this.handleFormSubmit}
               >
                 Create Survey
