@@ -10,7 +10,7 @@ import axios from "axios"
     state = {
       admin: "Julie",
       decision: "Family Vacation",
-      participants: [
+      participant: [
       { email:"ewartle@hotmail.com" },
       { email:"ewartle@yahoo.com" },
       { email:"ewartle@gmail.com" }
@@ -26,8 +26,8 @@ componentDidMount() {
  //       this.setState({
  //         admin: "",
  //         decision: "",
- //         link: "",
- //         participants: [{}]
+ //         participant: [{}]
+  //          surveyId: "";
  //       })
  //     )
  //     .catch(err => console.log(err));
@@ -39,7 +39,7 @@ handleSubmit= event => {
      event.preventDefault();
      const id = event.target.id
      console.log(id);
-     const emailRecip = this.state.participants[id].email;
+     const emailRecip = this.state.participant[id].email;
      console.log(emailRecip);
      const payload = this.state
      console.log(payload);
@@ -84,7 +84,7 @@ handleSubmit= event => {
            <Row>
                    <Col size = "md-12">  
 
-                    {this.state.participants.length ? (
+                    {this.state.participant.length ? (
                            <List>
                                     
                                 <ListItem>
@@ -93,9 +93,9 @@ handleSubmit= event => {
                                    </strong>
                                </ListItem>
                         
-                             {this.state.participants.map((emails, i) => (
-                               <ListItem key={this.state.participants._id}>
-                                    {this.state.participants[i].email}
+                             {this.state.participant.map((emails, i) => (
+                               <ListItem key={this.state.participant._id}>
+                                    {this.state.participant[i].email}
 
                                     <button id = {i} onClick={this.handleSubmit}>Send Email</button>
                             

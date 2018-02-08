@@ -19,6 +19,7 @@ connection.on('error', (err) => {
 }); 
 
 app.use(bodyParser.json());
+app.use(routes);
 
 
 app.use(express.static(__dirname + '/client/build/'));

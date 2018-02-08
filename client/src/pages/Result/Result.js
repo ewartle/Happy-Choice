@@ -62,23 +62,68 @@ class Result extends Component {
                   <Col size = "md-12"> 
                     <Panel> 
                       <Table>
-                        <TableHead>
+                      
+                      {this.state.choice.map((choice,i) => (
 
-               
+                         <thead> 
+                       <th scope="col">{choice[i]}</th>
+                      </thead>
+                        
+                        ))}
+                     
+                 
 
-                         </TableHead>
-                        {this.state.choice.map((choice, i) => (
-                          <TableBody>
+                      {this.state.RoundResultsHistory.map((round,i) => (
+                        <TableBody>
                               <tr>
-                                  <td> {i+1}</td>
-                                  <td> {choice} </td>
-                                  <td> 1</td>
-                                  <td> 2</td>
-                                  <td> 3 </td>   
+                                  <td> {round[i][0]}</td>
+                                    
                               </tr>
                           </TableBody>
                         ))}
+                        
+                        
                       </Table>
+
+                      <Table>
+                      
+                      <thead> 
+                       <th scope="col">{this.state.choice[0]}</th>
+                      </thead>
+                 
+
+                      {this.state.RoundResultsHistory.map((round,i) => (
+                        <TableBody>
+                              <tr>
+                                  <td> {round[i]}</td>
+                                    
+                              </tr>
+                          </TableBody>
+                        ))}
+                        
+                        
+                      </Table>
+
+                      <Table>
+                      
+                      <thead> 
+                       <th scope="col">{this.state.choice[0]}</th>
+                      </thead>
+                 
+
+                      {this.state.RoundResultsHistory.map((round,i) => (
+                        <TableBody>
+                              <tr>
+                                  <td> {round[i]}</td>
+                                    
+                              </tr>
+                          </TableBody>
+                        ))}
+                        
+                        
+                      </Table>
+
+
                     </Panel>
                     <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
                   </Col>
