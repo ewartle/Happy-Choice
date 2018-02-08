@@ -1,4 +1,4 @@
-const db = require("../models");
+const { Admin, Survey, Choice, Participant } = require('../models/database.js');
 
 // Defining methods for the surveyController
 module.exports = {

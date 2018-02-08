@@ -28,7 +28,7 @@ class Survey extends Component {
 
   loadChoice = () => {
    console.log(this.props);
-    axios.get("/api/admin/results/" + "5a7c988abfd31b1d489c4759")
+    axios.get("/api/survey/" + this.props.match.params.id)
         .then((response) => {
           console.log(response);
             const result = response.data;
