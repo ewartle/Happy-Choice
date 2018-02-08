@@ -20,7 +20,7 @@
 
   // Saves new survey form data to the database
    saveForm: function(formData) {
-     return axios.post("/api/form", formData);
+     return axios.post("/api/admin/", formData);
    },
    // Get survey
    getSurvey: function() {
