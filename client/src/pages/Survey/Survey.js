@@ -1,74 +1,77 @@
 import React, {Component} from "react";
 //import API from "../../utils/API";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
-import {FormBtn, Input, Slider, TextArea} from "../../components/Form"
+import {FormBtn, Input} from "../../components/Form"
 import { Col, Row, Container } from "../../components/Grid";
 import Wrapper from "../../components/Wrapper";
 import axios from "axios"
 
+
 class Survey extends Component {
-  
+   
    state = {
 
      participantId: "5a7b695873e45c3dbc6c1dfd",
      admin: "Julie",
      decision: "Family Vacation",
      totalPoints: 0,
-     choice: [{ votes:""}, {votes:""}, {votes:""}, {votes:""}, {votes:"" }],
-     options: []
+     choice: [{ votes:"0"}, {votes:"0"}, {votes:"0"}, {votes:"0"}, {votes:"0" }],
+     options: [{option:"China"}, {option: "US"}, {option: "India"}, {option: "Chile"}, {option: "Morocco"}]
 
   };
 
   componentDidMount() {
    //this.loadChoice();
     console.log("hello")
-     }
+  }
 
-//var total = choice.reduce (function(preVal, elem) {
-    //return preVal + elem.votes;}, 0);
+ //loadChoice function --this function loads the choices submitted by the Admin.
+  //loadChoice = (event) => {
+ //
+    //  axios.get("/api/admin/admin/").then(res=>
+    //    this.setState({               })
+        
+     //   console.log(res)
+     // )  
+  //   .catch(err=> {
+  //    console.log(err.message);
+ //   });
 
-//loadChoices function --this function loads the choices submitted by the Admin.
-// loadChoice = () => {
 
-   // axios.get("/api/choices", { params: { q: query}})
-    //.then((res => this.setState (res.data {  ""})
-   // console.log(res.data)}).catch((err)=> {
-    //console.log(err));
+//  API.getChoices()
+  //    .then(res =>
+  //      this.setState({choice: res.data, name: ""})
+  //    )
+    //  .catch(err => console.log(err));
+ //   };
 
- // };
- 
-
+ // Getting the value and name of the input which triggered the change
+ //Need to add user Validation to make sure do not go over 100 points.
 
  handleInputChange = (event) => {
-    // Getting the value and name of the input which triggered the change
+   const reducer = (accumulator, currentValue) => accumulator + currentValue;
    const id = event.target.id
    const choice = this.state.choice
-   let totalPoints=this.state.totalPoints
-   console.log(totalPoints);
-   console.log(choice[id]);
    let value= event.target.value;
    choice[id].votes = value;
-  // const array1 = [1, 2, 3, 4];
-  // const array = [choice[id].votes]
-   //totalPoints = array.forEach(function(element){
-   // console.log(element);
-  // });
-    //total = choice.reduce (function(preVal, elem) {
-    //return preVal + elem.votes;}, 0);
-   
+   let array = [];
    let newState = {...this.state}
    newState.choice = choice;
-   newState.totalPoints=totalPoints
+     
+   for (let i = 0; i<newState.choice.length; i++) {
+        array.push(parseInt(newState.choice[i].votes));
+   }
+   newState.totalPoints = array.reduce(reducer);
 
-   this.setState(newState)
+   this.setState(newState);
    
+
   };
 
   handleFormSubmit= event => {
     event.preventDefault();
     const payload =[];
-    //we will add a post route here to send all the points.
     for (let i = 0; i<this.state.choice.length; i++) {
         payload.push(parseInt(this.state.choice[i].votes));
     }
@@ -86,7 +89,7 @@ class Survey extends Component {
       choice: [],
       options: [],
     });       
-   //this.props.history.push("/");
+   this.props.history.push("/");
   };
 
   render(){
@@ -105,6 +108,14 @@ class Survey extends Component {
           <Row>
             <Col size = "md-12">  
               <List>
+
+              {this.state.options.map((options, i) => (
+                  <ListItem key={options._id}>
+                     <strong>
+                           Option {i+1}: {options.option}
+                      </strong>
+                  </ListItem>
+                ))}
                 {this.state.choice.map((choice, i) => (
                   <ListItem key={choice._id}>
                      
@@ -115,7 +126,8 @@ class Survey extends Component {
                       onChange={this.handleInputChange}
                       type="number"
                       placeholder="Enter your votes here"
-                  />      
+                  />   
+                  
               
                   </ListItem>
                 ))}
@@ -129,7 +141,6 @@ class Survey extends Component {
                   
             </Col>
           </Row>  
-
           </Container>
         </Container>
       </div>

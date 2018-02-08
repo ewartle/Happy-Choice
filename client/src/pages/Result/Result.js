@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
-import {FormBtn, Input, Slider, TextArea} from "../../components/Form"
 import { Col, Row, Container } from "../../components/Grid";
 import { Panel, Table, TableHead, TableBody } from "../../components/Table";
 import Wrapper from "../../components/Wrapper";
@@ -80,7 +79,7 @@ class Result extends Component {
                         ))}
                       </Table>
                     </Panel>
-                    <FormBtn><Link to="/" style={{ color: "black"}} > Back to User Page</Link></FormBtn> 
+                    <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
                   </Col>
                 </Row>  
             </Container>

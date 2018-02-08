@@ -28,10 +28,18 @@ app.get('/', (req,res) => {
 
 app.post("/send", (req, res) => {
     
-let emails = "ewartle@gmail.com, ewartle@yahoo.com";
-let link = "www.google.com";
-let name = "Lisa";
-let decision = "grandma's birthday gift"
+const emailList = [];
+
+for (let i = 0; i<req.body.emails.length; i++) {
+        emailList.push(req.body.emails[i].email);
+    }
+
+const recipients = emailList.toString();
+console.log(recipients);
+
+let link = req.body.link;
+let name = req.body.admin;
+let decision = req.body.decision;
 
     var transporter = nodemailer.createTransport({
        service: 'gmail',
@@ -40,7 +48,7 @@ let decision = "grandma's birthday gift"
            pass: "1354!#%$" // generated ethereal password
         },
         tls:{
-        	rejectUnauthorized: false
+          rejectUnauthorized: false
         }
    
     });
@@ -48,9 +56,9 @@ let decision = "grandma's birthday gift"
     
     let mailOptions = {
         from: '"Nodemailer Contact" <smartgroupdecision@gmail.com>', // sender address
-        to: emails, // list of receivers
+        to: recipients, // list of receivers
         subject: 'Time to Make a Decision', // Subject line
-        html: "You have been requested by " + name + "to cast your votes relating to " + decision + ". Follow the instructions included in the link" + link + ", and happy voting!" // html body
+        html: "You have been requested by  " + name + " to cast your votes relating to " + decision + ". Follow the instructions included in the link" + link + ", and happy voting!" // html body
     };
 
     
@@ -66,6 +74,7 @@ let decision = "grandma's birthday gift"
         
         res.render('contact', {msg: "email has been sent"})
     });
+
 });
 
 const PORT = process.env.PORT || 3001;
