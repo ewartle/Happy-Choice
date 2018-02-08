@@ -1,89 +1,112 @@
 import React, {Component} from "react";
-import {Link, Redirect} from "react-router-dom";
+//import API from "../../utils/API";
+import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
-import {FormBtn, Input, Slider, TextArea} from "../../components/Form"
+import {FormBtn, Input} from "../../components/Form"
 import { Col, Row, Container } from "../../components/Grid";
 import Wrapper from "../../components/Wrapper";
 import axios from "axios"
 
-class Survey extends Component {
-  
-  state = {
 
-    participantId: "5a7b695873e45c3dbc6c1dfd",
+class Survey extends Component {
+   
+   state = {
+
+     participantId: "5a7b695873e45c3dbc6c1dfd",
      admin: "Julie",
-     decision: "Family Vacation",
+     decision: "",
      totalPoints: 0,
-     choice: [{ votes:""}, {votes:""}, {votes:""}, {votes:""}, {votes:"" }]
+     votes: [{ vote:"0"}, {vote:"0"}, {vote:"0"}, {vote:"0"}, {vote:"0" }],
+     choice: []
 
   };
 
   componentDidMount() {
-   //this.loadChoice();
+   this.loadChoice();
     console.log("hello")
-     }
+  }
 
-//var total = choice.reduce (function(preVal, elem) {
-    //return preVal + elem.votes;}, 0);
+  loadChoice = () => {
+   console.log(this.props);
+    axios.get("/api/admin/results/" + "5a7c988abfd31b1d489c4759")
+        .then((response) => {
+          console.log(response);
+            const result = response.data;
+            let choice = [];
+            let participant = [];
+            let name = result.name;
+            let description = result.description;
+            for (let i = 0; i < result.choice.length; i++) {
 
-//loadChoices function --this function loads the choices submitted by the Admin.
- // loadChoice = () => {
- //  API.getChoices()
-  //    .then(res =>
-  //      this.setState({choice: res.data, name: ""}ate)
-  //    )
-    //  .catch(err => console.log(err));
- //   };
+                choice.push(result.choice[i].toString());
+            }
+            for (let i = 0; i < result.participant.length; i++) {
+                participant.push(result.participant[i].toString());
+            }
+            this.setState({
+                choice: choice,
+                emails: participant,
+                name: name,
+                description: description
+            });
+            console.log(this.state);
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+ };
 
 
  handleInputChange = (event) => {
-    // Getting the value and name of the input which triggered the change
+   const reducer = (accumulator, currentValue) => accumulator + currentValue;
    const id = event.target.id
-   const choice = this.state.choice
-   let totalPoints=this.state.totalPoints
-   console.log(totalPoints);
-   console.log(choice[id]);
+   const votes = this.state.votes
    let value= event.target.value;
-   choice[id].votes = value;
-  // const array1 = [1, 2, 3, 4];
-  // const array = [choice[id].votes]
-   //totalPoints = array.forEach(function(element){
-   // console.log(element);
-  // });
-    //total = choice.reduce (function(preVal, elem) {
-    //return preVal + elem.votes;}, 0);
-   
+   votes[id].vote = value;
+   let array = [];
    let newState = {...this.state}
-   newState.choice = choice;
-   newState.totalPoints=totalPoints
+   newState.votes = votes;
+     
+   for (let i = 0; i<newState.votes.length; i++) {
+        array.push(parseInt(newState.votes[i].vote));
+   }
+   newState.totalPoints = array.reduce(reducer);
 
-   this.setState(newState)
+   this.setState(newState);
+   if (newState.totalPoints > 100 ) {
+    alert ("Your vote total cannot exceed 100 points");
+   }
    
+
   };
 
   handleFormSubmit= event => {
     event.preventDefault();
-    const payload =[];
-    //we will add a post route here to send all the points.
-    for (let i = 0; i<this.state.choice.length; i++) {
-payload.push(parseInt(this.state.choice[i].votes));
-    }
+          if (this.state.totalPoints <=100 ){
+          const payload =[];
+          for (let i = 0; i<this.state.votes.length; i++) {
+              payload.push(parseInt(this.state.votes[i].votes));
+          }
+          console.log(payload);
+          axios.post("/api/admin/admin/"+this.state.participantId, payload).then((response)=>{
+            console.log(response)}).catch((err)=> {
+            console.log(err.message);
+          });
+         
+          alert(`Thank you for casting your votes!  ${this.state.admin} will be in touch with you about the results.`)
+          this.setState({
+            admin: "",
+            decision: "",
+            totalPoints: "",
+            votes: [],
+            options: [],
+          });       
+         this.props.history.push("/");
+       } 
+       else {
+        alert("Your vote total must be less than 100.");
 
-    
-    console.log(payload);
-    axios.post("/api/admin/admin/"+this.state.participantId, payload).then((response)=>{
-    console.log(response)}).catch((err)=> {
-    console.log(err.message);
-   });
-   
-    alert(`Thank you for casting your votes!  ${this.state.admin} will be in touch with you about the results.`)
-    this.setState({
-      admin: "",
-      decision: "",
-      totalPoints: "",
-      choice: {}
-    });       
-   this.props.history.push("/");
+       }
   };
 
   render(){
@@ -102,17 +125,26 @@ payload.push(parseInt(this.state.choice[i].votes));
           <Row>
             <Col size = "md-12">  
               <List>
-                {this.state.choice.map((choice, i) => (
+
+              {this.state.choice.map((choice, i) => (
                   <ListItem key={choice._id}>
-                    
+                     <strong>
+                           Choice {i+1}: {choice[i]}
+                      </strong>
+                  </ListItem>
+                ))}
+                {this.state.votes.map((votes, i) => (
+                  <ListItem key={votes._id}>
+                     
                       <Input
                       id={i}
-                      value={this.state.choice.votes}
+                      value={this.state.votes.vote}
                       name="votes"
                       onChange={this.handleInputChange}
                       type="number"
                       placeholder="Enter your votes here"
-                  />      
+                  />   
+                  
               
                   </ListItem>
                 ))}
@@ -122,11 +154,10 @@ payload.push(parseInt(this.state.choice[i].votes));
               <FormBtn onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
               <br/>
               <br/>
-              <FormBtn><Link to="/" style={{ color: "black"}} > Back to User Page</Link></FormBtn> 
-                   
+              <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
+                  
             </Col>
           </Row>  
-
           </Container>
         </Container>
       </div>

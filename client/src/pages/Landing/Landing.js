@@ -23,17 +23,30 @@ class Landing extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     const payload = this.state;
-    console.log(payload);
     axios.post("/api/admin", payload)
         .then((response) => {
-            console.log(response);
             sessionStorage.setItem('id', response.data._id);
-            
+            this.props.history.push("/User");
         })
         .catch(err => {
             console.log(err.message);
         })
-        this.props.history.push("/User");
+};
+
+handleAdminLogin = event => {
+    event.preventDefault();
+    axios.get("/api/admin/" + this.state.email)
+        .then((response) => {
+            if (response.data.password === this.state.password) {
+                sessionStorage.setItem('id', response.data._id);
+                this.props.history.push("/User");
+            } else {
+                console.log("Invalid password");
+            }
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
 };
 
     render() {
@@ -90,7 +103,7 @@ class Landing extends Component {
                 name="password"
                 placeholder="Password"
               />
-              <FormBtn onClick={this.handleFormSubmit}>Sign In</FormBtn>
+              <FormBtn onClick={this.handleAdminLogin}>Sign In</FormBtn>
             </form>
           </Col>
         </Row>

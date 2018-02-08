@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
-import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../../components/List";
 import RedirectBtn from "../../components/RedirectBtn";
@@ -17,10 +16,9 @@ componentDidMount() {
   }
 
 loadSurveys = () => {
-    axios.get("/api/admin/" + sessionStorage.getItem("id"))
+    axios.get("/api/admin/adminpage/"+ sessionStorage.getItem("id"))
         .then((response) => {
-            console.log(response);
-            // this.setState({ surveys: res.data})
+            this.setState({ surveys: response.data.surveys})
         })
         .catch(err => {
             console.log(err.message);
@@ -55,7 +53,7 @@ loadSurveys = () => {
             <List>
               {this.state.surveys.map(survey => (
                 <ListItem key={survey._id}>
-                  <Link to={"/Result/" + survey._id}>
+                  <Link to={"/Result/"+survey._id}>
                     <strong>
                       {survey.name}
                     </strong>

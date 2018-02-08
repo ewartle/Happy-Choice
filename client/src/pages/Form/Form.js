@@ -5,86 +5,152 @@ import axios from "axios";
 
 // update inputs???????????????????????????????
 class Form extends Component {
-    state = {
-        name: "test",
-        description: "test",
-        choice: ["choice1", "choice2"],
-        participant: ["go@gmail.com", "mi@gmail.com"],
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      description: "",
+      choices: [],
+      participants: [],
+      choiceInputs: ["input-0"],
+      emailInputs: ["input-0"]
     };
+  }
 
+  handleInputChange = event => {
+    const { name, value, key } = event.target;
+     this.setState({
+       [name]: value
+     });
+  };
 
-    handleInputChange = event => {
-        const { name, value } = event.target;
-        this.setState({
-            [name]: value,
-            
-        });
+ //    handleFormSubmit = event => {
+ //     event.preventDefault();
+ //     const payload = this.state;
+ //     console.log(payload);
+ //     axios.post("/api/admin/" + sessionStorage.getItem("id"), payload)
+ //         .then((response) => {
+ //             console.log(response);
+
+ //         })
+ //         .catch((err) => {
+ //             console.log(err.message);
+ //         })
+ // };
+  
+ handleFormSubmit = event => {
+    event.preventDefault();
+    let input = document.getElementsByClassName("choices");
+    for (let i = 0; i < input.length; i++) {
+      let newChoice = input[i].value;
+      this.state.choices.push(newChoice);
+    }
+
+    let input2 = document.getElementsByClassName("email");
+    for (let i = 0; i < input2.length; i++) {
+      let newEmail = input2[i].value;
+      this.state.participants.push(newEmail);
+    }
+
+    const formData = {
+      name: this.state.name,
+      description: this.state.description,
+      choice: this.state.choices,
+      participant: this.state.participants
     };
+    console.log(formData);
+    if (this.state.name && this.state.description) {
+      axios.post("/api/admin/"+ sessionStorage.getItem("id"), formData)
+        .then(res => this.props.history.push("/Verify"))
+        .catch(err => console.log(err));
+    }
+  };
 
-    handleFormSubmit = event => {
-     event.preventDefault();
-     const payload = this.state;
-     console.log(payload);
-     axios.post("/api/admin/" + sessionStorage.getItem("id"), payload)
-         .then((response) => {
-             console.log(response);
+  addChoice = () => {
+    const newInput = `input-${this.state.choiceInputs.length}`;
+    this.setState({ choiceInputs: [...this.state.choiceInputs, newInput] });
+  };
 
-         })
-         .catch((err) => {
-             console.log(err.message);
-         })
- };
-  // handleFormSubmit = event => {
-  //   event.preventDefault();
-  //   if (this.state.title && this.state.author) {
-  //     API.saveForm({
-  //       title: this.state.title,
-  //       author: this.state.author,
-  //       synopsis: this.state.synopsis
-  //     })
-  //       .then(res => this.loadBooks())
-  //       .catch(err => console.log(err));
-  //   }
-  // };
+  addEmail = () => {
+    const newInput = `input-${this.state.emailInputs.length}`;
+    this.setState({ emailInputs: [...this.state.emailInputs, newInput] });
+  };
 
-  render() {
+   render() {
     return (
-      <Container fluid>
+      <Container>
         <Row>
           <Col size="md-12">
             <form>
-              <label for="name">Title Name</label>
+              <label htmlFor="name">Title Name</label>
               <Input
-                // value={this.state.name}
+                key="title-input"
+                value={this.state.name}
                 onChange={this.handleInputChange}
                 name="name"
                 placeholder="Title Name (required)"
               />
-              <label for="description">Description</label>
+              <label htmlFor="description">Description</label>
               <TextArea
-                // value={this.state.description}
+                key="description"
+                value={this.state.description}
                 onChange={this.handleInputChange}
                 name="description"
                 placeholder="Description (Required)"
               />
-              <label for="choice">Choices</label>
-              <Input
-                // value={[this.state.choice]}
-                onChange={this.handleInputChange}
-                name="choice"
-                placeholder="Choice (required)"
-              />
-              <label for="email">Participant Emails</label>
-              <Input
-                // value={[this.state.participant]}
-                onChange={this.handleInputChange}
-                name="participant"
-                placeholder="Email (required)"
-              />
+              <label htmlFor="choice">Choices</label>
+              <button
+                onClick={e => {
+                  e.preventDefault();
+                  this.addChoice();
+                }}
+              >
+                Add Choice
+              </button>
+              {this.state.choiceInputs.map(choiceInput => {
+                return (
+                  <div className="form-control" key={choiceInput}>
+                    <Input
+                      key={choiceInput}
+                      className="choices"
+                      value={this.state.choice}
+                      name="choices"
+                      placeholder="Choice (required)"
+                    />
+                  </div>
+                );
+              })}
+              <label htmlFor="email">Participant Emails</label>
+              <button
+                onClick={e => {
+                  e.preventDefault();
+                  this.addEmail();
+                }}
+              >
+                Add Participant
+              </button>
+              {this.state.emailInputs.map(emailInput => {
+                return (
+                  <div className="form-control" key={emailInput}>
+                    <Input
+                      key={emailInput}
+                      className="email"
+                      value={this.state.participant}
+                      name="participants"
+                      placeholder="Email (required)"
+                    />
+                  </div>
+                );
+              })}
               <FormBtn
-                disabled={!(this.state.name && this.state.description)}
-                // disabled={!(this.state.name && this.state.description && this.state.choices && this.state.participants)}
-                onClick={this.handleFormSubmit}>
+                 disabled={
+                   !(
+                     this.state.name &&
+                     this.state.description
+                   )
+                 }
+                onClick={this.handleFormSubmit}
+              >
                 Create Survey
               </FormBtn>
             </form>

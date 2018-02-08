@@ -3,8 +3,6 @@ const { Admin, Survey, Choice, Participant } = require('../models/database.js');
 // Defining methods for the surveyController
 module.exports = {
     findOne: function(req, res) {
-        console.log(req.params.email);
-        console.log(typeof(req.params.email));
         Admin
             .findOne({ email: req.params.email })
             .then(dbAdmin => res.json(dbAdmin))
@@ -16,16 +14,16 @@ module.exports = {
     //     .then(dbAdmin => res.json(dbAdmin))
     //     .catch(err => res.status(422).json(err));
     // },
-    // findAll: function(req, res) {
-    //     Admin
-    //         .findById({ _id: req.params.id })
-    //         .then(dbAdmin => {
-    //             res.json(dbAdmin);
-    //             console.log(dbAdmin);
-    //         })
-    //         .catch(err => res.status(422. json(err)));
+    findAll: function(req, res) {
+        Admin
+            .findById({ _id: req.params.id })
+            .populate("surveys")
+            .then(dbAdmin => {
+                res.json(dbAdmin);
+            })
+            .catch(err => res.status(422).json(err));
+    },
 
-    // },
 
     create: function(req, res) {
         console.log("Hit the admin create POST route");
@@ -37,7 +35,6 @@ module.exports = {
                 res.json(dbAdmin);
                 console.log("Successfully created Admin");
             })
-
             .catch(err => {
                 console.log(err.message);
                 res.status(422).json(err);
@@ -81,8 +78,19 @@ module.exports = {
                 console.log(err.message);
                 res.status(422).json(err);
             })
-    }
+    },
 
+    findresults: function(req, res) {
+console.log("Hit the survey get results route");
+        console.log(req.params.id);
+        Survey
+            .findById({ _id: req.params.id })
+            .then(dbAdmin => {
+                res.json(dbAdmin);
+                console.log("Successfully pulled results");
+            })
+            .catch(err => res.status(422).json(err.message));
+    }
     // createchoices: function(req, res) {
     //     console.log(req.body);
     //     console.log(req.params.id);
