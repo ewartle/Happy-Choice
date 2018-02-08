@@ -1,4 +1,3 @@
-
 import axios from "axios";
 
 
@@ -22,14 +21,6 @@ getSurvey: function(id) {
 // //Saves a survey to the database
 saveSurvey: function(surveyData) {
 	return axios.post("api/survey", surveyData);
-},
+}
 
-
-
-  // Saves new survey form data to the database
-   saveForm: function(formData) {
-     return axios.post("/api/admin/", formData);
-   }
-  
 };
-

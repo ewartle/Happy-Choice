@@ -10,46 +10,65 @@ import axios from "axios"
 
 class Survey extends Component {
    
-   state = {
+  state = {
 
-     participantEmail: "ewartle@yahoo.com",
+     participantId: "5a7b695873e45c3dbc6c1dfd",
      admin: "Julie",
      decision: "Family Vacation",
      totalPoints: 0,
-     choice: [{ votes:"0"}, {votes:"0"}, {votes:"0"}, {votes:"0"}, {votes:"0" }],
-     options: [{option:"China"}, {option: "US"}, {option: "India"}, {option: "Chile"}, {option: "Morocco"}]
+     votes: [{ vote:"0"}, {vote:"0"}, {vote:"0"}, {vote:"0"}, {vote:"0" }],
+     choice: ["china", "japan", "India", "mexico"]
 
   };
 
   componentDidMount() {
-   this.loadChoice();
-    console.log("hello")
+    this.loadChoice();
+    
   }
 
   loadChoice = () => {
-   axios.get("/api/admin/adminpage/"+ sessionStorage.getItem("id"))
-       .then((response) => {
-           console.log(response);
-           this.setState({ surveys: response.data.surveys})
-       })
-       .catch(err => {
-           console.log(err.message);
-       })
+     console.log(this.props);
+      axios.get("/api/admin/results/" + "5a7c988abfd31b1d489c4759")
+          .then((response) => {
+            console.log(response);
+              const result = response.data;
+              let choice = [];
+              let participant = [];
+              let name = result.name;
+              let description = result.description;
+              for (let i = 0; i < result.choice.length; i++) {
+
+                  choice.push(result.choice[i].toString());
+              }
+              for (let i = 0; i < result.participant.length; i++) {
+                  participant.push(result.participant[i].toString());
+              }
+              this.setState({
+                  choice: choice,
+                  emails: participant,
+                  name: name,
+                  description: description
+              });
+              console.log(this.state);
+          })
+          .catch(err => {
+              console.log(err.message);
+          })
  };
 
 
  handleInputChange = (event) => {
    const reducer = (accumulator, currentValue) => accumulator + currentValue;
    const id = event.target.id
-   const choice = this.state.choice
+   const votes = this.state.votes
    let value= event.target.value;
-   choice[id].votes = value;
+   votes[id].vote = value;
    let array = [];
    let newState = {...this.state}
-   newState.choice = choice;
+   newState.votes = votes;
      
-   for (let i = 0; i<newState.choice.length; i++) {
-        array.push(parseInt(newState.choice[i].votes));
+   for (let i = 0; i<newState.votes.length; i++) {
+        array.push(parseInt(newState.votes[i].vote));
    }
    newState.totalPoints = array.reduce(reducer);
 
@@ -65,8 +84,8 @@ class Survey extends Component {
     event.preventDefault();
           if (this.state.totalPoints <=100 ){
           const payload =[];
-          for (let i = 0; i<this.state.choice.length; i++) {
-              payload.push(parseInt(this.state.choice[i].votes));
+          for (let i = 0; i<this.state.votes.length; i++) {
+              payload.push(parseInt(this.state.votes[i].vote));
           }
           console.log(payload);
           axios.post("/api/admin/admin/"+this.state.participantId, payload).then((response)=>{
@@ -79,9 +98,9 @@ class Survey extends Component {
             admin: "",
             decision: "",
             totalPoints: "",
-            choice: [],
+            votes: [],
             options: [],
-          });       
+          });         
          this.props.history.push("/");
        } 
        else {
@@ -104,40 +123,47 @@ class Survey extends Component {
             </Col>
           </Row>
           <Row>
-            <Col size = "md-12">  
-              <List>
+            <Col size = "md-9">  
+              
 
-              {this.state.options.map((options, i) => (
-                  <ListItem key={options._id}>
-                     <strong>
-                           Option {i+1}: {options.option}
-                      </strong>
-                  </ListItem>
-                ))}
-                {this.state.choice.map((choice, i) => (
-                  <ListItem key={choice._id}>
-                     
+              {this.state.choice.map((choice, i) => (
+                  <div>
+                   <strong>
+                    Option {i+1}:  {choice}
+                    </strong>
+                 </div>
+              ))}       
+
+             <List>
+                {this.state.votes.map((votes, i) => (
+                  <ListItem key={votes._id}>
+           
+                     Option: {i+1}
                       <Input
                       id={i}
-                      value={this.state.choice.votes}
+                      value={this.state.votes.vote}
                       name="votes"
                       onChange={this.handleInputChange}
                       type="number"
                       placeholder="Enter your votes here"
                   />   
-                  
-              
+       
                   </ListItem>
+
                 ))}
+
+             </List>
+        
                 Total Points:
                       <div> {this.state.totalPoints} </div>
-              </List>
+           
+           
               <FormBtn onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
               <br/>
               <br/>
               <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
-                  
-            </Col>
+               </Col>        
+            
           </Row>  
           </Container>
         </Container>

@@ -20,19 +20,54 @@ import axios from "axios"
       
    };
 
+ //   state = {
+
+  //   decription: "",
+    
+ //    choice: [],
+  //   emails: [],
+   //   admin: "Julie",
+ //     name: "",
+      
+//      surveyId: ""
+      
+//   };
+
 componentDidMount() {
- //   API.________________()
-//      .then(res =>
- //       this.setState({
- //         admin: "",
- //         decision: "",
- //         participant: [{}]
-  //          surveyId: "";
- //       })
- //     )
- //     .catch(err => console.log(err));
+   this.loadChoice();
       console.log("hello")
 };
+
+loadChoice = () => {
+    console.log(this.props);
+    axios.get("/api/admin/results/" + this.props.match.params.id)
+        .then((response) => {
+          console.log(response);
+            const result = response.data;
+            let choice = [];
+            let participant = [];
+            let name = result.name;
+            let description = result.description;
+            for (let i = 0; i < result.choice.length; i++) {
+
+                choice.push(result.choice[i].toString());
+            }
+            for (let i = 0; i < result.participant.length; i++) {
+                participant.push(result.participant[i].toString());
+            }
+            this.setState({
+                choice: choice,
+                emails: participant,
+                name: name,
+                description: description
+            });
+            console.log(this.state);
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
+
 
 handleSubmit= event => {
  
