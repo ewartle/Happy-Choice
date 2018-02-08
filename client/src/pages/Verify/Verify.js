@@ -1,94 +1,132 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
+//import API from "../../utils/API";
+import {Link} from "react-router-dom";
+import {List, ListItem} from "../../components/List"
 import { Col, Row, Container } from "../../components/Grid";
-import API from "../../utils/API";
-import { Input, TextArea, FormBtn } from "../../components/Form";
-import { RedirectBtn } from "../../components/RedirectBtn";
-import { List, ListItem } from "../../components/List/index";
+import Wrapper from "../../components/Wrapper";
+import axios from "axios"
+ 
+ class Verify extends Component {
+    state = {
+      admin: "Julie",
+      decision: "Family Vacation",
+      participants: [
+      { email:"ewartle@hotmail.com" },
+      { email:"ewartle@yahoo.com" },
+      { email:"ewartle@gmail.com" }
+      
+      ],
+      surveyId: "15"
+      
+   };
 
-class Verify extends Component {
-  state = {
-    name: "",
-    description: "",
-    choices: [],
-    participants: []
-  };
+componentDidMount() {
+ //   API.________________()
+//      .then(res =>
+ //       this.setState({
+ //         admin: "",
+ //         decision: "",
+ //         link: "",
+ //         participants: [{}]
+ //       })
+ //     )
+ //     .catch(err => console.log(err));
+      console.log("hello")
+};
 
-  componentDidMount() {
-    API.getSurvey()
-      .then(res =>
-        this.setState({
-          name: "",
-          description: "",
-          choices: [],
-          participants: []
-        })
-      )
-      .catch(err => console.log(err));
-  }
+handleSubmit= event => {
+ 
+     event.preventDefault();
+     const id = event.target.id
+     console.log(id);
+     const emailRecip = this.state.participants[id].email;
+     console.log(emailRecip);
+     const payload = this.state
+     console.log(payload);
+     const link = `http://localhost:3000/${payload.surveyId}/${emailRecip}`
+     console.log(link);
+     const NodeMailerInput = [emailRecip, link, payload.admin, payload.decision];
+     console.log(NodeMailerInput);
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
+     
+    axios.post("/send", NodeMailerInput).then((response)=>{
+         console.log(response)}).catch((err)=> {
+         console.log(err);
+     });
+ 
+    alert(`Thank you ${this.state.admin} submitting your survey.  Your survey has been emailed to ${emailRecip}.`);
+
     this.setState({
-      [name]: value
-    });
-  };
+            admin: "",
+            decision: "",
+            //participants: [],
+            //surveyId: ""
+          });
+    
+          
+    //this.props.history.push("/");
+};
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-    API.sendEmail({
-      name: this.state.name,
-      description: this.state.description,
-      choices: this.state.choices,
-      participants: this.state.participants
-    })
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-    alert(`Thank you for submitting your survey! Emails have been sent.`);
-    this.setState({
-      name: "",
-      description: "",
-      choices: [],
-      participants: []
-    });
-    this.props.history.push("/User");
-  };
+ 
+   render(){
+     return(
+       <Wrapper>
+       <div>
+         
+         <Container>
+           <Row>
+             <Col size="md-12">
+             <h1> {this.state.decision} </h1>
+            
+             </Col>
+           </Row>
+ 
+           <Row>
+                   <Col size = "md-12">  
 
-  render() {
-    return (
-      <Container>
-        <Row>
-          <Col size="md-12">
-            <List>
-              <ListItem>{this.state.name}</ListItem>
-              <ListItem>{this.state.description}</ListItem>
-            </List>
+                    {this.state.participants.length ? (
+                           <List>
+                                    
+                                <ListItem>
+                                  <strong>
+                                        Emails:
+                                   </strong>
+                               </ListItem>
+                        
+                             {this.state.participants.map((emails, i) => (
+                               <ListItem key={this.state.participants._id}>
+                                    {this.state.participants[i].email}
 
-            {this.state.choices.length ? (
-              <List>
-                {this.state.choices.map((choices, i) => (
-                  <ListItem key={choices._id}>{choices.name}</ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Choices</h3>
-            )}
-            {this.state.participants.length ? (
-              <List>
-                {this.state.participants.map((participants, i) => (
-                  <ListItem key={participants._id}>{participants.name}</ListItem>
-                ))}
-              </List>
-            ) : (
+                                    <button id = {i} onClick={this.handleSubmit}>Send Email</button>
+                            
+                               </ListItem>
+                             ))}
+                             
+                           </List>
+                     
+
+                      ): (
               <h3>No Participants</h3>
-            )}
-            <FormBtn disabled={false} onClick={this.handleFormSubmit}>
-              Send Emails
-            </FormBtn>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
-}
+            )}     
 
-export default Verify;
+
+                    
+                     <br/>
+                     <br/>
+                     <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
+                         
+                   </Col>
+               </Row>  
+ 
+           
+           </Container>
+         
+       </div>
+       </Wrapper>
+     );
+   }
+ 
+ }
+ export default Verify;
+
+
