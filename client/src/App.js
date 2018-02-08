@@ -5,6 +5,7 @@ import Survey from "./pages/Survey/Survey";
 import Result from "./pages/Result/Result";
 import User from "./pages/User/User";
 import Form from "./pages/Form/Form";
+
 import Verify from "./pages/Verify/Verify";
 import './App.css';
 
@@ -23,6 +24,7 @@ const App = () =>
      </Switch>
    </div>
  </Router>;
+
 
 
 export default App;

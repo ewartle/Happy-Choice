@@ -129,4 +129,3 @@ handleSubmit= event => {
  }
  export default Verify;
 
-

@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
-import {FormBtn, Input, Slider, TextArea} from "../../components/Form"
 import { Col, Row, Container } from "../../components/Grid";
 import { Panel, Table, TableHead, TableBody } from "../../components/Table";
 import Wrapper from "../../components/Wrapper";
@@ -13,29 +12,26 @@ class Result extends Component {
      admin: "Julie",
      decision: "Family Vacation",
      finalChoice: "China",
-     choice: [{ name:'US', vote1:"1", vote2:"2", vote3:"3" },
-     { name:'Europe(ESA)', vote1:"", vote2:"", vote3:""  },
-     { name:'India', vote1:"", vote2:"", vote3:"" },
-     { name:'Japan', vote1:"", vote2:"", vote3:"" }
-     ],
-     emails: [{name:"Lisa", email: "ewartle@yahoo.com"},
-     {name: "Elizabeth", email: "ewartle@gmail.com"}, 
-     { name: "group", email: "smartgroupdecision@gmail.com"}]
+     choice: ["US", "China", "England", "Russia"],
+     emails: ["ewartle@yahoo.com", "ewartle@gmail.com", "smartgroupdecision@gmail.com"],
+     RoundResultsHistory: [ [5, 10, 15, 20], [25, 30, 16, 0], [50, 50, 0, 0], [90, 10, 0, 0]]
   };
 
   componentDidMount() {
-   // this.loadChoice();
+  // this.loadChoice();
     console.log("hello")
   }
 
-//loadChoice function --this function loads the choices submitted by the Admin.
  // loadChoice = () => {
- //  API.getChoices()
-  //    .then(res =>
-  //      this.setState({choice: res.data, name: ""})
-  //    )
-    //  .catch(err => console.log(err));
- //   };
+ //  axios.get("/api/admin/adminpage/"+ sessionStorage.getItem("id"))
+ //      .then((response) => {
+ //          console.log(response);
+ //          this.setState({ surveys: response.data.surveys})
+ //      })
+ //      .catch(err => {
+ //          console.log(err.message);
+ //      })
+// };
 
 
   render(){
@@ -55,7 +51,7 @@ class Result extends Component {
                         <List>
                             {this.state.emails.map((emails, i) => (
                               <ListItem>
-                                {emails.name}                  
+                                {emails}                  
                               </ListItem>
                             ))}
                         </List>
@@ -66,21 +62,25 @@ class Result extends Component {
                   <Col size = "md-12"> 
                     <Panel> 
                       <Table>
-                        <TableHead> </TableHead>
+                        <TableHead>
+
+               
+
+                         </TableHead>
                         {this.state.choice.map((choice, i) => (
                           <TableBody>
                               <tr>
                                   <td> {i+1}</td>
-                                  <td> {choice.name} </td>
-                                  <td> {choice.vote1}</td>
-                                  <td> {choice.vote2}</td>
-                                  <td> {choice.vote3} </td>   
+                                  <td> {choice} </td>
+                                  <td> 1</td>
+                                  <td> 2</td>
+                                  <td> 3 </td>   
                               </tr>
                           </TableBody>
                         ))}
                       </Table>
                     </Panel>
-                    <FormBtn><Link to="/" style={{ color: "black"}} > Back to User Page</Link></FormBtn> 
+                    <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
                   </Col>
                 </Row>  
             </Container>
