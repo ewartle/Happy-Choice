@@ -9,33 +9,16 @@ import axios from "axios"
  class Verify extends Component {
     state = {
       admin: "Julie",
-      decision: "Family Vacation",
-      participant: [
-      { email:"ewartle@hotmail.com" },
-      { email:"ewartle@yahoo.com" },
-      { email:"ewartle@gmail.com" }
-      
-      ],
+      description: "We are going on a family vacation this summer!",
+      name: "Family Vacation",
+      choice: ["china", "japan", "India", "mexico"],
+      emails: ["ewartle@hotmail.com", "ewartle@yahoo.com", "ewartle@gmail.com"], 
       surveyId: "15"
       
    };
 
- //   state = {
-
-  //   decription: "",
-    
- //    choice: [],
-  //   emails: [],
-   //   admin: "Julie",
- //     name: "",
-      
-//      surveyId: ""
-      
-//   };
-
-componentDidMount() {
+ componentDidMount() {
    this.loadChoice();
-      console.log("hello")
 };
 
 loadChoice = () => {
@@ -59,7 +42,9 @@ loadChoice = () => {
                 choice: choice,
                 emails: participant,
                 name: name,
-                description: description
+                description: description,
+                surveyId: "15",
+                admin: "julie"
             });
             console.log(this.state);
         })
@@ -74,13 +59,13 @@ handleSubmit= event => {
      event.preventDefault();
      const id = event.target.id
      console.log(id);
-     const emailRecip = this.state.participant[id].email;
+     const emailRecip = this.state.emails[id];
      console.log(emailRecip);
-     const payload = this.state
-     console.log(payload);
-     const link = `http://localhost:3000/${payload.surveyId}/${emailRecip}`
+     const emailOutput = this.state
+     console.log(emailOutput);
+     const link = `http://localhost:3000/${emailOutput.surveyId}/${emailRecip}`
      console.log(link);
-     const NodeMailerInput = [emailRecip, link, payload.admin, payload.decision];
+     const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.decision];
      console.log(NodeMailerInput);
 
      
@@ -98,8 +83,6 @@ handleSubmit= event => {
             //surveyId: ""
           });
     
-          
-    //this.props.history.push("/");
 };
 
  
@@ -111,28 +94,33 @@ handleSubmit= event => {
          <Container>
            <Row>
              <Col size="md-12">
-             <h1> {this.state.decision} </h1>
-            
+                 <h1> {this.state.name} </h1>
+                 <p> {this.state.description} </p>
+                 <p> You have selected the following choices </p>
+                 <ul> 
+                   {this.state.choice.map((choice, i) => (
+                    <li> {choice} </li>
+                   ))}
+                 </ul>
              </Col>
            </Row>
- 
-           <Row>
+          <br/>
+          
+          <Row>
                    <Col size = "md-12">  
 
-                    {this.state.participant.length ? (
+                    {this.state.emails.length ? (
                            <List>
                                     
                                 <ListItem>
-                                  <strong>
-                                        Emails:
-                                   </strong>
+                                 Click on the button next to the email to send your survey!
                                </ListItem>
                         
-                             {this.state.participant.map((emails, i) => (
-                               <ListItem key={this.state.participant._id}>
-                                    {this.state.participant[i].email}
+                             {this.state.emails.map((emails, i) => (
+                               <ListItem key={this.state.emails._id}>
+                                    {emails}
 
-                                    <button id = {i} onClick={this.handleSubmit}>Send Email</button>
+                                    <button id = {i} onClick={this.handleSubmit} style={{ margin: "15px"}} >Send Email</button>
                             
                                </ListItem>
                              ))}
@@ -144,9 +132,6 @@ handleSubmit= event => {
               <h3>No Participants</h3>
             )}     
 
-
-                    
-                     <br/>
                      <br/>
                      <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
                          

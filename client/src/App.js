@@ -19,7 +19,7 @@ const App = () =>
        <Route exact path="/" component={Landing} />     
         <Route exact path="/Survey" component={Survey} />
         <Route exact path="/Result" component={Result} />
-       <Route exact path="/User" component={User} />
+        <Route exact path="/User" component={User} />
        <Route exact path="/Form" component={Form} />     
        <Route exact path="/Verify" component={Verify} />     
      </Switch>
