@@ -27,7 +27,7 @@ const SurveySchema = new Schema({
     description: { type: String, required: true },
     participant: [{ type: Schema.Types.Array, ref: "Participant" }],
     surveyActive: { type: Boolean, default: true },
-    choice: [{ type: Schema.Types.ObjectId, ref: "Choice" }]
+    choice: [{ type: Schema.Types.Array, ref: "Choice" }]
 });
 
 const AdminSchema = new Schema({

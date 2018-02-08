@@ -16,10 +16,28 @@ module.exports = {
     //     .then(dbAdmin => res.json(dbAdmin))
     //     .catch(err => res.status(422).json(err));
     // },
+    // findAll: function(req, res) {
+    //     Admin
+    //         .findById({ _id: req.params.id })
+    //         .then(dbAdmin => {
+    //             res.json(dbAdmin);
+    //             console.log(dbAdmin);
+    //         })
+    //         .catch(err => res.status(422. json(err)));
+
+    // },
+
     create: function(req, res) {
+        console.log("Hit the admin create POST route");
+        console.log(req.params);
+        console.log(typeof(req.params));
         Admin
             .create(req.body)
-            .then(dbAdmin => res.json(dbAdmin))
+            .then(dbAdmin => {
+                res.json(dbAdmin);
+                console.log("Successfully created Admin");
+            })
+
             .catch(err => {
                 console.log(err.message);
                 res.status(422).json(err);

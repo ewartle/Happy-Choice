@@ -18,9 +18,8 @@ router
   .post(adminController.createsurvey);
 
 // router
-//   .route("/survey/:id")
-//   // .get(adminController.findAll)
-//   .post(adminController.createchoices);
+//   .route("/adminpage/:id")
+//   .get(adminController.findAll)
 
 router
   .route("/admin/:id")

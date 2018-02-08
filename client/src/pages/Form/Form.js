@@ -8,8 +8,8 @@ class Form extends Component {
     state = {
         name: "test",
         description: "test",
-        choice: [],
-        participant: ["go@gmail.com"],
+        choice: ["choice1", "choice2"],
+        participant: ["go@gmail.com", "mi@gmail.com"],
     };
 
 
@@ -55,28 +55,28 @@ class Form extends Component {
             <form>
               <label for="name">Title Name</label>
               <Input
-                value={this.state.name}
+                // value={this.state.name}
                 onChange={this.handleInputChange}
                 name="name"
                 placeholder="Title Name (required)"
               />
               <label for="description">Description</label>
               <TextArea
-                value={this.state.description}
+                // value={this.state.description}
                 onChange={this.handleInputChange}
                 name="description"
                 placeholder="Description (Required)"
               />
               <label for="choice">Choices</label>
               <Input
-                value={[this.state.choice]}
+                // value={[this.state.choice]}
                 onChange={this.handleInputChange}
                 name="choice"
                 placeholder="Choice (required)"
               />
               <label for="email">Participant Emails</label>
               <Input
-                value={[this.state.participant]}
+                // value={[this.state.participant]}
                 onChange={this.handleInputChange}
                 name="participant"
                 placeholder="Email (required)"
@@ -84,8 +84,7 @@ class Form extends Component {
               <FormBtn
                 disabled={!(this.state.name && this.state.description)}
                 // disabled={!(this.state.name && this.state.description && this.state.choices && this.state.participants)}
-                onClick={this.handleFormSubmit}
-              >
+                onClick={this.handleFormSubmit}>
                 Create Survey
               </FormBtn>
             </form>
