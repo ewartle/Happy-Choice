@@ -3,7 +3,7 @@ import "./Slider.css";
 
 export const Slider  = props =>
 
-<div class="slidecontainer">
+<div className="slidecontainer">
   <input type="range" min="1" max="100" value="50" class="slider" id="myRange" {...props} />
   
 </div>

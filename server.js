@@ -1,9 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const app = express();
 const routes = require("./routes");
+const app = express();
 const nodemailer = require("nodemailer");
+const calculateSurveyResults = require('./calculate.js');
+const { Admin, Survey, Choice, Participant } = require('./models/database.js')
+
+
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/happy-choice"); //mongodb://localhost/fullstack-jeopardy
@@ -28,8 +32,6 @@ app.get('/', (req,res) => {
   })
 
 app.post("/send", (req, res) => {
-    
-
 
 let link = req.body[1];
 let name = req.body[2];
@@ -71,6 +73,16 @@ let decision = req.body[3]
     });
 
 });
+
+app.get('/surveys/:surveyId/calculate', (req, res) => {
+  console.log("You hit the calculate route");
+  Survey.findById(req.params.surveyId)
+    .then((survey) => {
+      let surveyResults = calculateSurveyResults( survey.toObject() );
+      console.log(surveyResults);    
+      res.json(surveyResults);
+    })
+})
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

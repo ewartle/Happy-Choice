@@ -2,8 +2,8 @@ import React from "react";
 
 export const Panel = ({ children }) => {
   return (
-    <div class = "panel panel-default">
-     	<div class = "panel-heading">
+    <div className = "panel panel-default">
+     	<div className = "panel-heading">
 	      
 	        {children}
 	     

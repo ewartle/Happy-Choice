@@ -3,8 +3,9 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
 import {FormBtn, Input} from "../../components/Form"
-import { Col, Row, Container } from "../../components/Grid";
+import {Col, Row, Container} from "../../components/Grid";
 import Wrapper from "../../components/Wrapper";
+import {Panel} from "../../components/Table";
 import axios from "axios"
 
 
@@ -12,11 +13,11 @@ class Survey extends Component {
    
   state = {
 
-     participantId: "5a7b695873e45c3dbc6c1dfd",
+     participantEmail: "miki@gmail.com",
      admin: "Julie",
      decision: "Family Vacation",
      totalPoints: 0,
-     votes: [{ vote:"0"}, {vote:"0"}, {vote:"0"}, {vote:"0"}, {vote:"0" }],
+     votes: [{ vote:"0"}, {vote:"0"}, {vote:"0"}, {vote:"0"}],
      choice: ["china", "japan", "India", "mexico"]
 
   };
@@ -28,7 +29,7 @@ class Survey extends Component {
 
   loadChoice = () => {
      console.log(this.props);
-      axios.get("/api/admin/results/" + "5a7c988abfd31b1d489c4759")
+      axios.get("/api/survey/" + this.props.match.params.id)
           .then((response) => {
             console.log(response);
               const result = response.data;
@@ -115,24 +116,30 @@ class Survey extends Component {
       <div>
         <Container fluid>
         <Container>
+        <Panel>
           <Row>
-            <Col size="md-12">
+            <Col size="md-10">
             <h1> {this.state.decision} </h1>
             <h4> Instructions </h4>
             <p> You have 100 points total that you can allocate to the following options.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.</p>
             </Col>
           </Row>
           <Row>
-            <Col size = "md-9">  
-              
-
+          <Col size = "md-7">  
               {this.state.choice.map((choice, i) => (
                   <div>
                    <strong>
                     Option {i+1}:  {choice}
                     </strong>
                  </div>
-              ))}       
+              ))}    
+
+              <br/>
+              <br/>   
+
+            
+            
+              
 
              <List>
                 {this.state.votes.map((votes, i) => (
@@ -157,14 +164,16 @@ class Survey extends Component {
                 Total Points:
                       <div> {this.state.totalPoints} </div>
            
-           
+            
+              
               <FormBtn onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
               <br/>
               <br/>
               <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
-               </Col>        
-            
+                  
+            </Col>  
           </Row>  
+          </Panel>
           </Container>
         </Container>
       </div>

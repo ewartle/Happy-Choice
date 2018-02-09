@@ -61,7 +61,11 @@ class Form extends Component {
     console.log(formData);
     if (this.state.name && this.state.description) {
       axios.post("/api/admin/"+ sessionStorage.getItem("id"), formData)
-        .then(res => this.props.history.push("/Verify"))
+        .then(res => {
+          console.log(res);
+          const surveyId = res.data.surveys[res.data.surveys.length -1];
+          this.props.history.push("/Verify/" + surveyId);
+          })
         .catch(err => console.log(err));
     }
   };

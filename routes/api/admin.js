@@ -17,10 +17,13 @@ router
   .route("/:id")
   .post(adminController.createsurvey);
 
-// router
-//   .route("/survey/:id")
-//   // .get(adminController.findAll)
-//   .post(adminController.createchoices);
+router
+  .route("/results/:id")
+  .get(adminController.findresults);
+
+router
+  .route("/adminpage/:id")
+  .get(adminController.findAll);
 
 router
   .route("/admin/:id")

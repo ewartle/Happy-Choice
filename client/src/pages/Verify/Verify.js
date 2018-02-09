@@ -1,19 +1,19 @@
 import React, {Component} from "react";
-//import API from "../../utils/API";
 import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
 import { Col, Row, Container } from "../../components/Grid";
+import {Panel} from "../../components/Table";
 import Wrapper from "../../components/Wrapper";
 import axios from "axios"
  
  class Verify extends Component {
     state = {
       admin: "Julie",
-      description: "We are going on a family vacation this summer!",
-      name: "Family Vacation",
-      choice: ["china", "japan", "India", "mexico"],
-      emails: ["ewartle@hotmail.com", "ewartle@yahoo.com", "ewartle@gmail.com"], 
-      surveyId: "15"
+      description: "",
+      name: "",
+      choice: [""],
+      emails: [""], 
+      surveyId: "5a7cfb19b4234c1b2c4ac1e7"
       
    };
 
@@ -23,7 +23,8 @@ import axios from "axios"
 
 loadChoice = () => {
     console.log(this.props);
-    axios.get("/api/admin/results/" + this.props.match.params.id)
+    //axios.get("/api/admin/results/" + this.props.match.params.id)
+    axios.get("/api/admin/results/5a7cfb19b4234c1b2c4ac1e7")
         .then((response) => {
           console.log(response);
             const result = response.data;
@@ -43,8 +44,7 @@ loadChoice = () => {
                 emails: participant,
                 name: name,
                 description: description,
-                surveyId: "15",
-                admin: "julie"
+               
             });
             console.log(this.state);
         })
@@ -63,9 +63,9 @@ handleSubmit= event => {
      console.log(emailRecip);
      const emailOutput = this.state
      console.log(emailOutput);
-     const link = `http://localhost:3000/${emailOutput.surveyId}/${emailRecip}`
+     const link = `http://localhost:3000/survey/${emailOutput.surveyId}/${emailRecip}`
      console.log(link);
-     const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.decision];
+     const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.name];
      console.log(NodeMailerInput);
 
      
@@ -92,11 +92,12 @@ handleSubmit= event => {
        <div>
          
          <Container>
+           <Panel>
            <Row>
              <Col size="md-12">
                  <h1> {this.state.name} </h1>
-                 <p> {this.state.description} </p>
-                 <p> You have selected the following choices </p>
+                 <h4> {this.state.description} </h4>
+                 <p> You have selected the following choices: </p>
                  <ul> 
                    {this.state.choice.map((choice, i) => (
                     <li> {choice} </li>
@@ -104,6 +105,7 @@ handleSubmit= event => {
                  </ul>
              </Col>
            </Row>
+          
           <br/>
           
           <Row>
@@ -112,15 +114,15 @@ handleSubmit= event => {
                     {this.state.emails.length ? (
                            <List>
                                     
-                                <ListItem>
-                                 Click on the button next to the email to send your survey!
-                               </ListItem>
+                                <p>
+                                 Please click "Send Survey" to send the survey to the corresponding email address. 
+                                </p>
                         
                              {this.state.emails.map((emails, i) => (
                                <ListItem key={this.state.emails._id}>
                                     {emails}
 
-                                    <button id = {i} onClick={this.handleSubmit} style={{ margin: "15px"}} >Send Email</button>
+                                    <button id = {i} onClick={this.handleSubmit} style={{ margin: "15px"}} >Send Survey</button>
                             
                                </ListItem>
                              ))}
@@ -137,6 +139,7 @@ handleSubmit= event => {
                          
                    </Col>
                </Row>  
+                </Panel>
  
            
            </Container>
