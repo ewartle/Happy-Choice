@@ -31,3 +31,4 @@ router
   .post(adminController.updatevotes);
 
 module.exports = router;
+

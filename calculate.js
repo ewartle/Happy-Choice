@@ -1,5 +1,5 @@
 function calculateSurveyResults(survey){
-console.log(survey.participant.length);
+console.log(survey);
   var options_ct = 0;
   var participant_ct = 0;
   var participants = survey.participant;

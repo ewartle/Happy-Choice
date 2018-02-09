@@ -21,24 +21,31 @@ module.exports = {
                 console.log("Successfully pulled results");
             })
             .catch(err => res.status(422).json(err.message));
+    },
+
+    calculate: function(req, res) {
+        console.log("surveyId", req.params.id);
+        Survey
+            .findById({ _id: req.params.id })
+            .populate("participant")
+            .then(dbAdmin => {
+                res.json(dbAdmin);
+                console.log(dbAdmin);
+                //     .then((response) => {
+                //             // let surveyResults = calculateSurveyResults( survey.toObject() );
+                //             console.log("this is the populated survey", response);
+                //             survey = response;
+                //             res.json(response);
+                //         })
+                //         .then(() => {
+                //             for (let i = 0; i < survey.participant.length; i++) {
+                //                 console.log("participant id", survey.participant[i])
+                //                 Participant.findById({ _id: survey.participant[i] }).populate("score")
+                //             }
+                //         })
+                //         .then((part) => console.log(part))
+                // }
+            })
+            .catch(err => res.status(422).json(err));
     }
-    // create: function(req, res) {
-    //   db.Survey
-    //     .create(req.body)
-    //     .then(dbModel => res.json(dbModel))
-    //     .catch(err => res.status(422).json(err));
-    // },
-    // update: function(req, res) {
-    //   db.Survey
-    //     .findOneAndUpdate({ _id: req.params.id }, req.body)
-    //     .then(dbModel => res.json(dbModel))
-    //     .catch(err => res.status(422).json(err));
-    // },
-    // remove: function(req, res) {
-    //   db.Survey
-    //     .findById({ _id: req.params.id })
-    //     .then(dbModel => dbModel.remove())
-    //     .then(dbModel => res.json(dbModel))
-    //     .catch(err => res.status(422).json(err));
-    // }
 };

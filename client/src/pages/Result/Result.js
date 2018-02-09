@@ -30,8 +30,8 @@ class Result extends Component {
 
   loadVotes = () => {
     console.log(this.props);
-  axios.get('/surveys/'+this.props.match.params.id+'/calculate').then ((response)=>{
-    console.log(response.data)
+    axios.get('/api/survey/calculate/'+this.props.match.params.id).then ((response)=>{
+    console.log("this is from resultspage" , response.data)
     let RoundResult1 = response.data[0];
     let RoundResult2 = response.data[1];
     let RoundResult3=response.data[2];
@@ -70,7 +70,7 @@ class Result extends Component {
  };
 
  loadResults = () => {
-      axios.get("/api/survey/" + this.props.match.params.id+"/calculate")
+      axios.get("/api/survey/" + this.props.match.params.id)
       // axios.get("/api/survey/5a7cfb19b4234c1b2c4ac1e7")
           .then((responseSurvey) => {
             console.log(responseSurvey);

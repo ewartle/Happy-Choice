@@ -112,7 +112,7 @@ module.exports = {
         console.log("Hit the survey create POST route");
         console.log(req.body);
         Participant
-            .findOneAndUpdate({ email: req.body[1]}, { $set: { score: req.body[0] } })
+            .findOneAndUpdate({ email: req.body[1] }, { $set: { score: req.body[0] } })
             .then((dbAdmin) => {
                 console.log("Successfully updated Survey")
                 res.json(dbAdmin)
@@ -131,30 +131,11 @@ module.exports = {
             .populate("participant")
             .then(dbAdmin => {
                 res.json(dbAdmin);
-            console.log("survey populated with email", dbAdmin);
+                console.log("survey populated with email", dbAdmin);
                 console.log("Successfully pulled results");
             })
             .catch(err => res.status(422).json(err.message));
     }
-    // createchoices: function(req, res) {
-    //     console.log(req.body);
-    //     console.log(req.params.id);
-    //     Choice
-    //         .create(req.body)
-    //         .then(function(dbChoices) {
-    //             return Survey.findOneAndUpdate({ _id: req.params.id }, { $push: { choices: dbChoices._id } }, { new: true });
-    //         })
-    //         .then(dbAdmin => res.json(dbAdmin))
-    //         .catch(err => {
-    //             console.log(err.message);
-    //             res.status(422).json(err);
-    //         })
-    // }
-    // remove: function(req, res) {
-    //   db.Survey
-    //     .findById({ _id: req.params.id })
-    //     .then(dbModel => dbModel.remove())
-    //     .then(dbModel => res.json(dbModel))
-    //     .catch(err => res.status(422).json(err));
-    // }
+
+
 };
