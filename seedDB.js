@@ -32,16 +32,16 @@ const surveySeed = [
     description: "What shall the Williams Family eat for dinner on Friday?",
     participants: [
       {name: "bobby",
-        scores: [20, 10, 50, 20]
+        scores: [15, 10, 50, 20,5]
       },
       {name: "lisa",
-        scores: [5, 70, 10, 15]
+        scores: [5, 65, 10, 15,5]
       },
       {name: "mom",
-        scores: [0, 5, 55, 40]
+        scores: [0, 5, 50, 40,5]
       },
       {name: "dad",
-        scores: [10, 10, 20, 60]
+        scores: [10, 10, 20, 55,5]
       }
     ],
     surveyActive: true,

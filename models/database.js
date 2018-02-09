@@ -19,8 +19,7 @@ const ParticipantsSchema = new Schema({
 });
 
 const ChoicesSchema = new Schema({
-    name: { type: String, required: true },
-
+    name: { type: String, required: true }
 });
 
 const SurveySchema = new Schema({
