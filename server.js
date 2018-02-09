@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
-const calculateSurveyResults = require('./algorithm-code.js')
+const calculateSurveyResults = require('./calculate.js')
 const { Admin, Survey, Choice, Participant } = require('./models/database.js');
 
 
