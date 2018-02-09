@@ -17,7 +17,12 @@ class Form extends Component {
     };
   }
 
-  handleInputChange = event => {
+  
+ 
+
+ 
+
+ handleInputChange = event => {
     const { name, value, key } = event.target;
      this.setState({
        [name]: value
@@ -52,7 +57,7 @@ class Form extends Component {
       this.state.participants.push(newEmail);
     }
 
-    const formData = {
+     const formData = {
       name: this.state.name,
       description: this.state.description,
       choice: this.state.choices,

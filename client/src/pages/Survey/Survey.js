@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-//import API from "../../utils/API";
 import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
 import {FormBtn, Input} from "../../components/Form"
 import { Col, Row, Container } from "../../components/Grid";
 import Wrapper from "../../components/Wrapper";
+import {Panel} from "../../components/Table";
 import axios from "axios"
 
 
@@ -12,18 +12,17 @@ class Survey extends Component {
    
    state = {
 
-     participantEmail: "miki@gmail.com",
+     participant: "",
      admin: "Julie",
      decision: "",
      totalPoints: 0,
-     votes: [{ vote:"0"}, {vote:"0"}, {vote:"0"}, {vote:"0"}, {vote:"0" }],
+     votes: [],
      choice: []
 
   };
 
   componentDidMount() {
    this.loadChoice();
-    console.log("hello")
   }
 
   loadChoice = () => {
@@ -33,21 +32,26 @@ class Survey extends Component {
           console.log(response);
             const result = response.data;
             let choice = [];
-            let participant = [];
+            let participant = "collins.miki@gmail.com";
             let name = result.name;
             let description = result.description;
+            let votesarray = [];
             for (let i = 0; i < result.choice.length; i++) {
 
                 choice.push(result.choice[i].toString());
+                votesarray.push({vote: 0 });
+                
             }
-            for (let i = 0; i < result.participant.length; i++) {
-                participant.push(result.participant[i].toString());
-            }
+                        // for (let i = 0; i < result.participant.length; i++) {
+            //     participant.push(result.participant[i].toString());
+            // }
             this.setState({
                 choice: choice,
-                emails: participant,
+                participant: participant,
                 name: name,
-                description: description
+                description: description,
+                votes: votesarray
+
             });
             console.log(this.state);
         })
@@ -59,13 +63,15 @@ class Survey extends Component {
 
  handleInputChange = (event) => {
    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-   const id = event.target.id
-   const votes = this.state.votes
+   const id = event.target.id;
+   const votes = this.state.votes;
+   console.log(votes);
    let value= event.target.value;
    votes[id].vote = value;
    let array = [];
    let newState = {...this.state}
    newState.votes = votes;
+   console.log(newState.votes);
      
    for (let i = 0; i<newState.votes.length; i++) {
         array.push(parseInt(newState.votes[i].vote));
@@ -73,6 +79,7 @@ class Survey extends Component {
    newState.totalPoints = array.reduce(reducer);
 
    this.setState(newState);
+   console.log(newState);
    if (newState.totalPoints > 100 ) {
     alert ("Your vote total cannot exceed 100 points");
    }
@@ -83,12 +90,18 @@ class Survey extends Component {
   handleFormSubmit= event => {
     event.preventDefault();
           if (this.state.totalPoints <=100 ){
-          const payload =[];
+          const payload = [];
+
           for (let i = 0; i<this.state.votes.length; i++) {
-              payload.push(parseInt(this.state.votes[i].votes));
+              payload.push(parseInt(this.state.votes[i].vote));
           }
-          console.log(payload);
-          axios.post("/api/admin/admin/"+this.state.participantId, payload).then((response)=>{
+          this.setState({
+           votes: payload
+          }); 
+          const surveyInput = [payload, this.state.participant];
+          console.log("props", this.props);
+          console.log("state", this.state);
+          axios.post("/api/admin/admin/"+this.state.participant, surveyInput).then((response)=>{
             console.log(response)}).catch((err)=> {
             console.log(err.message);
           });
@@ -97,11 +110,12 @@ class Survey extends Component {
           this.setState({
             admin: "",
             decision: "",
+            participant: "",
             totalPoints: "",
-            votes: [],
-            options: [],
+            // votes: [],
+            // options: [],
           });       
-         this.props.history.push("/");
+         // this.props.history.push("/");
        } 
        else {
         alert("Your vote total must be less than 100.");
@@ -115,27 +129,36 @@ class Survey extends Component {
       <div>
         <Container fluid>
         <Container>
+        <Panel>
           <Row>
-            <Col size="md-12">
+            <Col size="md-10">
             <h1> {this.state.decision} </h1>
             <h4> Instructions </h4>
             <p> You have 100 points total that you can allocate to the following options.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.</p>
             </Col>
           </Row>
           <Row>
-            <Col size = "md-12">  
-              <List>
-
+          <Col size = "md-7">  
               {this.state.choice.map((choice, i) => (
-                  <ListItem key={choice._id}>
-                     <strong>
-                           Choice {i+1}: {choice[i]}
-                      </strong>
-                  </ListItem>
-                ))}
+                  <div>
+                   <strong>
+                    Option {i+1}:  {choice}
+                    </strong>
+                 </div>
+              ))}    
+
+              <br/>
+              <br/>   
+
+            
+            
+              
+
+             <List>
                 {this.state.votes.map((votes, i) => (
                   <ListItem key={votes._id}>
-                     
+           
+                     Option: {i+1}
                       <Input
                       id={i}
                       value={this.state.votes.vote}
@@ -144,20 +167,26 @@ class Survey extends Component {
                       type="number"
                       placeholder="Enter your votes here"
                   />   
-                  
-              
+       
                   </ListItem>
+
                 ))}
+
+             </List>
+        
                 Total Points:
                       <div> {this.state.totalPoints} </div>
-              </List>
+           
+            
+              
               <FormBtn onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
               <br/>
               <br/>
               <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
                   
-            </Col>
+            </Col>  
           </Row>  
+          </Panel>
           </Container>
         </Container>
       </div>

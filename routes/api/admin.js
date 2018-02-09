@@ -26,7 +26,7 @@ router
   .get(adminController.findAll);
 
 router
-  .route("/admin/:id")
+  .route("/admin/:email")
   // .get(adminController.findAll)
   .post(adminController.updatevotes);
 
