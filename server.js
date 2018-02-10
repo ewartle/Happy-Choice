@@ -52,7 +52,7 @@ app.post("/send", (req, res) => {
         from: '"Nodemailer Contact" <smartgroupdecision@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'Time to Make a Decision', // Subject line
-        html: "You have been requested by  " + name + " to cast your votes relating to " + decision + ". Follow the instructions included in the link " + link + ", and happy voting!" // html body
+        html: "You have been requested by  " + name + " to cast your votes relating to " + decision + ". Follow the instructions included in the link " + link + " and happy voting!" // html body
     };
 
 

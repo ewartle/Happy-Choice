@@ -1,13 +1,15 @@
 function calculateSurveyResults(survey){
-console.log(survey);
+console.log("what calculate receives",survey);
   var options_ct = 0;
   var participant_ct = 0;
   var participants = survey.participant;
+  console.log(participants[0].score[[0]]);
   var participants_opt_scores = participants.map((participant) => {
-    var participantScores = participant.score;
+    var participantScores = participant.score[[0]];
     participant_ct = survey.participant.length;
     options_ct = participantScores.length;
     return participantScores;
+    console.log("participant scores", participantScores);
   });
 
   var surveyDone = false;
@@ -52,7 +54,7 @@ console.log(survey);
     var tempArry = new Array(options_ct);
     tempArry = opt_scores_ttls.slice();
     roundResultsHistory.push(tempArry);
-    console.log(roundResultsHistory);
+    console.log("round results history", roundResultsHistory);
 
    //Find the scores of the lowest and highest scoring non-zero options in the round
     max_opt_score = 0; //initial max value is first element of array

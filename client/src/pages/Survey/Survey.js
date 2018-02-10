@@ -27,12 +27,13 @@ class Survey extends Component {
 
   loadChoice = () => {
    console.log(this.props);
+
     axios.get("/api/survey/" + this.props.match.params.id)
         .then((response) => {
           console.log(response);
             const result = response.data;
             let choice = [];
-            let participant = "collins.miki@gmail.com";
+            let participant = window.location.pathname.split("/").pop();
             let name = result.name;
             let description = result.description;
             let votesarray = [];
@@ -96,9 +97,10 @@ class Survey extends Component {
               payload.push(parseInt(this.state.votes[i].vote));
           }
           this.setState({
-           votes: payload
+           votes: payload.toString()
           }); 
           const surveyInput = [payload, this.state.participant];
+          console.log(payload.toString());
           console.log("props", this.props);
           console.log("state", this.state);
           axios.post("/api/admin/admin/"+this.state.participant, surveyInput).then((response)=>{

@@ -112,7 +112,7 @@ module.exports = {
         console.log("Hit the survey create POST route");
         console.log(req.body);
         Participant
-            .findOneAndUpdate({ email: req.body[1] }, { $set: { score: req.body[0] } })
+            .findOneAndUpdate({ _id: req.body[1] }, { $push: { score: req.body[0] } })
             .then((dbAdmin) => {
                 console.log("Successfully updated Survey")
                 res.json(dbAdmin)

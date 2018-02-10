@@ -14,7 +14,7 @@ router
   .get(surveyController.findById);
   // .put(surveyController.update)
   router
-  .route("/calculate/:surveyId")
+  .route("/calculate/:id")
   .get(surveyController.calculate);
   
   

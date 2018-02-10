@@ -1,4 +1,5 @@
 const { Admin, Survey, Choice, Participant } = require('../models/database.js');
+const calculateSurveyResults = require('../calculate.js');
 
 // Defining methods for the surveyController
 module.exports = {
@@ -28,23 +29,13 @@ module.exports = {
         Survey
             .findById({ _id: req.params.id })
             .populate("participant")
-            .then(dbAdmin => {
-                res.json(dbAdmin);
-                console.log(dbAdmin);
-                //     .then((response) => {
-                //             // let surveyResults = calculateSurveyResults( survey.toObject() );
-                //             console.log("this is the populated survey", response);
-                //             survey = response;
-                //             res.json(response);
-                //         })
-                //         .then(() => {
-                //             for (let i = 0; i < survey.participant.length; i++) {
-                //                 console.log("participant id", survey.participant[i])
-                //                 Participant.findById({ _id: survey.participant[i] }).populate("score")
-                //             }
-                //         })
-                //         .then((part) => console.log(part))
-                // }
+            // .then(dbAdmin => {
+            //     res.json(dbAdmin.participant[0].score[[0]]);
+            //     console.log(dbAdmin.participant[0].score[[0]]);
+            // })
+            .then((survey) => {
+                let surveyResults = calculateSurveyResults(survey);
+                res.json(surveyResults);
             })
             .catch(err => res.status(422).json(err));
     }

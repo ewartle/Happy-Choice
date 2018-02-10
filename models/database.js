@@ -13,7 +13,7 @@ const ParticipantsSchema = new Schema({
             message: '{VALUE} is not a valid email address!'
         }
     },
-    score: [{ type: Number }]
+    score: { type: Array }
 });
 
 const ChoicesSchema = new Schema({
