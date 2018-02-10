@@ -15,14 +15,9 @@ class Form extends Component {
       choiceInputs: ["input-0"],
       emailInputs: ["input-0"]
     };
-  }
+  };
 
-  
- 
-
- 
-
- handleInputChange = event => {
+handleInputChange = event => {
     const { name, value, key } = event.target;
      this.setState({
        [name]: value
@@ -49,13 +44,13 @@ class Form extends Component {
     for (let i = 0; i < input.length; i++) {
       let newChoice = input[i].value;
       this.state.choices.push(newChoice);
-    }
+    };
 
     let input2 = document.getElementsByClassName("email");
     for (let i = 0; i < input2.length; i++) {
       let newEmail = input2[i].value;
       this.state.participants.push(newEmail);
-    }
+    };
 
      const formData = {
       name: this.state.name,
@@ -72,7 +67,7 @@ class Form extends Component {
           this.props.history.push("/Verify/" + surveyId);
           })
         .catch(err => console.log(err));
-    }
+    };
   };
 
   addChoice = () => {
@@ -167,7 +162,7 @@ class Form extends Component {
         </Row>
       </Container>
     );
-  }
-}
+  };
+};
 
 export default Form;

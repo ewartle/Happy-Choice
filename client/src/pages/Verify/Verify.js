@@ -4,7 +4,7 @@ import {List, ListItem} from "../../components/List"
 import { Col, Row, Container } from "../../components/Grid";
 import {Panel} from "../../components/Table";
 import Wrapper from "../../components/Wrapper";
-import axios from "axios"
+import axios from "axios";
  
  class Verify extends Component {
     state = {
@@ -15,12 +15,10 @@ import axios from "axios"
     admin: "Julie",
     name: "",
     surveyId: ""
-      
    };
 
 componentDidMount() {
    this.loadChoice();
-      console.log("hello")
 };
 
 loadChoice = () => {
@@ -62,14 +60,14 @@ loadChoice = () => {
 handleSubmit= event => {
  
      event.preventDefault();
-     const id = event.target.id
+     const id = event.target.id;
      console.log(id);
      const emailRecip = this.state.emails[id];
      const partId = this.state.participant[id];
      console.log(emailRecip);
-     const emailOutput = this.state
+     const emailOutput = this.state;
      console.log(emailOutput);
-     const link = `http://localhost:3000/survey/${emailOutput.surveyId}/${partId}`
+     const link = `http://localhost:3000/survey/${emailOutput.surveyId}/${partId}`;
      console.log(link);
      const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.name];
      console.log(NodeMailerInput);
@@ -127,26 +125,18 @@ handleSubmit= event => {
                              ))}
                              
                            </List>
-                     
-
                       ): (
               <h3>No Participants</h3>
             )}     
-
                      <br/>
-                     <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
-                         
+                     <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button>        
                    </Col>
                </Row>  
                 </Panel>
- 
-           
-           </Container>
-         
+         </Container>        
        </div>
        </Wrapper>
      );
-   }
- 
- }
+   };
+ };
  export default Verify;
