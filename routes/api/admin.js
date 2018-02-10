@@ -17,14 +17,18 @@ router
   .route("/:id")
   .post(adminController.createsurvey);
 
-// router
-//   .route("/survey/:id")
-//   // .get(adminController.findAll)
-//   .post(adminController.createchoices);
+router
+  .route("/results/:id")
+  .get(adminController.findresults);
 
 router
-  .route("/admin/:id")
+  .route("/adminpage/:id")
+  .get(adminController.findAll);
+
+router
+  .route("/admin/:email")
   // .get(adminController.findAll)
   .post(adminController.updatevotes);
 
 module.exports = router;
+

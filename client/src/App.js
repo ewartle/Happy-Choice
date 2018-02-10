@@ -10,21 +10,29 @@ import './App.css';
 import Nav from "./components/Nav";
 
 
-const App = () =>
- <Router>
-   <div>
-   <Nav />
-     <Switch>
-       <Route exact path="/" component={Landing} />     
-        <Route exact path="/Survey" component={Survey} />
-        <Route exact path="/Result" component={Result} />
+class App extends Component {
 
-       <Route exact path="/User" component={User} />
-       <Route exact path="/Form" component={Form} />     
-       <Route exact path="/Verify" component={Verify} />     
+render() {
+    return ( 
+      <Router>
+        <div>
+
+       
+      <Switch>
+      <Route exact path="/" component={Landing} />     
+      <Route exact path="/Form" component={Form} />   
+      <Route exact path="/User" component={User} /> 
+      <Route exact path="/Survey" component={Survey} /> 
+      <Route path="/Result/:id" component={Result} /> 
+      <Route path="/Survey/:id" component={Survey} />
+      <Route path="/Verify/:id" component={Verify} />
+ 
+       
+        
      </Switch>
-   </div>
- </Router>;
-
-
+        </div> 
+        </Router>
+    );
+};
+}
 export default App;

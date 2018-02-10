@@ -6,7 +6,6 @@ mongoose.Promise = global.Promise;
 const ParticipantsSchema = new Schema({
     email: {
         type: String,
-        unique: true,
         validate: {
             validator: function(v) {
                 return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(v);
@@ -25,9 +24,9 @@ const ChoicesSchema = new Schema({
 const SurveySchema = new Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
-    participant: [{ type: Schema.Types.Array, ref: "Participant" }],
+    participant: [{ type: Schema.Types.ObjectId, ref: "Participant" }],
     surveyActive: { type: Boolean, default: true },
-    choice: [{ type: Schema.Types.ObjectId, ref: "Choice" }]
+    choice: [{ type: Schema.Types.Array, ref: "Choice" }]
 });
 
 const AdminSchema = new Schema({

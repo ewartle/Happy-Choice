@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import { Input, FormBtn } from "../../components/Form";
-import API from "../../utils/API";
+import {Link} from "react-router-dom";
+import { Input, FormBtn } from "../../components/Form";
+import axios from "axios";
 
 class Landing extends Component {
   state = {
@@ -19,18 +21,34 @@ class Landing extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.email && this.state.password) {
-      API.saveAdmin({
-        name: this.state.name,
-        password: this.state.password,
-        email: this.state.email
-      })
-        .then(res => this.authenticate())
-        .catch(err => console.log(err));
-    }
-  };
+    const payload = this.state;
+    axios.post("/api/admin", payload)
+        .then((response) => {
+            sessionStorage.setItem('id', response.data._id);
+            this.props.history.push("/User");
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
 
-  render() {
+handleAdminLogin = event => {
+    event.preventDefault();
+    axios.get("/api/admin/" + this.state.email)
+        .then((response) => {
+            if (response.data.password === this.state.password) {
+                sessionStorage.setItem('id', response.data._id);
+                this.props.history.push("/User");
+            } else {
+                console.log("Invalid password");
+            }
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
+
+    render() {
     return (
       <Container>
         <Row>
@@ -84,7 +102,7 @@ class Landing extends Component {
                 name="password"
                 placeholder="Password"
               />
-              <FormBtn onClick={this.handleFormSubmit}>Sign In</FormBtn>
+              <FormBtn onClick={this.handleAdminLogin}>Sign In</FormBtn>
             </form>
           </Col>
         </Row>

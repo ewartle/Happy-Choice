@@ -1,38 +1,106 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {List, ListItem} from "../../components/List"
+import {FormBtn, Input, Slider, TextArea} from "../../components/Form"
 import { Col, Row, Container } from "../../components/Grid";
 import { Panel, Table, TableHead, TableBody } from "../../components/Table";
 import Wrapper from "../../components/Wrapper";
+import axios from "axios";
 
 class Result extends Component {
   
-  state = {
+ state = {
 
      admin: "Julie",
-     decision: "Family Vacation",
-     finalChoice: "China",
-     choice: ["US", "China", "England", "Russia"],
-     emails: ["ewartle@yahoo.com", "ewartle@gmail.com", "smartgroupdecision@gmail.com"],
-     RoundResultsHistory: [ [5, 10, 15, 20], [25, 30, 16, 0], [50, 50, 0, 0], [90, 10, 0, 0]]
+     decision: "",
+     finalChoice: "",
+     choice: [],
+     emails: [],
+     RoundResult1: [],
+     RoundResult2: [],
+     RoundResult3: [],
+     IndexMax: 0   
   };
 
-  componentDidMount() {
-  // this.loadChoice();
-    console.log("hello")
-  }
+ componentDidMount() {
+  this.loadVotes();
+  
+}
 
- // loadChoice = () => {
- //  axios.get("/api/admin/adminpage/"+ sessionStorage.getItem("id"))
- //      .then((response) => {
- //          console.log(response);
- //          this.setState({ surveys: response.data.surveys})
- //      })
- //      .catch(err => {
- //          console.log(err.message);
- //      })
-// };
 
+  loadVotes = () => {
+    console.log(this.props);
+    axios.get('/api/survey/calculate/'+this.props.match.params.id).then ((response)=>{
+    console.log("this is from resultspage" , response.data)
+    let RoundResult1 = response.data[0];
+    let RoundResult2 = response.data[1];
+    let RoundResult3=response.data[2];
+    let Maximum = Math.max(...response.data[2]);
+    console.log(Maximum);
+    let IndexMax = response.data[2].indexOf(Maximum);
+
+
+              for (let i = 0; i <RoundResult1.length; i++) {
+                RoundResult1[i] = RoundResult1[i].toFixed(0)
+              }
+
+              for (let i = 0; i <RoundResult2.length; i++) {
+                RoundResult2[i] = RoundResult2[i].toFixed(0)
+              }
+
+              for (let i = 0; i <RoundResult3.length; i++) {
+                RoundResult3[i] = RoundResult3[i].toFixed(0)
+              }
+      
+             
+              this.setState({
+                RoundResult1: RoundResult1,
+                RoundResult2: RoundResult2,
+                RoundResult3: RoundResult3, 
+                IndexMax: IndexMax
+             });
+
+             console.log(this.state); 
+             this.loadResults();
+    })
+    .catch(err => {
+              console.log(err.message);
+         })
+    
+ };
+
+ loadResults = () => {
+      axios.get("/api/survey/" + this.props.match.params.id)
+      // axios.get("/api/survey/5a7cfb19b4234c1b2c4ac1e7")
+          .then((responseSurvey) => {
+            console.log(responseSurvey);
+              const resultSurvey = responseSurvey.data;
+              let choice = [];
+              let participant = [];
+              let name = resultSurvey.name;
+              let IndexMax = `${this.state.IndexMax}`
+              console.log(IndexMax);
+
+              for (let i = 0; i < resultSurvey.choice.length; i++) {
+
+                  choice.push(resultSurvey.choice[i].toString());
+              }
+            for (let i = 0; i < resultSurvey.participants.length; i++) {
+               participant.push(resultSurvey.participants[i].name);
+             }
+              this.setState({
+                  choice: choice,
+                  emails: participant,
+                  name: name,
+                  finalChoice: choice[IndexMax],
+                  
+              });
+              console.log(this.state);
+          })
+          .catch(err => {
+              console.log(err);
+          })
+};
 
   render(){
     return(
@@ -43,45 +111,99 @@ class Result extends Component {
               <Row>
                   <Col size="md-12">
                     <Panel>
-                        <h1> {this.state.decision} </h1>
+                        <h1> {this.state.name} </h1>
                         <h2> Maximized Group Decision: {this.state.finalChoice} </h2>
-                    </Panel>
-                    <Panel>
-                        <h5> Voters </h5>
-                        <List>
-                            {this.state.emails.map((emails, i) => (
-                              <ListItem>
-                                {emails}                  
-                              </ListItem>
-                            ))}
-                        </List>
+                        <br />
+                        <h5> All possible options: </h5> 
+                            {this.state.choice.map((choice, i) => (  
+                                     <p> {this.state.choice[i]}</p>
+                              ))}
+                       
                     </Panel>
                   </Col>
               </Row>
               <Row>
-                  <Col size = "md-12"> 
+                <Col size = "md-2"> 
                     <Panel> 
-                      <Table>
-                        <TableHead>
-
-               
-
-                         </TableHead>
-                        {this.state.choice.map((choice, i) => (
-                          <TableBody>
-                              <tr>
-                                  <td> {i+1}</td>
-                                  <td> {choice} </td>
-                                  <td> 1</td>
-                                  <td> 2</td>
-                                  <td> 3 </td>   
-                              </tr>
-                          </TableBody>
-                        ))}
-                      </Table>
+                        <Table>
+                          <thead>
+                               <tr><th scope="col">Options</th></tr>
+                          </thead>
+                          <tbody>
+                             {this.state.choice.map((choice, i) => (  
+                                     <tr><th> {this.state.choice[i]}</th></tr>
+                              ))}
+                          </tbody>
+                        </Table> 
                     </Panel>
-                    <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
                   </Col>
+
+                  <Col size = "md-2"> 
+                    <Panel> 
+                        <Table>
+                          <thead>
+                               <tr>
+                                  <th scope="col">Round 1</th>
+                                </tr>
+                          </thead>
+                          <tbody>
+                             {this.state.RoundResult1.map((RoundResult1, i) => (
+                                  <tr><td>{this.state.RoundResult1[i]}</td></tr>  
+                            ))} 
+                          </tbody>
+                        </Table> 
+                    </Panel>
+                  </Col>
+
+                  <Col size = "md-2"> 
+                    <Panel> 
+                        <Table>
+                          <thead>
+                               <tr>
+                                  <th scope="col">Round 2</th>
+                                </tr>
+                          </thead>
+                          <tbody>
+                             {this.state.RoundResult2.map((RoundResult2, i) => (
+                                  <tr><td>{this.state.RoundResult2[i]}</td></tr>  
+                              ))} 
+                          </tbody>
+                        </Table> 
+                    </Panel>
+                  </Col>
+
+                   <Col size = "md-2"> 
+                    <Panel> 
+                        <Table>
+                          <thead>
+                               <tr>
+                                  <th scope="col">Round 3</th>
+                                </tr>
+                          </thead>
+                          <tbody>
+                             {this.state.RoundResult3.map((RoundResult3, i) => (
+                                <tr ><td>{this.state.RoundResult3[i]}</td></tr>     
+                            ))} 
+                          </tbody>
+                        </Table> 
+                    </Panel>
+                  </Col>
+                </Row>
+                <Row>
+                 <Col size="md-12">
+                   <Panel>
+                        <h5> Voters </h5>
+                            {this.state.emails.map((emails, i) => (
+                              <p> 
+                                {emails}                  
+                              </p>
+                            ))}
+                    </Panel>
+                  </Col>
+                   
+                  </Row>
+                <Row>
+                  <button><Link to="/" style={{ color: "black"}}> Back to User Page</Link></button> 
                 </Row>  
             </Container>
           </Container>
@@ -91,4 +213,3 @@ class Result extends Component {
   }
 }
 export default Result;
-

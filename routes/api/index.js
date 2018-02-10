@@ -10,3 +10,4 @@ router.use("/admin", adminRoutes);
 router.use("/survey", surveyRoutes);
 
 module.exports = router;
+

@@ -3,8 +3,6 @@ const { Admin, Survey, Choice, Participant } = require('../models/database.js');
 // Defining methods for the surveyController
 module.exports = {
     findOne: function(req, res) {
-        console.log(req.params.email);
-        console.log(typeof(req.params.email));
         Admin
             .findOne({ email: req.params.email })
             .then(dbAdmin => res.json(dbAdmin))
@@ -16,10 +14,27 @@ module.exports = {
     //     .then(dbAdmin => res.json(dbAdmin))
     //     .catch(err => res.status(422).json(err));
     // },
+    findAll: function(req, res) {
+        Admin
+            .findById({ _id: req.params.id })
+            .populate("surveys")
+            .then(dbAdmin => {
+                res.json(dbAdmin);
+            })
+            .catch(err => res.status(422).json(err));
+    },
+
+
     create: function(req, res) {
+        console.log("Hit the admin create POST route");
+        console.log(req.params);
+        console.log(typeof(req.params));
         Admin
             .create(req.body)
-            .then(dbAdmin => res.json(dbAdmin))
+            .then(dbAdmin => {
+                res.json(dbAdmin);
+                console.log("Successfully created Admin");
+            })
             .catch(err => {
                 console.log(err.message);
                 res.status(422).json(err);
@@ -27,63 +42,100 @@ module.exports = {
     },
 
     createsurvey: function(req, res) {
-        console.log("Hit the survey create POST route")
-        console.log(req.body);
-        console.log(req.params.id);
+        // console.log("Hit the survey create POST route")
+        // console.log(req.body);
+        // console.log(req.params.id);
+        const survey = {
+            name: req.body.name,
+            description: req.body.description,
+            choice: req.body.choice
+        };
+        let surveyId;
+        let participants = req.body.participant;
         Survey
-            .create(req.body)
+            .create(survey)
             .then(function(dbSurvey) {
-                console.log("You successfully created a new survey")
-                console.log(dbSurvey.id)
+                surveyId = dbSurvey._id;
+                console.log("You successfully created a new survey");
+                // console.log(dbSurvey);
                 Admin.findOneAndUpdate({ _id: req.params.id }, { $push: { surveys: dbSurvey._id } }, { new: true })
                     .then((dbAdmin) => {
-                        console.log("Successfully updated Admin")
-                        res.json(dbAdmin)
+                        // console.log("Successfully updated Admin");
+                        createParticipant(surveyId, participants);
+                        res.json(dbAdmin);
                     })
                     .catch((err) => {
-                        console.log(err.message)
+                        console.log('error from Admin line 68', err.message)
                     })
             })
             .catch(err => {
-                console.log(err.message);
+                console.log('error from survey line 72 ', err.message);
                 res.status(422).json(err);
             })
+
+        const createParticipant = (srvyid, part) => {
+            let parts = [];
+            // console.log(part);
+            for (let i = 0; i < part.length; i++) {
+                parts.push({ email: part[i] });
+            }
+            // console.log(parts);
+            // console.log(typeof(parts));
+            let partId;
+            part.forEach(email => {
+                Participant
+                    .create({ email: email })
+                    .then(response => {
+                        partId = response._id
+                        // console.log("participant res" + response)
+
+                    })
+                    .then(() => {
+                        Survey
+                            .findByIdAndUpdate(srvyid, { $push: { participant: partId } })
+                            .then(response => {
+                                console.log('response from survey ', response)
+                            })
+                            .catch(err => {
+                                console.log('error from survey line 100 ', err)
+                            })
+                    })
+                    .catch(err => {
+                        console.log('error from participant line 104 ', err)
+                    })
+            })
+        }
+
     },
 
     updatevotes: function(req, res) {
         console.log("Hit the survey create POST route");
         console.log(req.body);
         Participant
-            .findOneAndUpdate({ _id: req.params.id }, { $set: { score: req.body } })
+            .findOneAndUpdate({ email: req.body[1] }, { $set: { score: req.body[0] } })
             .then((dbAdmin) => {
-                console.log("Successfully updated Admin")
+                console.log("Successfully updated Survey")
                 res.json(dbAdmin)
             })
             .catch((err) => {
                 console.log(err.message);
                 res.status(422).json(err);
             })
+    },
+
+    findresults: function(req, res) {
+        console.log("Hit the survey get results route");
+        console.log(req.params.id);
+        Survey
+            .findById({ _id: req.params.id })
+            .populate("participant")
+            .then(dbAdmin => {
+                res.json(dbAdmin);
+                console.log("survey populated with email", dbAdmin);
+                console.log("Successfully pulled results");
+            })
+            .catch(err => res.status(422).json(err.message));
     }
 
-    // createchoices: function(req, res) {
-    //     console.log(req.body);
-    //     console.log(req.params.id);
-    //     Choice
-    //         .create(req.body)
-    //         .then(function(dbChoices) {
-    //             return Survey.findOneAndUpdate({ _id: req.params.id }, { $push: { choices: dbChoices._id } }, { new: true });
-    //         })
-    //         .then(dbAdmin => res.json(dbAdmin))
-    //         .catch(err => {
-    //             console.log(err.message);
-    //             res.status(422).json(err);
-    //         })
-    // }
-    // remove: function(req, res) {
-    //   db.Survey
-    //     .findById({ _id: req.params.id })
-    //     .then(dbModel => dbModel.remove())
-    //     .then(dbModel => res.json(dbModel))
-    //     .catch(err => res.status(422).json(err));
-    // }
+
 };

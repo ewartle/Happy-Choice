@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
-import API from "../../utils/API";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+import axios from "axios";
 
 class Form extends Component {
   constructor(props) {
@@ -17,27 +17,33 @@ class Form extends Component {
     };
   }
 
-  handleInputChange = event => {
+  
+ 
+
+ 
+
+ handleInputChange = event => {
     const { name, value, key } = event.target;
-    this.setState({
-      [name]: value
-    });
+     this.setState({
+       [name]: value
+     });
   };
 
-  // verifyForm = () => {
-  //   API.getSurvey()
-  //     .then(res =>
-  //       this.setState({
-  //         name: "",
-  //         description: "",
-  //         choices: [],
-  //         participants: []
-  //       })
-  //     )
-  //     .catch(err => console.log(err));
-  // };
+ //    handleFormSubmit = event => {
+ //     event.preventDefault();
+ //     const payload = this.state;
+ //     console.log(payload);
+ //     axios.post("/api/admin/" + sessionStorage.getItem("id"), payload)
+ //         .then((response) => {
+ //             console.log(response);
 
-  handleFormSubmit = event => {
+ //         })
+ //         .catch((err) => {
+ //             console.log(err.message);
+ //         })
+ // };
+  
+ handleFormSubmit = event => {
     event.preventDefault();
     let input = document.getElementsByClassName("choices");
     for (let i = 0; i < input.length; i++) {
@@ -59,8 +65,12 @@ class Form extends Component {
     };
     console.log(formData);
     if (this.state.name && this.state.description) {
-      API.saveForm(formData)
-        .then(res => this.props.history.push("/Verify"))
+      axios.post("/api/admin/"+ sessionStorage.getItem("id"), formData)
+        .then(res => {
+          console.log(res);
+          const surveyId = res.data.surveys[res.data.surveys.length -1];
+          this.props.history.push("/Verify/" + surveyId);
+          })
         .catch(err => console.log(err));
     }
   };

@@ -9,10 +9,14 @@ const surveyController = require("../../controllers/surveyController");
 //   .post(surveyController.create);
 
 // // Matches with "/api/survey/:id"
-// router
-//   .route("/:id")
-//   .get(surveyController.findById)
-//   .put(surveyController.update)
-//   .delete(surveyController.remove);
-
+router
+  .route("/:id")
+  .get(surveyController.findById);
+  // .put(surveyController.update)
+  router
+  .route("/calculate/:surveyId")
+  .get(surveyController.calculate);
+  
+  
 module.exports = router;
+

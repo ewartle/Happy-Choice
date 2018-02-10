@@ -1,26 +1,46 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
-import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../../components/List";
+import axios from "axios";
 
 class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      admin: "Julie",
-      name: ["Summer Vacation","50th birthday celebration","Graduation dinner"],
-      active: [false, true, true]
-    };
+      name: "",
+      surveys: {}
+      };
   }
   
+componentDidMount() {
+    this.loadSurveys();
+  }
+
+loadSurveys = () => {
+    axios.get("/api/admin/adminpage/"+ sessionStorage.getItem("id"))
+        .then((response) => {
+            this.setState({ surveys: response.data.surveys})
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
   render() {
     return (
       <Container>
         <Row>
           <Col size="m6">
             <img src="/sun.png" />
-            <h4>{this.state.admin}</h4>
+            <h4>{this.state.name}</h4>
           </Col>
           <Col size="m6">
             <button className="btn"><Link to="/Form">
@@ -33,13 +53,13 @@ class User extends Component {
         <Row>
           <Col size="m12" />
           <h3>Active Surveys</h3>
-          {this.state.name.length ? (
+          {this.state.surveys.length ? (
             <List>
-              {this.state.name.map(name => (
-                <ListItem key={name._id}>
-                  <Link to={"/Result/" + name._id}>
+              {this.state.surveys.map(survey => (
+                <ListItem key={survey._id}>
+                  <Link to={"/Result/" + survey._id}>
                     <strong>
-                      {name}
+                      {survey.name}
                     </strong>
                   </Link>
                 </ListItem>
@@ -55,13 +75,13 @@ class User extends Component {
         <Row>
           <Col size="m12" />
           <h3>Closed Surveys</h3>
-          {this.state.name.length ? (
+          {this.state.surveys.length ? (
             <List>
-              {this.state.name.map(name => (
-                <ListItem key={name._id}>
-                  <Link to={"/Result/" + name._id}>
+              {this.state.surveys.map(survey => (
+                <ListItem key={survey._id}>
+                  <Link to={"/Result/" + survey._id}>
                     <strong>
-                      {name}
+                      {survey.name}
                     </strong>
                   </Link>
                 </ListItem>
