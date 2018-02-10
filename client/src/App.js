@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Landing from "./pages/Landing/Landing";
+import CreateAcct from "./pages/Landing/CreateAcct";
+import SignIn from "./pages/Landing/SignIn";
 import Survey from "./pages/Survey/Survey";
 import Result from "./pages/Result/Result";
 import User from "./pages/User/User";
@@ -17,12 +19,16 @@ render() {
       <Router>
         <div>
 
-       
+      <Nav /> 
       <Switch>
       <Route exact path="/" component={Landing} />     
+      <Route exact path="/CreateAcct" component={CreateAcct} />     
+      <Route exact path="/SignIn" component={SignIn} />
       <Route exact path="/Form" component={Form} />   
       <Route exact path="/User" component={User} /> 
       <Route exact path="/Survey" component={Survey} /> 
+      <Route path="/Result/" component={Result} /> 
+      <Route path="/Verify/" component={Verify} />
       <Route path="/Result/:id" component={Result} /> 
       <Route path="/Survey/:id" component={Survey} />
       <Route path="/Verify/:id" component={Verify} />

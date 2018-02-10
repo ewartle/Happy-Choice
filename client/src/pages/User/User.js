@@ -39,7 +39,7 @@ loadSurveys = () => {
       <Container>
         <Row>
           <Col size="m6">
-            <img src="/sun.png" />
+            <img src="/sun.png" alt="avatar default"/>
             <h4>{this.state.name}</h4>
           </Col>
           <Col size="m6">

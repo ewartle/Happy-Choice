@@ -105,11 +105,9 @@ class Result extends Component {
   render(){
     return(
       <Wrapper>
-        <div>
-          <Container fluid>
             <Container>
               <Row>
-                  <Col size="md-12">
+                  <Col size="m12">
                     <Panel>
                         <h1> {this.state.name} </h1>
                         <h2> Maximized Group Decision: {this.state.finalChoice} </h2>
@@ -123,7 +121,7 @@ class Result extends Component {
                   </Col>
               </Row>
               <Row>
-                <Col size = "md-2"> 
+                <Col size = "m2"> 
                     <Panel> 
                         <Table>
                           <thead>
@@ -138,7 +136,7 @@ class Result extends Component {
                     </Panel>
                   </Col>
 
-                  <Col size = "md-2"> 
+                  <Col size = "m2"> 
                     <Panel> 
                         <Table>
                           <thead>
@@ -155,7 +153,7 @@ class Result extends Component {
                     </Panel>
                   </Col>
 
-                  <Col size = "md-2"> 
+                  <Col size = "m2"> 
                     <Panel> 
                         <Table>
                           <thead>
@@ -172,7 +170,7 @@ class Result extends Component {
                     </Panel>
                   </Col>
 
-                   <Col size = "md-2"> 
+                   <Col size = "m2"> 
                     <Panel> 
                         <Table>
                           <thead>
@@ -190,7 +188,7 @@ class Result extends Component {
                   </Col>
                 </Row>
                 <Row>
-                 <Col size="md-12">
+                 <Col size="m12">
                    <Panel>
                         <h5> Voters </h5>
                             {this.state.emails.map((emails, i) => (
@@ -203,11 +201,9 @@ class Result extends Component {
                    
                   </Row>
                 <Row>
-                  <button><Link to="/" style={{ color: "black"}}> Back to User Page</Link></button> 
+                  <button><Link to="/"> Back to User Page</Link></button> 
                 </Row>  
             </Container>
-          </Container>
-        </div>
       </Wrapper>
     );
   }

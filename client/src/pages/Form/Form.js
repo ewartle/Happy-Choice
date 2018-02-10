@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
-import { Input, TextArea, FormBtn } from "../../components/Form";
+import { Input, FormBtn } from "../../components/Form";
 import axios from "axios";
 
 class Form extends Component {
@@ -16,14 +15,9 @@ class Form extends Component {
       emailInputs: ["input-0"]
     };
   }
-
-  
  
-
- 
-
  handleInputChange = event => {
-    const { name, value, key } = event.target;
+    const { name, value } = event.target;
      this.setState({
        [name]: value
      });
