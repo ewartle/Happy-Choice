@@ -32,6 +32,7 @@ class Result extends Component {
     console.log(this.props);
     axios.get('/api/survey/calculate/'+this.props.match.params.id).then ((response)=>{
     console.log("this is from resultspage" , response.data)
+    let RoundResult = [];
     let RoundResult1 = response.data[0];
     let RoundResult2 = response.data[1];
     let RoundResult3=response.data[2];
