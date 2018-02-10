@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Link, Redirect} from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import API from "../../utils/API";
 import { Input, TextArea, FormBtn } from "../../components/Form";
@@ -19,9 +19,9 @@ class Form extends Component {
 
   handleInputChange = event => {
     const { name, value, key } = event.target;
-     this.setState({
-       [name]: value
-     });
+    this.setState({
+      [name]: value
+    });
   };
 
   // verifyForm = () => {
@@ -54,8 +54,8 @@ class Form extends Component {
     const formData = {
       name: this.state.name,
       description: this.state.description,
-      choices: this.state.choices,
-      participants: this.state.participants
+      choice: this.state.choices,
+      participant: this.state.participants
     };
     console.log(formData);
     if (this.state.name && this.state.description) {
@@ -79,7 +79,7 @@ class Form extends Component {
     return (
       <Container>
         <Row>
-          <Col size="md-12">
+          <Col size="m12">
             <form>
               <label htmlFor="name">Title Name</label>
               <Input
@@ -90,7 +90,7 @@ class Form extends Component {
                 placeholder="Title Name (required)"
               />
               <label htmlFor="description">Description</label>
-              <TextArea
+              <Input
                 key="description"
                 value={this.state.description}
                 onChange={this.handleInputChange}
@@ -142,12 +142,7 @@ class Form extends Component {
                 );
               })}
               <FormBtn
-                 disabled={
-                   !(
-                     this.state.name &&
-                     this.state.description
-                   )
-                 }
+                disabled={!(this.state.name && this.state.description)}
                 onClick={this.handleFormSubmit}
               >
                 Create Survey

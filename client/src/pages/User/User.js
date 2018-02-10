@@ -3,54 +3,75 @@ import { Col, Row, Container } from "../../components/Grid";
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../../components/List";
-import RedirectBtn from "../../components/RedirectBtn";
 
 class User extends Component {
-  state = {
-    name: "",
-    surveys: {}
-  };
-
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      admin: "Julie",
+      name: ["Summer Vacation","50th birthday celebration","Graduation dinner"],
+      active: [false, true, true]
+    };
+  }
+  
   render() {
     return (
       <Container>
         <Row>
-          <Col size="md-6">
-            <img src="" />
-            <h4>{this.state.name}</h4>
+          <Col size="m6">
+            <img src="/sun.png" />
+            <h4>{this.state.admin}</h4>
           </Col>
-          <Col size="md-6">
-            <button><Link to="/Form">
+          <Col size="m6">
+            <button className="btn"><Link to="/Form">
               Add New Survey</Link>
             </button>
           </Col>
         </Row>
+        <div className="divider"></div>
+        <div className="section">
         <Row>
-          <Col size="md-12" />
-          <h2>Active Surveys</h2>
-          {this.state.surveys.length ? (
+          <Col size="m12" />
+          <h3>Active Surveys</h3>
+          {this.state.name.length ? (
             <List>
-              {this.state.surveys.map(survey => (
-                <ListItem key={survey._id}>
-                  <Link to={"/Result/" + survey._id}>
+              {this.state.name.map(name => (
+                <ListItem key={name._id}>
+                  <Link to={"/Result/" + name._id}>
                     <strong>
-                      {survey.name}
+                      {name}
                     </strong>
                   </Link>
                 </ListItem>
               ))}
             </List>
           ) : (
-            <h3>No Active Surveys</h3>
+            <strong>No Active Surveys</strong>
           )}
         </Row>
+        </div>
+        <div className="divider"></div>
+        <div className="section">
+        <Row>
+          <Col size="m12" />
+          <h3>Closed Surveys</h3>
+          {this.state.name.length ? (
+            <List>
+              {this.state.name.map(name => (
+                <ListItem key={name._id}>
+                  <Link to={"/Result/" + name._id}>
+                    <strong>
+                      {name}
+                    </strong>
+                  </Link>
+                </ListItem>
+              ))}
+            </List>
+          ) : (
+            <strong>No Closed Surveys</strong>
+          )}
+        </Row>
+        </div>
       </Container>
     );
   }

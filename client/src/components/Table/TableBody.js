@@ -1,8 +1,8 @@
 import React from "react";
 
-export const TableBody = props =>
+export const TableBody = ({children}) =>
  	
   	<tbody>
-      	{props.children}
+      	{children}
   	</tbody>;
 

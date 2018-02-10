@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import { Input, FormBtn } from "../../components/Form";
 import API from "../../utils/API";
-import RedirectBtn from "../../components/RedirectBtn";
 
 class Landing extends Component {
   state = {

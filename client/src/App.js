@@ -7,12 +7,13 @@ import User from "./pages/User/User";
 import Form from "./pages/Form/Form";
 import Verify from "./pages/Verify/Verify";
 import './App.css';
+import Nav from "./components/Nav";
 
 
 const App = () =>
  <Router>
    <div>
-   
+   <Nav />
      <Switch>
        <Route exact path="/" component={Landing} />     
         <Route exact path="/Survey" component={Survey} />

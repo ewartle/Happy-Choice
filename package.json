@@ -25,6 +25,7 @@
     "concurrently": "^3.5.1",
     "express": "^4.16.2",
     "mongoose": "^5.0.3",
-    "nodemailer": "^4.4.2"
+    "nodemailer": "^4.4.2",
+    "react-notifications": "^1.4.3"
   }
 }

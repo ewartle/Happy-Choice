@@ -5,6 +5,7 @@ import {List, ListItem} from "../../components/List"
 import { Col, Row, Container } from "../../components/Grid";
 import Wrapper from "../../components/Wrapper";
 import axios from "axios"
+import {NotificationContainer, NotificationManager} from 'react-notifications';
  
  class Verify extends Component {
     state = {
@@ -34,6 +35,27 @@ componentDidMount() {
       console.log("hello")
 };
 
+createNotification = (type) => {
+  return () => {
+    switch (type) {
+      case 'info':
+        NotificationManager.info('Info message');
+        break;
+      case 'success':
+        NotificationManager.success('Success message', 'Title here');
+        break;
+      case 'warning':
+        NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
+        break;
+      case 'error':
+        NotificationManager.error('Error message', 'Click me!', 5000, () => {
+          alert('callback');
+        });
+        break;
+    }
+  };
+};
+
 handleSubmit= event => {
  
      event.preventDefault();
@@ -53,8 +75,9 @@ handleSubmit= event => {
          console.log(response)}).catch((err)=> {
          console.log(err);
      });
- 
-    alert(`Thank you ${this.state.admin} submitting your survey.  Your survey has been emailed to ${emailRecip}.`);
+     
+     this.createNotification('success');
+    // alert(`Thank you ${this.state.admin} submitting your survey.  Your survey has been emailed to ${emailRecip}.`);
 
     this.setState({
             admin: "",
@@ -114,7 +137,7 @@ handleSubmit= event => {
                      <br/>
                      <br/>
                      <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button> 
-                         
+                     <NotificationContainer/>                         
                    </Col>
                </Row>  
  
