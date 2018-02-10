@@ -65,7 +65,7 @@ module.exports = {
                         res.json(dbAdmin);
                     })
                     .catch((err) => {
-                        console.log('error from Admin line 68', err.message)
+                        console.log('error from Admin line 68', err.message);
                     })
             })
             .catch(err => {
@@ -86,7 +86,7 @@ module.exports = {
                 Participant
                     .create({ email: email })
                     .then(response => {
-                        partId = response._id
+                        partId = response._id;
                         // console.log("participant res" + response)
 
                     })
@@ -94,17 +94,17 @@ module.exports = {
                         Survey
                             .findByIdAndUpdate(srvyid, { $push: { participant: partId } })
                             .then(response => {
-                                console.log('response from survey ', response)
+                                console.log('response from survey ', response);
                             })
                             .catch(err => {
-                                console.log('error from survey line 100 ', err)
+                                console.log('error from survey line 100 ', err);
                             })
                     })
                     .catch(err => {
-                        console.log('error from participant line 104 ', err)
+                        console.log('error from participant line 104 ', err);
                     })
-            })
-        }
+            });
+        };
 
     },
 
@@ -114,8 +114,8 @@ module.exports = {
         Participant
             .findOneAndUpdate({ _id: req.body[1] }, { $push: { score: req.body[0] } })
             .then((dbAdmin) => {
-                console.log("Successfully updated Survey")
-                res.json(dbAdmin)
+                console.log("Successfully updated Survey");
+                res.json(dbAdmin);
             })
             .catch((err) => {
                 console.log(err.message);
