@@ -67,6 +67,8 @@ class Survey extends Component {
    let array = [];
    let newState = {...this.state}
    newState.votes = votes;
+
+
      
    for (let i = 0; i<newState.votes.length; i++) {
         array.push(parseInt(newState.votes[i].vote));
@@ -74,6 +76,7 @@ class Survey extends Component {
    newState.totalPoints = array.reduce(reducer);
 
    this.setState(newState);
+    console.log(newState)
    if (newState.totalPoints > 100 ) {
     alert ("Your vote total cannot exceed 100 points");
    }

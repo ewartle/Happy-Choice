@@ -44,7 +44,7 @@ loadChoice = () => {
                 emails: participant,
                 name: name,
                 description: description,
-               
+                
             });
             console.log(this.state);
         })

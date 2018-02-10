@@ -14,6 +14,7 @@ class Result extends Component {
      finalChoice: "",
      choice: [],
      emails: [],
+     RoundResult:[],
      RoundResult1: [],
      RoundResult2: [],
      RoundResult3: [],
@@ -32,29 +33,53 @@ class Result extends Component {
   loadVotes = () => {
   axios.get('/surveys/5a7cfb19b4234c1b2c4ac1e7/calculate').then ((response)=>{
     console.log(response.data)
+
+    let RoundResult = []
     let RoundResult1 = response.data[0];
     let RoundResult2 = response.data[1];
     let RoundResult3=response.data[2];
-    let Maximum = Math.max(...response.data[2]);
-    console.log(Maximum);
-    let IndexMax = response.data[2].indexOf(Maximum);
+    //RoundResultTotal = []
+   // let Maximum = Math.max(...response.data[2]);
+    //console.log(Maximum);
+   //let IndexMax = response.data[2].indexOf(Maximum);
+    for (let i = 0; i <response.data.length; i++) {
+      RoundResult.push(response.data[i]);
+      
+    }
 
+    for (let i=0; i<response.data.length; i++) {
+
+    }
+
+    console.log(RoundResult);
+    var numberOfRounds = RoundResult.length;
+    var lastRound = RoundResult[RoundResult.length-1];
+    console.log (lastRound);
+    let Maximum = Math.max(...lastRound);
+    let IndexMax = lastRound.indexOf(Maximum);
+    console.log(IndexMax);
+
+
+
+
+
+console.log(RoundResult);
 
               for (let i = 0; i <RoundResult1.length; i++) {
-                RoundResult1[i] = RoundResult1[i].toFixed(0)
+                RoundResult1[i] = RoundResult1[i].toFixed(2)
               }
 
-              for (let i = 0; i <RoundResult2.length; i++) {
-                RoundResult2[i] = RoundResult2[i].toFixed(0)
-              }
+            for (let i = 0; i <RoundResult2.length; i++) {
+            RoundResult2[i] = RoundResult2[i].toFixed(2)
+             }
 
-              for (let i = 0; i <RoundResult3.length; i++) {
-                RoundResult3[i] = RoundResult3[i].toFixed(0)
-              }
+            for (let i = 0; i <RoundResult3.length; i++) {
+            RoundResult3[i] = RoundResult3[i].toFixed(2)
+             }
       
              
               this.setState({
-                RoundResult1: RoundResult1,
+              RoundResult1: RoundResult1,
                 RoundResult2: RoundResult2,
                 RoundResult3: RoundResult3, 
                 IndexMax: IndexMax
@@ -73,7 +98,7 @@ class Result extends Component {
       //axios.get("/api/survey/" + this.props.match.params.id)
       axios.get("/api/survey/5a7cfb19b4234c1b2c4ac1e7")
           .then((responseSurvey) => {
-            console.log(responseSurvey);
+              console.log(responseSurvey);
               const resultSurvey = responseSurvey.data;
               let choice = [];
               let participant = [];
