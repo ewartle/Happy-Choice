@@ -186,7 +186,7 @@ class Result extends Component {
                    
                   </Row>
                 <Row>
-                  <button><Link to="/" style={{ color: "black"}}> Back to User Page</Link></button> 
+                  <button><Link to="/User" style={{ color: "black"}}> Back to User Page</Link></button> 
                 </Row>  
             </Container>
         
