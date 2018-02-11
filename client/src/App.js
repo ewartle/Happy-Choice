@@ -8,6 +8,7 @@ import Result from "./pages/Result/Result";
 import User from "./pages/User/User";
 import Form from "./pages/Form/Form";
 import Verify from "./pages/Verify/Verify";
+import Information from "./pages/Information/Information";
 import './App.css';
 import Nav from "./components/Nav";
 
@@ -27,6 +28,7 @@ render() {
       <Route exact path="/Form" component={Form} />   
       <Route exact path="/User" component={User} /> 
       <Route exact path="/Survey" component={Survey} /> 
+      <Route exact path="/Information" component={Information} /> 
       <Route path="/Result/" component={Result} /> 
       <Route path="/Verify/" component={Verify} />
       <Route path="/Result/:id" component={Result} /> 

@@ -5,35 +5,36 @@ import { Input, FormBtn } from "../../components/Form";
 import axios from "axios";
 
 class CreateAcct extends Component {
-    state = {
-      name: "",
-      password: "",
-      email: ""
-    };
-  
-    handleInputChange = event => {
-      const { name, value } = event.target;
-      this.setState({
-        [name]: value
-      });
-    };
-  
-    handleFormSubmit = event => {
-      event.preventDefault();
-      const payload = this.state;
-      axios.post("/api/admin", payload)
-          .then((response) => {
-              sessionStorage.setItem('id', response.data._id);
-              this.props.history.push("/User");
-          })
-          .catch(err => {
-              console.log(err.message);
-          })
+  state = {
+    name: "",
+    password: "",
+    email: ""
   };
-  
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    const payload = this.state;
+    axios
+      .post("/api/admin", payload)
+      .then(response => {
+        sessionStorage.setItem("id", response.data._id);
+        this.props.history.push("/User");
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  };
+
   render() {
-      return (
-        <Container>
+    return (
+      <div className="shadow">
           <Row>
             <Col size="m12">
               <h2>Create Account</h2>
@@ -56,13 +57,18 @@ class CreateAcct extends Component {
                   name="password"
                   placeholder="Password"
                 />
-                <FormBtn onClick={this.handleFormSubmit}>Create Account</FormBtn>
+                <FormBtn onClick={this.handleFormSubmit}>
+                  Create Account
+                </FormBtn>
+                <button className="btn">
+              <Link to="/">Cancel</Link>
+            </button>
               </form>
             </Col>
           </Row>
-        </Container>
-      );
-    }
+      </div>
+    );
   }
-    
+}
+
 export default CreateAcct;

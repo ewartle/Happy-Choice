@@ -42,13 +42,17 @@ class Form extends Component {
     let input = document.getElementsByClassName("choices");
     for (let i = 0; i < input.length; i++) {
       let newChoice = input[i].value;
+      if (newChoice) {
       this.state.choices.push(newChoice);
+      }
     }
 
     let input2 = document.getElementsByClassName("email");
     for (let i = 0; i < input2.length; i++) {
       let newEmail = input2[i].value;
-      this.state.participants.push(newEmail);
+      if (newEmail) {
+        this.state.participants.push(newEmail);
+      }
     }
 
     const formData = {
