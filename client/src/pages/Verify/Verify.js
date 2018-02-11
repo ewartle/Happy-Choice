@@ -1,24 +1,26 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import {List, ListItem} from "../../components/List"
 import { Col, Row, Container } from "../../components/Grid";
-import {Panel} from "../../components/Table";
-import Wrapper from "../../components/Wrapper";
 import axios from "axios";
+import {FormBtn} from "../../components/Form"
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
  
  class Verify extends Component {
     state = {
-    participant: [],
-    decription: "",
-    choice: [],
-    emails: [],
-    admin: "Julie",
-    name: "",
-    surveyId: ""
+      participant: [],
+      decription: "",
+      choice: [],
+      emails: [],
+      admin: "",
+      name: "",
+      surveyId: "",
+      adminEmail: ""
    };
 
 componentDidMount() {
    this.loadChoice();
+   // this.loadAdmin();
 };
 
 loadChoice = () => {
@@ -33,7 +35,6 @@ loadChoice = () => {
             let name = result.name;
             let description = result.description;
             for (let i = 0; i < result.choice.length; i++) {
-
                 choice.push(result.choice[i].toString());
             }
             for (let i = 0; i < result.participant.length; i++) {
@@ -57,86 +58,101 @@ loadChoice = () => {
         })
 };
 
-handleSubmit= event => {
+// loadAdmin = event => {
+//     axios.get("/api/admin/ewart@email.com")
+//         .then((response) => {
+//             console.log(response);   
+//             this.setState({
+//                 admin: response.data.name,
+//                 adminEmail: response.data.email  
+//             });
+//         })
+//         .catch(err => {
+//             console.log(err.message);
+//         })
+// };
+
+// handleSubmit= event => {
  
-     event.preventDefault();
-     const id = event.target.id;
-     console.log(id);
-     const emailRecip = this.state.emails[id];
-     const partId = this.state.participant[id];
-     console.log(emailRecip);
-     const emailOutput = this.state;
-     console.log(emailOutput);
-     const link = `https://testhappy.herokuapp.com/survey/${emailOutput.surveyId}/${partId}`;
-     console.log(link);
-     const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.name];
-     console.log(NodeMailerInput);
+//      event.preventDefault();
+//      const id = event.target.id;
+//      console.log(id);
+//      const emailRecip = this.state.emails[id];
+//      const partId = this.state.participant[id];
+//      console.log(emailRecip);
+//      const emailOutput = this.state;
+//      console.log(emailOutput);
+//      const link = `https://testhappy.herokuapp.com/survey/${emailOutput.surveyId}/${partId}`;
+//      console.log(link);
+//      const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.name];
+//      console.log(NodeMailerInput);
 
      
-    axios.post("/send", NodeMailerInput).then((response)=>{
-         console.log(response)}).catch((err)=> {
-         console.log(err);
-     });
+//     axios.post("/send", NodeMailerInput).then((response)=>{
+//          console.log(response)}).catch((err)=> {
+//          console.log(err);
+//      });
  
-    alert(`Thank you ${this.state.admin} submitting your survey.  Your survey has been emailed to ${emailRecip}.`);
+//     alert(`Thank you ${this.state.admin} submitting your survey.  Your survey has been emailed to ${emailRecip}.`);
       
+// };
+
+sendEmail = event => {
+     event.preventDefault();
+     const id = event.target.id
+     const emailRecip = this.state.emails[id];
+     const partId = this.state.participant[id];
+     const emailOutput = this.state
+     const link = `http://localhost:3000/survey/${emailOutput.surveyId}/${partId}`
+     const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.adminEmail, emailOutput.name];
+    
+    axios.post("/send", NodeMailerInput)
+      .then((response)=>{
+         console.log(response);
+      })
+      .catch((err)=> {
+         console.log(err);
+      });
+     NotificationManager.success(`our survey has been emailed to ${emailRecip}.`, 'Success!', 3000);
 };
 
- 
-   render(){
-     return(
-       <Wrapper>
-       <div>
-         
-         <Container>
-           <Panel>
-           <Row>
-             <Col size="md-12">
-                 <h1> {this.state.name} </h1>
-                 <h4> {this.state.description} </h4>
-                 <p> You have selected the following choices: </p>
-                 <ul> 
-                   {this.state.choice.map((choice, i) => (
-                    <li> {choice} </li>
-                   ))}
-                 </ul>
-             </Col>
-           </Row>
-          
-          <br/>
-          
+  render(){
+    return(
+      <div>
+        <Container>
           <Row>
-                   <Col size = "md-12">  
-
-                    {this.state.emails.length ? (
-                           <List>
-                                    
-                                <p>
-                                 Please click "Send Survey" to send the survey to the corresponding email address. 
-                                </p>
-                        
-                             {this.state.emails.map((emails, i) => (
-                               <ListItem key={this.state.emails._id}>
-                                    {emails}
-
-                                    <button id = {i} onClick={this.handleSubmit} style={{ margin: "15px"}} >Send Survey</button>
-                            
-                               </ListItem>
-                             ))}
-                             
-                           </List>
-                      ): (
-              <h3>No Participants</h3>
-            )}     
-                     <br/>
-                     <button><Link to="/" style={{ color: "black"}} > Back to User Page</Link></button>        
-                   </Col>
-               </Row>  
-                </Panel>
-         </Container>        
-       </div>
-       </Wrapper>
-     );
-   };
- };
- export default Verify;
+            <Col size="md-12">
+              <h1> {this.state.name} </h1>
+              <h4> {this.state.description} </h4>
+              <br/>
+              <ul className ="collection with-header">
+                <li className ="collection-header"><h4>Options</h4></li>
+                {this.state.choice.map((choice, i) => (
+                  <li className = "collection-item"><div> Option {i+ 1}:  {choice}</div></li>
+                ))}
+              </ul>
+            </Col>
+          </Row>
+          <Row>
+            <Col size = "md-12">  
+              <ul className ="collection with-header">
+                <li className ="collection-header" ><h4>Participants</h4></li>
+                {this.state.emails.map((emails, i) => (
+                  <li className = "collection-item" key={this.state.emails._id}>
+                    <div> {emails}</div>
+                    <FormBtn className = 'btn btn-success' id = {i} onClick={this.sendEmail} style={{ margin: "15px"}}>Send Survey</FormBtn>
+                  </li>
+                ))}
+              </ul>
+              <br/>
+            </Col>
+          </Row>  
+          <button><Link to="/User" style={{ color: "black"}} > Back to User Page</Link></button> 
+          <NotificationContainer/>
+        </Container>
+      </div>
+    );
+  }
+}
+  
+export default Verify;
