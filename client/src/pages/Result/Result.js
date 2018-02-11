@@ -8,7 +8,6 @@ class Result extends Component {
  
   state = {
 
-     admin: "Julie",
      name: "",
      finalChoice: "",
      choice: [],
@@ -37,6 +36,7 @@ class Result extends Component {
              }
          console.log(RoundResult);
     
+          
 
     let NumberOfRounds = RoundResult.length;
 

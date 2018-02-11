@@ -33,7 +33,8 @@ app.post("/send", (req, res) => {
 let link = req.body[1];
 let name = req.body[2];
 let email = req.body[0];
-let decision = req.body[3]
+let decision = req.body[4];
+let sender = req.body[3];
 
     var transporter = nodemailer.createTransport({
        service: 'gmail',
@@ -49,7 +50,7 @@ let decision = req.body[3]
 
     
     let mailOptions = {
-        from: name + '<smartgroupdecision@gmail.com>', // sender address
+        from: sender + '<smartgroupdecision@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'Time to Make a Decision', // Subject line
         html: "You have been requested by  " + name + " to cast your votes relating to " + decision + ". Follow the instructions included in the link " + link + ", and happy voting!" // html body

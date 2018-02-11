@@ -8,7 +8,7 @@ class Survey extends Component {
   state = {
 
      participant: "",
-     admin: "Julie",
+     admin: "",
      name: "",
      totalPoints: 0,
      votes: [],
@@ -49,6 +49,22 @@ loadChoice = () => {
 
             });
             console.log(this.state);
+            this.loadAdmin();
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
+
+loadAdmin = event => {
+    
+    axios.get("/api/admin/ewart@email.com")
+        .then((response) => {
+            console.log(response);   
+
+            this.setState({
+                admin: response.data.name  
+            });
         })
         .catch(err => {
             console.log(err.message);
@@ -104,6 +120,7 @@ loadChoice = () => {
             totalPoints: 0,
             votes: [],
             options: [],
+            admin: []
             
           });         
         

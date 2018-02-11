@@ -13,14 +13,16 @@ class Verify extends Component {
     decription: "",
     choice: [],
     emails: [],
-    admin: "Julie",
+    admin: "",
     name: "",
-    surveyId: ""
+    surveyId: "",
+    adminEmail: ""
       
    };
 
  componentDidMount() {
    this.loadChoice();
+   this.loadAdmin();
 };
 
 loadChoice = () => {
@@ -60,6 +62,22 @@ loadChoice = () => {
         })
 };
 
+loadAdmin = event => {
+    
+    axios.get("/api/admin/ewart@email.com")
+        .then((response) => {
+            console.log(response);   
+
+            this.setState({
+                admin: response.data.name,
+                adminEmail: response.data.email  
+            });
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
+
 
     
    
@@ -71,7 +89,7 @@ sendEmail = event => {
      const partId = this.state.participant[id];
      const emailOutput = this.state
      const link = `http://localhost:3000/survey/${emailOutput.surveyId}/${partId}`
-     const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.name];
+     const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.adminEmail, emailOutput.name];
      
      
     axios.post("/send", NodeMailerInput)
