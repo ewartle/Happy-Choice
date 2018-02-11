@@ -19,9 +19,6 @@ class Result extends Component {
      participant: [],
      emails: [],
      RoundResult:[],
-     RoundResult1: [],
-     RoundResult2: [],
-     RoundResult3: [],
      IndexMax: 0   
   };
 
@@ -31,67 +28,33 @@ class Result extends Component {
 
 }
 
-
-
-
   loadVotes = () => {
   axios.get('/api/survey/calculate/'+this.props.match.params.id).then ((response)=>{
-    //axios.get('api/survey/calculate/5a7cfb19b4234c1b2c4ac1e7').then ((response)=>{
     console.log(response.data)
 
     let RoundResult = []
-    let RoundResult1 = response.data[0];
-    let RoundResult2 = response.data[1];
-    let RoundResult3=response.data[2];
-    //RoundResultTotal = []
-   // let Maximum = Math.max(...response.data[2]);
-    //console.log(Maximum);
-   //let IndexMax = response.data[2].indexOf(Maximum);
+    
     for (let i = 0; i <response.data.length; i++) {
       RoundResult.push(response.data[i]);
       
     }
-
-    for (let i=0; i<response.data.length; i++) {
-
-    }
-
+    
     console.log(RoundResult);
     var numberOfRounds = RoundResult.length;
-    var lastRound = RoundResult[RoundResult.length-1];
-    console.log (lastRound);
-    let Maximum = Math.max(...lastRound);
-    let IndexMax = lastRound.indexOf(Maximum);
+    var lastRoundVote = RoundResult[RoundResult.length-1];
+    console.log (lastRoundVote);
+    let Maximum = Math.max(...lastRoundVote);
+    let IndexMax = lastRoundVote.indexOf(Maximum);
     console.log(IndexMax);
-
-
-
-
-
-console.log(RoundResult);
-
-              for (let i = 0; i <RoundResult1.length; i++) {
-                RoundResult1[i] = RoundResult1[i].toFixed(2)
-              }
-
-            for (let i = 0; i <RoundResult2.length; i++) {
-            RoundResult2[i] = RoundResult2[i].toFixed(2)
-             }
-
-            for (let i = 0; i <RoundResult3.length; i++) {
-            RoundResult3[i] = RoundResult3[i].toFixed(2)
-             }
-      
              
               this.setState({
-              RoundResult1: RoundResult1,
-                RoundResult2: RoundResult2,
-                RoundResult3: RoundResult3, 
-                IndexMax: IndexMax
+                IndexMax: IndexMax,
+                RoundResult:RoundResult
              });
 
              console.log(this.state); 
-             this.loadResults();
+             this.loadInfo();
+             this.loadEmails();
     })
     .catch(err => {
               console.log(err.message);
@@ -99,40 +62,58 @@ console.log(RoundResult);
     
  };
 
- loadResults = () => {
-      //axios.get("/api/survey/" + this.props.match.params.id/calculate)
-      axios.get("/api/survey/5a7cfb19b4234c1b2c4ac1e7/calculate")
+ loadEmails = () => {
+
+ axios.get("/api/admin/results/" + this.props.match.params.id)
+//    axios.get("/api/admin/results/5a7cfb19b4234c1b2c4ac1e7")
+        .then((response) => {
+          console.log(response);
+            const result = response.data;
+            let participant = [];
+            let email = [];
+           
+            for (let i = 0; i < result.participant.length; i++) {
+                participant.push(result.participant[i]._id);
+            }
+            for (let i=0; i<result.participant.length; i++) {
+              email.push(result.participant[i].email);
+            }
+            this.setState({
+                participant: participant,
+                emails: email,
+                
+                
+            });
+            console.log(this.state);
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
+
+
+ loadInfo = () => {
+      axios.get("/api/survey/" + this.props.match.params.id)
+      //axios.get("/api/survey/5a7cfb19b4234c1b2c4ac1e7/calculate")
           .then((responseSurvey) => {
-              console.log(responseSurvey);
+              
               const resultSurvey = responseSurvey.data;
+              console.log(resultSurvey);
               let choice = [];
-              let participant = [];
               let name = resultSurvey.name;
-               let email = [];
-              let IndexMax = `${this.state.IndexMax}`
-              console.log(IndexMax);
+              console.log(resultSurvey.choice)
 
               for (let i = 0; i < resultSurvey.choice.length; i++) {
 
                   choice.push(resultSurvey.choice[i].toString());
               }
-             //for (let i = 0; i < resultSurvey.participant.length; i++) {
-               //participant.push(resultSurvey.participant[i]._id);
-             //}
-             for (let i = 0; i < resultSurvey.participants.length; i++) {
-               participant.push(resultSurvey.participants[i]._id);
-             }
-             for (let i=0; i<resultSurvey.participant.length; i++) {
-              email.push(resultSurvey.participant[i].email);
-            }
-
-
+              console.log(choice);
+             
+            
               this.setState({
-                  choice: choice,
-                 // email: email,
-                 email: participant,
+                  choice: choice, 
                   name: name,
-                  finalChoice: choice[IndexMax],
+                  finalChoice: choice[this.state.IndexMax],
 
                   
               });
@@ -188,47 +169,15 @@ console.log(RoundResult);
                                 </tr>
                           </thead>
                           <tbody>
-                             {this.state.RoundResult1.map((RoundResult1, i) => (
-                                  <tr><td>{this.state.RoundResult1[i]}</td></tr>  
+                             {this.state.RoundResult.map((RoundResult1, i) => (
+                                  <tr><td>{this.state.RoundResult[i]}</td></tr>  
                             ))} 
                           </tbody>
                         </Table> 
                     </Panel>
                   </Col>
 
-                  <Col size = "md-2"> 
-                    <Panel> 
-                        <Table>
-                          <thead>
-                               <tr>
-                                  <th scope="col">Round 2</th>
-                                </tr>
-                          </thead>
-                          <tbody>
-                             {this.state.RoundResult2.map((RoundResult2, i) => (
-                                  <tr><td>{this.state.RoundResult2[i]}</td></tr>  
-                              ))} 
-                          </tbody>
-                        </Table> 
-                    </Panel>
-                  </Col>
-
-                   <Col size = "md-2"> 
-                    <Panel> 
-                        <Table>
-                          <thead>
-                               <tr>
-                                  <th scope="col">Round 3</th>
-                                </tr>
-                          </thead>
-                          <tbody>
-                             {this.state.RoundResult3.map((RoundResult3, i) => (
-                                <tr ><td>{this.state.RoundResult3[i]}</td></tr>     
-                            ))} 
-                          </tbody>
-                        </Table> 
-                    </Panel>
-                  </Col>
+                  
                 </Row>
                 <Row>
                  <Col size="md-12">

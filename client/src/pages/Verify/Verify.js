@@ -45,6 +45,7 @@ loadChoice = () => {
               email.push(result.participant[i].email);
             }
             this.setState({
+                participant: participant,
                 choice: choice,
                 emails: email,
                 name: name,
