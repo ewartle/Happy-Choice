@@ -7,29 +7,26 @@ const nodemailer = require("nodemailer");
 const calculateSurveyResults = require('./calculate.js');
 const { Admin, Survey, Choice, Participant } = require('./models/database.js')
 
-
-
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/happy-choice"); //mongodb://localhost/fullstack-jeopardy
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/happy-choice");
 
 const connection = mongoose.connection;
 connection.on('connected', () => {
-  console.log('Mongoose Connected Successfully');    
-}); 
+    console.log('Mongoose Connected Successfully');
+});
 
 // If the connection throws an error
-connection.on('error', (err) => {  
-  console.log('Mongoose default connection error: ' + err);
-}); 
+connection.on('error', (err) => {
+    console.log('Mongoose default connection error: ' + err);
+});
 
 app.use(bodyParser.json());
 app.use(routes);
 
-
 app.use(express.static(__dirname + '/client/build/'));
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.sendFile(__dirname + '/client/build/index.html')
-  })
+})
 
 app.post("/send", (req, res) => {
 
@@ -52,7 +49,7 @@ let decision = req.body[3]
 
     
     let mailOptions = {
-        from: '"Nodemailer Contact" <smartgroupdecision@gmail.com>', // sender address
+        from: name + '<smartgroupdecision@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'Time to Make a Decision', // Subject line
         html: "You have been requested by  " + name + " to cast your votes relating to " + decision + ". Follow the instructions included in the link " + link + ", and happy voting!" // html body
@@ -74,15 +71,6 @@ let decision = req.body[3]
 
 });
 
-app.get('/surveys/:surveyId/calculate', (req, res) => {
-  console.log("You hit the calculate route");
-  Survey.findById(req.params.surveyId)
-    .then((survey) => {
-      let surveyResults = calculateSurveyResults( survey.toObject() );
-      console.log(surveyResults);    
-      res.json(surveyResults);
-    })
-})
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

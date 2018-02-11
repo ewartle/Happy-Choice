@@ -4,15 +4,19 @@ import {Col, Row, Container} from "../../components/Grid";
 import {Panel, Table} from "../../components/Table";
 import Wrapper from "../../components/Wrapper";
 import axios from "axios"
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 
 class Result extends Component {
   
   state = {
 
      admin: "Julie",
-     decision: "",
+     name: "",
      finalChoice: "",
      choice: [],
+     participant: [],
      emails: [],
      RoundResult:[],
      RoundResult1: [],
@@ -31,7 +35,8 @@ class Result extends Component {
 
 
   loadVotes = () => {
-  axios.get('/surveys/5a7cfb19b4234c1b2c4ac1e7/calculate').then ((response)=>{
+  axios.get('/api/survey/calculate/'+this.props.match.params.id).then ((response)=>{
+    //axios.get('api/survey/calculate/5a7cfb19b4234c1b2c4ac1e7').then ((response)=>{
     console.log(response.data)
 
     let RoundResult = []
@@ -95,14 +100,15 @@ console.log(RoundResult);
  };
 
  loadResults = () => {
-      //axios.get("/api/survey/" + this.props.match.params.id)
-      axios.get("/api/survey/5a7cfb19b4234c1b2c4ac1e7")
+      //axios.get("/api/survey/" + this.props.match.params.id/calculate)
+      axios.get("/api/survey/5a7cfb19b4234c1b2c4ac1e7/calculate")
           .then((responseSurvey) => {
               console.log(responseSurvey);
               const resultSurvey = responseSurvey.data;
               let choice = [];
               let participant = [];
               let name = resultSurvey.name;
+               let email = [];
               let IndexMax = `${this.state.IndexMax}`
               console.log(IndexMax);
 
@@ -110,14 +116,24 @@ console.log(RoundResult);
 
                   choice.push(resultSurvey.choice[i].toString());
               }
-            for (let i = 0; i < resultSurvey.participants.length; i++) {
-               participant.push(resultSurvey.participants[i].name);
+             //for (let i = 0; i < resultSurvey.participant.length; i++) {
+               //participant.push(resultSurvey.participant[i]._id);
+             //}
+             for (let i = 0; i < resultSurvey.participants.length; i++) {
+               participant.push(resultSurvey.participants[i]._id);
              }
+             for (let i=0; i<resultSurvey.participant.length; i++) {
+              email.push(resultSurvey.participant[i].email);
+            }
+
+
               this.setState({
                   choice: choice,
-                  emails: participant,
+                 // email: email,
+                 email: participant,
                   name: name,
                   finalChoice: choice[IndexMax],
+
                   
               });
               console.log(this.state);

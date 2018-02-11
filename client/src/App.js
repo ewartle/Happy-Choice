@@ -22,9 +22,12 @@ render() {
       <Route exact path="/Form" component={Form} />   
       <Route exact path="/User" component={User} /> 
       <Route exact path="/Survey" component={Survey} /> 
-      <Route path="/Result/" component={Result} /> 
+      <Route path="/Result/:id" component={Result} /> 
       <Route path="/Survey/:id" component={Survey} />
-      <Route path="/Verify/" component={Verify} />
+      <Route path="/Verify/:id" component={Verify} />
+       <Route path="/Result" component={Result} /> 
+     
+      <Route path="/Verify" component={Verify} />
  
        
         

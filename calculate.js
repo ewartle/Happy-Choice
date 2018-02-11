@@ -1,13 +1,15 @@
 function calculateSurveyResults(survey){
-
+console.log("what calculate receives",survey);
   var options_ct = 0;
   var participant_ct = 0;
-  var participants = survey.participants;
+  var participants = survey.participant;
+  console.log(participants[0].score[[0]]);
   var participants_opt_scores = participants.map((participant) => {
-    var participantScores = participant.scores;
-    participant_ct = survey.participants.length;
+    var participantScores = participant.score[[0]];
+    participant_ct = survey.participant.length;
     options_ct = participantScores.length;
     return participantScores;
+    console.log("participant scores", participantScores);
   });
 
   var surveyDone = false;
@@ -52,8 +54,9 @@ function calculateSurveyResults(survey){
     var tempArry = new Array(options_ct);
     tempArry = opt_scores_ttls.slice();
     roundResultsHistory.push(tempArry);
+    console.log("round results history", roundResultsHistory);
 
-  //Find the scores of the lowest and highest scoring non-zero options in the round
+   //Find the scores of the lowest and highest scoring non-zero options in the round
     max_opt_score = 0; //initial max value is first element of array
     for (i=0; i<options_ct; i++) {
       if (opt_scores_ttls[i]>max_opt_score) {
@@ -72,12 +75,11 @@ function calculateSurveyResults(survey){
 
   //Identify the indices of options to be eliminated and push them into opts_to_be_eliminated[]
   function identifyAllOptionTBEliminated(){
-    opts_to_be_eliminated = [];
     for(var i=0; i<opt_scores_ttls.length; i++)  {
       if (opt_scores_ttls[i] === min_opt_score) {
           opts_to_be_eliminated.push(i);
       }
-    } 
+    }  
   }
 
   //Revalue each participants' options scores by redistributing points from options being eliminated
@@ -102,6 +104,7 @@ function calculateSurveyResults(survey){
   function checkForWinners(){
     //Reinitialize winner variables
     winners = [];
+    winners_ct = winners.length;
     secondPlaceValue = 0;
     thirdPlaceValue = 0;
     
@@ -117,7 +120,6 @@ function calculateSurveyResults(survey){
         }
       }
     }
-    winners_ct = winners.length;
 
     //Find the value of the third placer(s)  -if there is one
     for ( i=0; i<options_ct; i++) {
@@ -134,7 +136,6 @@ function calculateSurveyResults(survey){
     else {
       surveyDone = true;
     }
-
   }  //function checkForWinners()
 
   // surveyCalculatedResults.roundResultsHistory = roundResultsHistory;

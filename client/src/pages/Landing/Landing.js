@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import {Link} from "react-router-dom";
-//import { Modal, ModHeader, ModBody, ModFooter } from "../../components/Modal";
 import { Input, FormBtn } from "../../components/Form";
-import RedirectBtn from "../../components/RedirectBtn";
 import axios from "axios";
 
 class Landing extends Component {

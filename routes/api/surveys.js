@@ -13,5 +13,9 @@ router
   .route("/:id")
   .get(surveyController.findById);
   // .put(surveyController.update)
+  router
+  .route("/calculate/:id")
+  .get(surveyController.calculate);
+  
   
 module.exports = router;
