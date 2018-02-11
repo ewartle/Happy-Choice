@@ -1,15 +1,11 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {Col, Row, Container} from "../../components/Grid";
-import {Panel, Table} from "../../components/Table";
-import Wrapper from "../../components/Wrapper";
 import axios from "axios"
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-
 class Result extends Component {
-  
+ 
   state = {
 
      admin: "Julie",
@@ -19,37 +15,39 @@ class Result extends Component {
      participant: [],
      emails: [],
      RoundResult:[],
-     IndexMax: 0   
+     IndexMax: 0,
+     numberOfRounds: 0, 
+     numberOfChoices: 0,
+     
   };
 
  componentDidMount() {
   this.loadVotes();
-  
 
 }
 
   loadVotes = () => {
   axios.get('/api/survey/calculate/'+this.props.match.params.id).then ((response)=>{
     console.log(response.data)
-
     let RoundResult = []
     
+   
     for (let i = 0; i <response.data.length; i++) {
-      RoundResult.push(response.data[i]);
-      
-    }
+       RoundResult.push(response.data[i]);
+             }
+         console.log(RoundResult);
     
-    console.log(RoundResult);
-    var numberOfRounds = RoundResult.length;
-    var lastRoundVote = RoundResult[RoundResult.length-1];
-    console.log (lastRoundVote);
-    let Maximum = Math.max(...lastRoundVote);
-    let IndexMax = lastRoundVote.indexOf(Maximum);
-    console.log(IndexMax);
-             
+
+    let NumberOfRounds = RoundResult.length;
+
+    let LastRoundVote = RoundResult[NumberOfRounds-1];
+    let Maximum = Math.max(...LastRoundVote);
+    let IndexMax = LastRoundVote.indexOf(Maximum);
+    
               this.setState({
                 IndexMax: IndexMax,
-                RoundResult:RoundResult
+                RoundResult:RoundResult,
+                numberOfRounds: NumberOfRounds
              });
 
              console.log(this.state); 
@@ -65,9 +63,7 @@ class Result extends Component {
  loadEmails = () => {
 
  axios.get("/api/admin/results/" + this.props.match.params.id)
-//    axios.get("/api/admin/results/5a7cfb19b4234c1b2c4ac1e7")
         .then((response) => {
-          console.log(response);
             const result = response.data;
             let participant = [];
             let email = [];
@@ -81,16 +77,13 @@ class Result extends Component {
             this.setState({
                 participant: participant,
                 emails: email,
-                
-                
             });
-            console.log(this.state);
+            
         })
         .catch(err => {
             console.log(err.message);
         })
 };
-
 
  loadInfo = () => {
       axios.get("/api/survey/" + this.props.match.params.id)
@@ -98,24 +91,18 @@ class Result extends Component {
           .then((responseSurvey) => {
               
               const resultSurvey = responseSurvey.data;
-              console.log(resultSurvey);
+              let NumberOfChoices = resultSurvey.choice.length;
               let choice = [];
               let name = resultSurvey.name;
-              console.log(resultSurvey.choice)
-
-              for (let i = 0; i < resultSurvey.choice.length; i++) {
+               for (let i = 0; i < resultSurvey.choice.length; i++) {
 
                   choice.push(resultSurvey.choice[i].toString());
               }
-              console.log(choice);
-             
-            
               this.setState({
                   choice: choice, 
                   name: name,
                   finalChoice: choice[this.state.IndexMax],
-
-                  
+                  numberOfChoices: NumberOfChoices
               });
               console.log(this.state);
           })
@@ -126,69 +113,59 @@ class Result extends Component {
 
   render(){
     return(
-      <Wrapper>
+      
         <div>
-          <Container fluid>
-            <Container>
+          <Container>
               <Row>
                   <Col size="md-12">
-                    <Panel>
-                        <h1> {this.state.name} </h1>
-                        <h2> Maximized Group Decision: {this.state.finalChoice} </h2>
-                        <br />
-                        <h5> All possible options: </h5> 
-                            {this.state.choice.map((choice, i) => (  
-                                     <p> {this.state.choice[i]}</p>
-                              ))}
-                       
-                    </Panel>
+                  <div className="section">
+                         <h3> Decision:  {this.state.name} </h3>
+                      </div>
+                      <div className="section">
+                        <h3> Maximized Group Choice: {this.state.finalChoice} </h3>
+                      </div>
+                    
                   </Col>
               </Row>
               <Row>
-                <Col size = "md-2"> 
-                    <Panel> 
-                        <Table>
-                          <thead>
-                               <tr><th scope="col">Options</th></tr>
-                          </thead>
-                          <tbody>
-                             {this.state.choice.map((choice, i) => (  
-                                     <tr><th> {this.state.choice[i]}</th></tr>
-                              ))}
-                          </tbody>
-                        </Table> 
-                    </Panel>
-                  </Col>
+                <Col size = "md-12"> 
+                
+                    <div className="section">
+                        <h4> Voting Results </h4>
+                      </div>
+                
+                            {this.state.choice.map((choice, i)=>(
+                                <ul className="collection with-header">
 
-                  <Col size = "md-2"> 
-                    <Panel> 
-                        <Table>
-                          <thead>
-                               <tr>
-                                  <th scope="col">Round 1</th>
-                                </tr>
-                          </thead>
-                          <tbody>
-                             {this.state.RoundResult.map((RoundResult1, i) => (
-                                  <tr><td>{this.state.RoundResult[i]}</td></tr>  
-                            ))} 
-                          </tbody>
-                        </Table> 
-                    </Panel>
-                  </Col>
+                                <li className="collection-header"><h4>{this.state.choice[i]}</h4></li>
+                                      
+                                        {this.state.RoundResult.map((RoundResult, j) => (
+                                          <div>
 
-                  
-                </Row>
+                                             <li className = "collection-item">Round {j+1}:  {this.state.RoundResult[j][i]}
+                                                          
+                                              </li>
+                                         </div>
+                                        ))} 
+                                </ul>  
+
+                        ))}
+      </Col>
+       </Row>
                 <Row>
                  <Col size="md-12">
-                   <Panel>
-                        <h5> Voters </h5>
+                     <div className="section">
+                        <h4> Participants (by email) </h4>
+                      </div>
+                       <ul className="collection">
+
+               
                             {this.state.emails.map((emails, i) => (
-                              <p> 
+                               <li className = "collection-item">
                                 {emails}                  
-                              </p>
+                              </li>
                             ))}
-                    </Panel>
+                    </ul>
                   </Col>
                    
                   </Row>
@@ -196,9 +173,9 @@ class Result extends Component {
                   <button><Link to="/" style={{ color: "black"}}> Back to User Page</Link></button> 
                 </Row>  
             </Container>
-          </Container>
+        
         </div>
-      </Wrapper>
+    
     );
   }
 }
