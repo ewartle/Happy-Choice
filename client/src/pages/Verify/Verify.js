@@ -117,8 +117,8 @@ sendEmail = event => {
                  <h4> {this.state.description} </h4>
                  <br/>
              
-                 <ul class="collection with-header">
-                <li class="collection-header"><h4>Options</h4></li>
+                 <ul className ="collection with-header">
+                <li className ="collection-header"><h4>Options</h4></li>
                               
                                   {this.state.choice.map((choice, i) => (
                     <li className = "collection-item"><div> Option {i+ 1}:  {choice}</div></li>
@@ -131,8 +131,8 @@ sendEmail = event => {
                    <Col size = "md-12">  
                     
                              
-                          <ul class="collection with-header">
-                <li class="collection-header" ><h4>Participants</h4></li>
+                          <ul className ="collection with-header">
+                <li className ="collection-header" ><h4>Participants</h4></li>
                 
                                   {this.state.emails.map((emails, i) => (
                                          <li className = "collection-item" key={this.state.emails._id}><div> {emails}</div>

@@ -133,25 +133,41 @@ class Result extends Component {
                     <div className="section">
                         <h4> Voting Results </h4>
                       </div>
-                
-                            {this.state.choice.map((choice, i)=>(
-                                <ul className="collection with-header">
-
-                                <li className="collection-header"><h4>{this.state.choice[i]}</h4></li>
-                                      
-                                        {this.state.RoundResult.map((RoundResult, j) => (
-                                          <div>
-
-                                             <li className = "collection-item">Round {j+1}:  {this.state.RoundResult[j][i]}
-                                                          
-                                              </li>
-                                         </div>
-                                        ))} 
-                                </ul>  
-
-                        ))}
-      </Col>
+               </Col>
        </Row>
+<Row>
+                <Col size = "md-12"> 
+                 <table className="highlight">
+                          <thead>
+                            <tr>
+                              <th> Options </th>
+
+                             {this.state.RoundResult.map((RoundResult, j) => (
+                                       
+                                          <th> Round Result:  {j+1}      
+                                              </th> 
+                                        ))} 
+                             </tr>
+                             </thead>
+                             <tbody>  
+                              
+                               {this.state.choice.map((choice, i)=>(
+                                  <tr>  
+                                <th> {this.state.choice[i]} </th>
+
+                                        {this.state.RoundResult.map((RoundResult, j) => (
+                                        <td>{this.state.RoundResult[j][i]}  </td>
+                                      ))} 
+
+                                 </tr> 
+                                ))}
+
+                             
+                      </tbody>
+                      </table>
+             </Col>
+       </Row> 
+     
                 <Row>
                  <Col size="md-12">
                      <div className="section">
@@ -180,4 +196,3 @@ class Result extends Component {
   }
 }
 export default Result;
-

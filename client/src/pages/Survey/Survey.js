@@ -151,7 +151,7 @@ loadAdmin = event => {
                           <h5>Here are your Options</h5>
                             <ul> 
                             {this.state.choice.map((choice, i) => (
-                                        <li> <i class="material-icons">check</i> <strong> {this.state.choice[i]} </strong> </li>
+                                        <li> <i className="material-icons">check</i> <strong> {this.state.choice[i]} </strong> </li>
                                         ))}
                             </ul>
                      </div>                                   <div className="divider"></div>
@@ -171,7 +171,7 @@ loadAdmin = event => {
                           <tbody>
                             {this.state.votes.map((votes, i) => (
                             <tr><td>
-                                <div class ="range-field">
+                                <div className ="range-field">
                                  <h6> Your votes for {this.state.choice[i]}: {this.state.votes[i].vote} </h6> 
                                   <Input
                                   id={i}
