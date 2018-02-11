@@ -67,7 +67,7 @@ handleSubmit= event => {
      console.log(emailRecip);
      const emailOutput = this.state;
      console.log(emailOutput);
-     const link = `http://localhost:3000/survey/${emailOutput.surveyId}/${partId}`;
+     const link = `https://testhappy.herokuapp.com/survey/${emailOutput.surveyId}/${partId}`;
      console.log(link);
      const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.name];
      console.log(NodeMailerInput);
