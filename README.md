@@ -12,6 +12,7 @@ Votes are tallied for each choice and the lowest scoring choices are eliminated 
 ### **Technologies Deployed:**
 Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, Heroku, Node Mailer
 ### **Try out this app:**
+
 * *Test on the Heroku server*
 1)	Copy & paste this link into your browser:  https://testhappy.herokuapp.com
 2)	Create an account by entering your Name, email and password, then press ‘Create Account.’
@@ -19,6 +20,7 @@ Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, He
 4)	Click ‘Create New Survey’ to describe a decision, list choices and enter the emails of voters to be invited.  Then click ‘Send’ to email the decision to each participant.
 5)	Participating voters will then open their email invitations, allocate their 100 points to the choices and submit their ballots.
 6)	Results will then display on the decision maker’s account page.
+
 
 * *Test Locally: note this app requires voters be able to submit their ballots to a common server, like Heroku.  However, an example of a decision can be viewed from data already seeded in the database.  A user can also create a decision and email herself multiple invitations to vote as a simulation.  The app will run locally and display the votes of the local instance.*
 1) Create a directory on your local machine to store the Happy!Choice app.
