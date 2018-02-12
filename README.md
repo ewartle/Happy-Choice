@@ -30,4 +30,8 @@ Team
 Team
 
 5. A screenshot of your Jira, Trello, or Project Management Board that shows breakdown of tasks – assigned to group members with a schedule.
+<<<<<<< HEAD
 Miki 
+=======
+Miki 
+>>>>>>> 50cbfabe756b6a1209510d14ceebc77dd75ea6b8

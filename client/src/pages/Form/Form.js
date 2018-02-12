@@ -22,21 +22,7 @@ class Form extends Component {
        [name]: value
      });
   };
-
- //    handleFormSubmit = event => {
- //     event.preventDefault();
- //     const payload = this.state;
- //     console.log(payload);
- //     axios.post("/api/admin/" + sessionStorage.getItem("id"), payload)
- //         .then((response) => {
- //             console.log(response);
-
- //         })
- //         .catch((err) => {
- //             console.log(err.message);
- //         })
- // };
-  
+ 
  handleFormSubmit = event => {
     event.preventDefault();
     let input = document.getElementsByClassName("choices");
@@ -70,7 +56,7 @@ class Form extends Component {
           this.props.history.push("/Verify/" + surveyId);
           })
         .catch(err => console.log(err));
-    }
+    };
   };
 
   addChoice = () => {
@@ -160,7 +146,7 @@ class Form extends Component {
         </Row>
       </Container>
     );
-  }
-}
+  };
+};
 
 export default Form;

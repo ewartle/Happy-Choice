@@ -3,10 +3,7 @@ const router = require("express").Router();
 const apiRoutes = require("./api");
 const adminController = require("../controllers/adminController");
 
-
 // API Routes
 router.use("/api", apiRoutes);
 
 module.exports = router;
-
-
