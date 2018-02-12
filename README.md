@@ -21,3 +21,7 @@ Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, He
 6)	Results will then display on the decision maker’s account page.
 
 * *Test Locally: note this app requires voters be able to submit their ballots to a common server, like Heroku.  However, an example of a decision can be viewed from data already seeded in the database.  A user can also create a decision and email herself multiple invitations to vote as a simulation.  The app will run locally and display the votes of the local instance.*
+1) Create a directory on your local machine to store the Happy!Choice app.
+2) On GitHub, clone this directory.
+3) In bash on your local machine, navigate to the Happy!Choice directory, clone the GitHub directory to your local machine by running the following command in bash:  git clone <paste GitHub Happy!Choice address>
+
