@@ -19,7 +19,7 @@ Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, He
 3) Use your email and password to sign in to your new account.
 4) Click ‘Create New Survey’ to describe a decision, list choices, enter the emails of voters to be invited then submit the survey.  You will then be redirected to a page where you can click ‘Send’ to email the decision to each participant.
 5) Participating voters will then open their email invitations, allocate their 100 points to the choices and submit their ballots.
-6) Results will then display on the decision maker’s account page.
+6) Return to your User Page, and click on the survey name to display the results.
 
 
 * *Test Locally: note this app requires voters be able to submit their ballots to a common server, like Heroku.  However, an example of a decision can be viewed from data already seeded in the database.  A user can also create a decision and email herself multiple invitations to vote as a simulation.  The app will run locally and display the votes of the local instance.*
