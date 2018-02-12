@@ -1,10 +1,6 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-// import {List, ListItem} from "../../components/List"
-// import {FormBtn, Input, Slider, TextArea} from "../../components/Form"
 import { Col, Row, Container } from "../../components/Grid";
-// import { Panel, Table, TableHead, TableBody } from "../../components/Table";
-// import Wrapper from "../../components/Wrapper";
 import axios from "axios";
 import 'react-notifications/lib/notifications.css';
 
@@ -40,7 +36,6 @@ class Result extends Component {
               console.log(RoundResult);
 
               let NumberOfRounds = RoundResult.length;
-
               let LastRoundVote = RoundResult[NumberOfRounds - 1];
               let Maximum = Math.max(...LastRoundVote);
               let IndexMax = LastRoundVote.indexOf(Maximum);
@@ -88,9 +83,7 @@ class Result extends Component {
 
  loadInfo = () => {
      axios.get("/api/survey/" + this.props.match.params.id)
-         //axios.get("/api/survey/5a7cfb19b4234c1b2c4ac1e7/calculate")
          .then((responseSurvey) => {
-
              const resultSurvey = responseSurvey.data;
              let NumberOfChoices = resultSurvey.choice.length;
              let choice = [];
@@ -115,55 +108,67 @@ class Result extends Component {
     return(
         <div>
           <Container>
-              <Row>
-                  <Col size="md-12">
-                      <div className="section">
-                          <h3> Decision:  {this.state.name} </h3>
-                      </div>
-                      <div className="section">
-                          <h3> Maximized Group Choice: {this.state.finalChoice} </h3>
-                      </div>
-                  </Col>
-              </Row>
-              <Row>
-                  <Col size = "md-12"> 
-                      <div className="section">
-                          <h4> Voting Results </h4>
-                      </div>
-                          {this.state.choice.map((choice, i)=>(
-                              <ul className="collection with-header">
-                                  <li className="collection-header">
-                                      <h4>{this.state.choice[i]}</h4>
-                                  </li>
-                                  {this.state.RoundResult.map((RoundResult, j) => (
-                                      <div>
-                                          <li className = "collection-item">Round {j+1}:  {this.state.RoundResult[j][i]}
-                                          </li>
-                                      </div>
-                                  ))} 
-                              </ul>  
-                          ))}
-                  </Col>
-              </Row>
-              <Row>
-                  <Col size="md-12">
-                      <div className="section">
-                          <h4> Participants (by email)</h4>
-                      </div>
-                          <ul className="collection">
-                              {this.state.emails.map((emails, i) => (
-                                  <li className = "collection-item">
-                                      {emails}                  
-                                  </li>
-                              ))}
-                          </ul>
-                  </Col>
-              </Row>
-              <Row>
-                  <button><Link to="/" style={{ color: "black"}}> Back to User Page</Link></button> 
-              </Row>  
-          </Container>     
-        </div>
+         
+        <Row>
+             
+            <Col size = "md-12"> 
+               <div className="section">
+               <h2> <i className="large material-icons" >check</i>Your Group Selected: {this.state.finalChoice} </h2>
+
+                <h5> Decision:  {this.state.name} </h5>
+                <h5> Congratulations!  Your group has made a decision.</h5>  
+              </div>            
+            </Col>
+          </Row>
+         <Row>
+             
+            <Col size = "md-12"> 
+               <div className="section">
+             <h3> Voting Results</h3>
+            
+            <table className="highlight" id = "resultTable">
+                  <thead>
+                  <tr>
+                    <th> Options </th>
+                    {this.state.RoundResult.map((RoundResult, j) => (
+                    <th> Round Result:  {j+1}      
+                    </th> 
+                    ))} 
+                  </tr>
+                  </thead>
+                  <tbody>
+                     {this.state.choice.map((choice, i)=>(
+                        <tr>  
+                        <th> {this.state.choice[i]} </th>
+                            {this.state.RoundResult.map((RoundResult, j) => (
+                            <td>{this.state.RoundResult[j][i]}  </td>
+                            ))} 
+                        </tr> 
+                     ))}
+                  </tbody>
+              </table> 
+                  </div>
+            </Col>
+          </Row> 
+          <Row>
+              <Col size="md-12">
+                    <div className="section">
+                      <h4> Participants (by email) </h4>
+                    </div>
+                    <ul className="collection">
+                        {this.state.emails.map((emails, i) => (
+                            <li className = "collection-item">
+                             {emails}                  
+                            </li>
+                        ))}
+                    </ul>
+              </Col>
+         </Row>
+         <Row>
+                <button><Link to="/User" style={{ color: "black"}}> Back to User Page</Link></button> 
+         </Row>  
+       </Container>
+      </div>
     );
   }
 }
