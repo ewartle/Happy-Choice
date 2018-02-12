@@ -17,7 +17,7 @@ Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, He
 1) Copy & paste this link into your browser:  https://testhappy.herokuapp.com
 2) Create an account by entering your Name, email and password, then press ‘Create Account.’
 3) Use your email and password to sign in to your new account.
-4) Click ‘Create New Survey’ to describe a decision, list choices and enter the emails of voters to be invited.  Then click ‘Send’ to email the decision to each participant.
+4) Click ‘Create New Survey’ to describe a decision, list choices, enter the emails of voters to be invited then submit the survey.  You will then be redirected to a page where you can click ‘Send’ to email the decision to each participant.
 5) Participating voters will then open their email invitations, allocate their 100 points to the choices and submit their ballots.
 6) Results will then display on the decision maker’s account page.
 
