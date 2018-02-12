@@ -31,12 +31,6 @@ button:visited,
   text-transform: uppercase;
 }
 
-.container {
-  background-color: white;
-  padding: 50px;
-  border: 2px solid #263238;
-}
-
 nav {
   background-color: #455a64;
   border: none;
@@ -49,13 +43,6 @@ nav img {
   margin: 15px 15px 0px 15px;
 }
 
-#landing {
-  margin: 0 auto;
-  max-width: 750px;
-  text-align: center;
-  color: white;
-}
-
 p {
   font-size: 1.2rem;
 
@@ -64,6 +51,19 @@ p {
 p > a {
   color: white;
   text-decoration: underline;
+}
+
+.container {
+  background-color: white;
+  padding: 50px;
+  border: 2px solid #263238;
+}
+
+#landing {
+  margin: 0 auto;
+  max-width: 750px;
+  text-align: center;
+  color: white;
 }
 
 .shadow {

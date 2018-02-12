@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
-import { Link, withRouter } from "react-router-dom";
 
 class Information extends Component {
     state = {};
