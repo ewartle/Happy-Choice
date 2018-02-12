@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require("./routes");
 const app = express();
-const routes = require("./routes");
 const nodemailer = require("nodemailer");
 
 mongoose.Promise = global.Promise;
