@@ -78,7 +78,7 @@ sendEmail = event => {
      const emailRecip = this.state.emails[id];
      const partId = this.state.participant[id];
      const emailOutput = this.state
-     const link = `http://localhost:3000/survey/${emailOutput.surveyId}/${partId}`
+     const link = `https://testhappy.herokuapp.com/survey/${emailOutput.surveyId}/${partId}`
      const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.adminEmail, emailOutput.name];
     
     axios.post("/send", NodeMailerInput)
