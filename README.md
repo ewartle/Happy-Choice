@@ -1,4 +1,4 @@
-# Happy Choice #
+# ![GitHub Logo](./client/public/images/happychoicelogo.PNG)  Happy Choice   #
 ### **The Creators:**  
 * Project Manager: Miki Collins
 * Front-end: Lisa Ewart & Julie Shockley
