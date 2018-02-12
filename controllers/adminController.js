@@ -52,8 +52,10 @@ module.exports = {
                 Admin.findOneAndUpdate({ _id: req.params.id }, { $push: { surveys: dbSurvey._id } }, { new: true })
                     .then((dbAdmin) => {
                         // console.log("Successfully updated Admin");
-                        createParticipant(surveyId, participants);
-                        res.json(dbAdmin);
+                        createParticipants(surveyId, participants, function ( err ) {
+                            if ( err ) res.json( err );
+                            res.json(dbAdmin);
+                        });
                     })
                     .catch((err) => {
                         console.log('error from Admin line 68', err.message);
@@ -64,33 +66,28 @@ module.exports = {
                 res.status(422).json(err);
             })
 
-        const createParticipant = (srvyid, part) => {
-            let parts = [];
-            // console.log(part);
-            for (let i = 0; i < part.length; i++) {
-                parts.push({ email: part[i] });
-            }
-            let partId;
-            part.forEach(email => {
-                Participant
-                    .create({ email: email })
-                    .then(response => {
-                        partId = response._id;
-                    })
-                    .then(() => {
-                        Survey
-                            .findByIdAndUpdate(srvyid, { $push: { participant: partId } })
-                            .then(response => {
-                                console.log('response from survey ', response);
-                            })
-                            .catch(err => {
-                                console.log('error from survey line 100 ', err);
-                            })
-                    })
-                    .catch(err => {
-                        console.log('error from participant line 104 ', err);
-                    })
+        const createParticipants = (srvyid, emails, cb) => {
+            const participants = emails.map( ( email ) => {
+                return { email: email };
             });
+            Participant
+                .create( participants )
+                .then(dbParticipants => {
+                    const participantIds = dbParticipants.map( participant => participant._id );
+                    Survey
+                        .findByIdAndUpdate(srvyid, { participant: participantIds })
+                        .then(response => {
+                            console.log('response from survey ', response);
+                            cb( null );
+                        })
+                        .catch(err => {
+                            console.log('error from survey line 100 ', err);
+                            cb( err );
+                        })
+                })
+                .catch(err => {
+                    console.log('error from participant line 104 ', err);
+                });
         };
 
     },

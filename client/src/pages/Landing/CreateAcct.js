@@ -25,6 +25,8 @@ class CreateAcct extends Component {
       .post("/api/admin", payload)
       .then(response => {
         sessionStorage.setItem("id", response.data._id);
+        sessionStorage.setItem('email', response.data.email);
+        sessionStorage.setItem('name', response.data.name);
         this.props.history.push("/User");
       })
       .catch(err => {

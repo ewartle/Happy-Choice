@@ -18,58 +18,44 @@ import 'react-notifications/lib/notifications.css';
       adminEmail: ""
    };
 
-componentDidMount() {
-   this.loadChoice();
-   // this.loadAdmin();
+componentWillMount() {
+    this.loadChoice();
 };
 
 loadChoice = () => {
     axios.get("/api/admin/results/" + this.props.match.params.id)
         .then((response) => {
-          console.log(response);
             const result = response.data;
             let choice = [];
             let participant = [];
             let email = [];
             let name = result.name;
             let description = result.description;
+            for (let i = 0; i < result.participant.length; i++) {
+                email.push(result.participant[i].email);
+            }
             for (let i = 0; i < result.choice.length; i++) {
                 choice.push(result.choice[i].toString());
             }
             for (let i = 0; i < result.participant.length; i++) {
                 participant.push(result.participant[i]._id);
             }
-            for (let i = 0; i < result.participant.length; i++) {
-                email.push(result.participant[i].email);
-            }
+
             this.setState({
                 choice: choice,
                 emails: email,
                 participant: participant,
                 name: name,
                 description: description,
-                surveyId: response.data._id
+                surveyId: response.data._id,
+                admin: sessionStorage.getItem("name"),
+                adminEmail: sessionStorage.getItem("email")
             });
-            console.log(this.state);
         })
         .catch(err => {
             console.log(err.message);
         })
 };
-
-// loadAdmin = event => {
-//     axios.get("/api/admin/ewart@email.com")
-//         .then((response) => {
-//             console.log(response);   
-//             this.setState({
-//                 admin: response.data.name,
-//                 adminEmail: response.data.email  
-//             });
-//         })
-//         .catch(err => {
-//             console.log(err.message);
-//         })
-// };
 
 sendEmail = event => {
      event.preventDefault();
@@ -82,7 +68,6 @@ sendEmail = event => {
     
     axios.post("/send", NodeMailerInput)
       .then((response)=>{
-         console.log(response);
       })
       .catch((err)=> {
          console.log(err);
