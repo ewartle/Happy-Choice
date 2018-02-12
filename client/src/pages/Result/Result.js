@@ -34,11 +34,21 @@ class Result extends Component {
                   RoundResult.push(response.data[i]);
               }
               console.log(RoundResult);
-
+              let max_opt_score = 0;
               let NumberOfRounds = RoundResult.length;
+              let NumberofScores=RoundResult[0].length;
               let LastRoundVote = RoundResult[NumberOfRounds - 1];
               let Maximum = Math.max(...LastRoundVote);
               let IndexMax = LastRoundVote.indexOf(Maximum);
+              var opt_scores_ttls = NumberofScores;
+             //initial max value is first element of array
+              for (i=0; i<NumberofScores; i++) {
+                if (opt_scores_ttls[i]>max_opt_score) {
+                    max_opt_score = opt_scores_ttls[i]; 
+                    max_opt_score_index = i;
+                }
+              }
+
 
               this.setState({
                   IndexMax: IndexMax,
