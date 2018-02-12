@@ -19,12 +19,12 @@ render() {
        
       <Switch>
       <Route exact path="/" component={Landing} />     
-      <Route exact path="/Form" component={Form} />   
-      <Route exact path="/User" component={User} /> 
-      <Route exact path="/Survey" component={Survey} /> 
-      <Route path="/Result/:id" component={Result} /> 
-      <Route path="/Survey/:surveyid/:participantid" component={Survey} />
-      <Route path="/Verify/:id" component={Verify} />
+      <Route exact path="/form" component={Form} />   
+      <Route exact path="/user" component={User} /> 
+      <Route exact path="/survey" component={Survey} /> 
+      <Route path="/result/:id" component={Result} /> 
+      <Route path="/survey/:surveyid/:participantid" component={Survey} />
+      <Route path="/verify/:id" component={Verify} />
  
        
         

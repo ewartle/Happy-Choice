@@ -18,14 +18,15 @@ import 'react-notifications/lib/notifications.css';
       adminEmail: ""
    };
 
-componentDidMount() {
-   this.loadChoice();
-   // this.loadAdmin();
+componentWillMount() {
+    this.loadChoice();
+    // this.loadAdmin();
 };
 
 loadChoice = () => {
     axios.get("/api/admin/results/" + this.props.match.params.id)
         .then((response) => {
+          console.log("=================Database return=================")
           console.log(response);
             const result = response.data;
             let choice = [];
@@ -33,14 +34,14 @@ loadChoice = () => {
             let email = [];
             let name = result.name;
             let description = result.description;
+            for (let i = 0; i < result.participant.length; i++) {
+                email.push(result.participant[i].email);
+            }
             for (let i = 0; i < result.choice.length; i++) {
                 choice.push(result.choice[i].toString());
             }
             for (let i = 0; i < result.participant.length; i++) {
                 participant.push(result.participant[i]._id);
-            }
-            for (let i = 0; i < result.participant.length; i++) {
-                email.push(result.participant[i].email);
             }
 
             this.setState({
@@ -51,6 +52,7 @@ loadChoice = () => {
                 description: description,
                 surveyId: response.data._id
             });
+            console.log("=====================State=====================")
             console.log(this.state);
         })
         .catch(err => {
