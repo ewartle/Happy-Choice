@@ -124,7 +124,7 @@ class Survey extends Component {
              admin: []
          });
 
-         this.props.history.push("/");
+         this.props.history.push("/User");
         } else {
          NotificationManager.warning('Your vote total cannot exceed 100 points.', 'Warning', 5000);
        }
