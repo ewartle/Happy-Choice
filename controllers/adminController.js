@@ -8,7 +8,6 @@ module.exports = {
             .then(dbAdmin => res.json(dbAdmin))
             .catch(err => res.status(422).json(err));
     },
-
     findAll: function(req, res) {
         Admin
             .findById({ _id: req.params.id })

@@ -1,17 +1,8 @@
 import React, { Component } from "react";
-import { Col, Row, Container } from "../../components/Grid";
-import {Link} from "react-router-dom";
-import { Modal, ModHeader, ModBody, ModFooter } from "../../components/Modal";
-import { Input, FormBtn } from "../../components/Form";
-import RedirectBtn from "../../components/RedirectBtn";
-import axios from "axios";
+import { Col, Row } from "../../components/Grid";
+import { Link } from "react-router-dom";
 
 class Landing extends Component {
-  state = {
-    name: "",
-    password: "",
-    email: ""
-  };
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -53,63 +44,21 @@ handleAdminLogin = event => {
 
     render() {
     return (
-      <Container>
+      <div id="landing">
         <Row>
-          <Col size="md-12">
-            <h1>Happy Choice App</h1>
-            <h1>
-              <span role="img">LOGO</span>
-            </h1>
+          <Col size="m12">
+            <h1>Happy Choice</h1>
+            <h2>Happier decisions for groups</h2>
+            <p>Happy Choice is an app that maximizes total satisfaction over groups through instant runoff voting. <Link to="/Information">More information...</Link></p>
+            <button className="btn">
+              <Link to="/CreateAcct">Create Account</Link>
+            </button>
+            <button className="btn">
+              <Link to="/SignIn">Sign In</Link>
+            </button>
           </Col>
         </Row>
-
-        <Row>
-          <Col size="md-12">
-            <h2>Create Account</h2>
-            <form>
-              <Input
-                value={this.state.name}
-                onChange={this.handleInputChange}
-                name="name"
-                placeholder="Name"
-              />
-              <Input
-                value={this.state.email}
-                onChange={this.handleInputChange}
-                name="email"
-                placeholder="Email"
-              />
-              <Input
-                value={this.state.password}
-                onChange={this.handleInputChange}
-                name="password"
-                placeholder="Password"
-              />
-              <FormBtn onClick={this.handleFormSubmit}>Create Account</FormBtn>
-            </form>
-          </Col>
-        </Row>
-        <Row>
-          <Col size="md-12">
-          <h2>Sign In</h2>
-            <form>
-              <Input
-                value={this.state.email}
-                onChange={this.handleInputChange}
-                name="email"
-                placeholder="Email"
-              />
-              <Input
-                value={this.state.password}
-                onChange={this.handleInputChange}
-                name="password"
-                placeholder="Password"
-              />
-              <FormBtn onClick={this.handleAdminLogin}>Sign In</FormBtn>
-            </form>
-          </Col>
-        </Row>
-      </Container>
+      </div>
     );
   }
 }

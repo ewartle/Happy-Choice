@@ -111,7 +111,7 @@ NotificationManager.error('Your vote total cannot exceed 100 points.  Please rea
       <div>
         <Container>
           <Row>
-            <Col size="md 12">
+            <Col size="m12">
                     <h1> {this.state.name} </h1>
                     <div className="divider"></div>
                             <h5>Description:</h5>

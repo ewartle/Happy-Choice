@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
-import { Input, TextArea, FormBtn } from "../../components/Form";
+import { Input, FormBtn } from "../../components/Form";
 import axios from "axios";
 
 class Form extends Component {
@@ -14,10 +14,10 @@ class Form extends Component {
       choiceInputs: ["input-0"],
       emailInputs: ["input-0"]
     };
-  };
-
-handleInputChange = event => {
-    const { name, value, key } = event.target;
+  }
+ 
+ handleInputChange = event => {
+    const { name, value } = event.target;
      this.setState({
        [name]: value
      });
@@ -28,16 +28,20 @@ handleInputChange = event => {
     let input = document.getElementsByClassName("choices");
     for (let i = 0; i < input.length; i++) {
       let newChoice = input[i].value;
+      if (newChoice) {
       this.state.choices.push(newChoice);
-    };
+      }
+    }
 
     let input2 = document.getElementsByClassName("email");
     for (let i = 0; i < input2.length; i++) {
       let newEmail = input2[i].value;
-      this.state.participants.push(newEmail);
-    };
+      if (newEmail) {
+        this.state.participants.push(newEmail);
+      }
+    }
 
-     const formData = {
+    const formData = {
       name: this.state.name,
       description: this.state.description,
       choice: this.state.choices,
@@ -66,11 +70,11 @@ handleInputChange = event => {
     this.setState({ emailInputs: [...this.state.emailInputs, newInput] });
   };
 
-   render() {
+  render() {
     return (
       <Container>
         <Row>
-          <Col size="md-12">
+          <Col size="m12">
             <form>
               <label htmlFor="name">Title Name</label>
               <Input
@@ -81,7 +85,7 @@ handleInputChange = event => {
                 placeholder="Title Name (required)"
               />
               <label htmlFor="description">Description</label>
-              <TextArea
+              <Input
                 key="description"
                 value={this.state.description}
                 onChange={this.handleInputChange}
@@ -133,12 +137,7 @@ handleInputChange = event => {
                 );
               })}
               <FormBtn
-                 disabled={
-                   !(
-                     this.state.name &&
-                     this.state.description
-                   )
-                 }
+                disabled={!(this.state.name && this.state.description)}
                 onClick={this.handleFormSubmit}
               >
                 Create Survey

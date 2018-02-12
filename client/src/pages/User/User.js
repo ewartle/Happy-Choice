@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../../components/List";
-import RedirectBtn from "../../components/RedirectBtn";
 import axios from "axios";
 
 class User extends Component {
-  state = {
-    name: "",
-    surveys: {}
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      surveys: {}
+      };
+  }
+  
 componentDidMount() {
     this.loadSurveys();
   }
@@ -36,24 +38,26 @@ loadSurveys = () => {
     return (
       <Container>
         <Row>
-          <Col size="md-6">
-            <img src="" />
+          <Col size="m6">
+            <img src="/sun.png" alt="avatar default"/>
             <h4>{this.state.name}</h4>
           </Col>
-          <Col size="md-6">
-            <button><Link to="/Form">
+          <Col size="m6">
+            <button className="btn"><Link to="/Form">
               Add New Survey</Link>
             </button>
           </Col>
         </Row>
+        <div className="divider"></div>
+        <div className="section">
         <Row>
-          <Col size="md-12" />
-          <h2>Active Surveys</h2>
+          <Col size="m12" />
+          <h3>Active Surveys</h3>
           {this.state.surveys.length ? (
             <List>
               {this.state.surveys.map(survey => (
                 <ListItem key={survey._id}>
-                  <Link to={"/Result/"+survey._id}>
+                  <Link to={"/Result/" + survey._id}>
                     <strong>
                       {survey.name}
                     </strong>
@@ -62,9 +66,32 @@ loadSurveys = () => {
               ))}
             </List>
           ) : (
-            <h3>No Active Surveys</h3>
+            <strong>No Active Surveys</strong>
           )}
         </Row>
+        </div>
+        <div className="divider"></div>
+        <div className="section">
+        <Row>
+          <Col size="m12" />
+          <h3>Closed Surveys</h3>
+          {this.state.surveys.length ? (
+            <List>
+              {this.state.surveys.map(survey => (
+                <ListItem key={survey._id}>
+                  <Link to={"/Result/" + survey._id}>
+                    <strong>
+                      {survey.name}
+                    </strong>
+                  </Link>
+                </ListItem>
+              ))}
+            </List>
+          ) : (
+            <strong>No Closed Surveys</strong>
+          )}
+        </Row>
+        </div>
       </Container>
     );
   }
