@@ -24,12 +24,12 @@ class Survey extends Component {
 
   loadChoice = () => {
    console.log(this.props);
-    axios.get("/api/survey/" + this.props.match.params.id)
+    axios.get("/api/survey/" + this.props.match.params.surveyid)
         .then((response) => {
           console.log(response);
             const result = response.data;
             let choice = [];
-            let participant = window.location.pathname.split("/").pop();
+            let participant = this.props.match.params.participantid;
             let name = result.name;
             let description = result.description;
             let votesarray = [];

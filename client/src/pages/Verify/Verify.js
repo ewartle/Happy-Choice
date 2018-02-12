@@ -57,19 +57,19 @@ loadChoice = () => {
         })
 };
 
-// loadAdmin = event => {
-//     axios.get("/api/admin/ewart@email.com")
-//         .then((response) => {
-//             console.log(response);   
-//             this.setState({
-//                 admin: response.data.name,
-//                 adminEmail: response.data.email  
-//             });
-//         })
-//         .catch(err => {
-//             console.log(err.message);
-//         })
-// };
+loadAdmin = event => {
+    axios.get("/api/admin/ewart@email.com")
+        .then((response) => {
+            console.log(response);   
+            this.setState({
+                admin: response.data.name,
+                adminEmail: response.data.email  
+            });
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
 
 sendEmail = event => {
      event.preventDefault();
@@ -77,7 +77,7 @@ sendEmail = event => {
      const emailRecip = this.state.emails[id];
      const partId = this.state.participant[id];
      const emailOutput = this.state
-     const link = `https://testhappy.herokuapp.com/survey/${emailOutput.surveyId}/${partId}`
+     const link = `http://localhost:3000/survey/${emailOutput.surveyId}/${partId}`
      const NodeMailerInput = [emailRecip, link, emailOutput.admin, emailOutput.adminEmail, emailOutput.name];
     
     axios.post("/send", NodeMailerInput)
