@@ -28,7 +28,7 @@ Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, He
 3) In bash on your local machine:
    * navigate to the Happy!Choice directory, clone the GitHub directory to your local machine by running the following command in bash:  git clone <paste GitHub Happy!Choice address>
    * npm install    (installs the required packages locally for the app)
-   * npm init –y
+   * npm init
    * to launch the program in bash:  node server.js .     This should open up a page in your browswer with the landing page of the Happy!Choice app.   
 4) In the browser, Create an account by entering your Name, email and password, then press ‘Create Account.’
 5) Use your email and password to sign in to your new account.
