@@ -95,7 +95,7 @@ sendEmail = event => {
        <div>
          <Container>
            <Row>
-              <Col size="md 12">
+              <Col size="m12">
                 <ul className ="collection with-header">
                   <li className ="collection-header"><h3 className = "center-align">{this.state.name} </h3></li>
                      
@@ -128,7 +128,7 @@ sendEmail = event => {
                    </div>
                </Row>  
              
-               <FormBtn className = 'btn btn-success '><Link to="/User" style={{ color: "white"}} > Back to User Page</Link></FormBtn> 
+               <FormBtn className = 'btn btn-success '><Link to="/User" > Back to User Page</Link></FormBtn> 
                          
             <NotificationContainer/>
 

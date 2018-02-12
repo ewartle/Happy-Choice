@@ -29,8 +29,6 @@ render() {
       <Route exact path="/User" component={User} /> 
       <Route exact path="/Survey" component={Survey} /> 
       <Route exact path="/Information" component={Information} /> 
-      <Route path="/Result/" component={Result} /> 
-      <Route path="/Verify/" component={Verify} />
       <Route path="/Result/:id" component={Result} /> 
       <Route path="/Survey/:id" component={Survey} />
       <Route path="/Verify/:id" component={Verify} />

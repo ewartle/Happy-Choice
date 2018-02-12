@@ -111,7 +111,7 @@ class Result extends Component {
          
         <Row>
              
-            <Col size = "md-12"> 
+            <Col size = "m12"> 
                <div className="section">
                <h2> <i className="large material-icons" >check</i>Your Group Selected: {this.state.finalChoice} </h2>
 
@@ -122,7 +122,7 @@ class Result extends Component {
           </Row>
          <Row>
              
-            <Col size = "md-12"> 
+            <Col size = "m12"> 
                <div className="section">
              <h3> Voting Results</h3>
             
@@ -151,7 +151,7 @@ class Result extends Component {
             </Col>
           </Row> 
           <Row>
-              <Col size="md-12">
+              <Col size="m12">
                     <div className="section">
                       <h4> Participants (by email) </h4>
                     </div>
@@ -165,7 +165,7 @@ class Result extends Component {
               </Col>
          </Row>
          <Row>
-                <button><Link to="/User" style={{ color: "black"}}> Back to User Page</Link></button> 
+                <button><Link to="/User"> Back to User Page</Link></button> 
          </Row>  
        </Container>
       </div>
