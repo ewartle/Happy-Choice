@@ -3,7 +3,7 @@ import { Col, Row, Container } from "../../components/Grid";
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../../components/List";
-import RedirectBtn from "../../components/RedirectBtn";
+
 
 class User extends Component {
   state = {

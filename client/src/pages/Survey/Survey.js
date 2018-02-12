@@ -85,7 +85,11 @@ loadAdmin = event => {
    }
    newState.totalPoints = array.reduce(reducer);
    this.setState(newState);
-    console.log(newState)
+    console.log(newState);
+  if (this.state.totalPoints===101){
+    NotificationManager.warning('Your vote total cannot exceed 100 points.', 'Warning', 5000);
+
+  }
 
 };
 
@@ -118,8 +122,7 @@ loadAdmin = event => {
        } 
        else {
       
-        NotificationManager.warning('Your vote total cannot exceed 100 points.', 'Warning', 5000);
-
+       NotificationManager.error('Your vote total cannot exceed 1000 points.  Please reallocate your votes.', 'Error', 5000); 
        }
   };
 
@@ -131,12 +134,11 @@ loadAdmin = event => {
             <Col size="md 12">
                     <h1> {this.state.name} </h1>
                     <div className="divider"></div>
-                     <div className="section">
-                          <h5>Description</h5>
+                            <h5>Description:</h5>
                             <p>{this.state.description}</p>
-                     </div>
-                     <div className="section">
-                          <h5>Here are your Options</h5>
+                     
+                                  <div className="section">
+                          <h5>Here are your Options:</h5>
                             <ul> 
                             {this.state.choice.map((choice, i) => (
                                         <li> <i className="material-icons">check</i> <strong> {this.state.choice[i]} </strong> </li>
@@ -179,16 +181,14 @@ loadAdmin = event => {
                             </tbody>
                               </table> 
                       </div>      
-                       <div className="divider"></div>
-      <div className="section"> 
-        
-                Total Points:
-                      <div> {this.state.totalPoints} </div>
-           
-            </div>
-             <div className="divider"></div>
+                     
+   <div className="section"> 
 
-             <div className="section"> 
+      <div className="chip">
+       Total Points:  {this.state.totalPoints} 
+      </div>
+  </div>
+       <div className="section"> 
               
               <FormBtn onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
              

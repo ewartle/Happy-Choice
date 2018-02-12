@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {Col, Row, Container} from "../../components/Grid";
 import axios from "axios"
-import 'react-notifications/lib/notifications.css';
+import {FormBtn} from "../../components/Form"
+
 
 class Result extends Component {
  
@@ -99,6 +100,8 @@ class Result extends Component {
           })
   };
 
+ 
+
   render(){
     return(
         <div>
@@ -121,7 +124,7 @@ class Result extends Component {
                <div className="section">
              <h3> Voting Results</h3>
             
-            <table className="highlight">
+            <table className="highlight" id = "resultTable">
                   <thead>
                   <tr>
                     <th> Options </th>
@@ -141,8 +144,7 @@ class Result extends Component {
                         </tr> 
                      ))}
                   </tbody>
-              </table>
-
+              </table> 
                   </div>
             </Col>
           </Row> 
