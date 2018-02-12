@@ -140,5 +140,4 @@ sendEmail = event => {
    }
  
  }
-
  export default Verify;

@@ -1,9 +1,9 @@
 import React from "react";
 import "./Wrapper.css";
 
-
-const Wrapper = props => <main className="wrapper" {...props} />;
-
+const Wrapper = ({children}) => <main className="wrapper">
+ {children}
+ </main>;
 
 
 export default Wrapper;
