@@ -10,7 +10,6 @@ class Survey extends Component {
    state = {
 
      participant: "",
-     admin: "",
      name: "",     
      totalPoints: 0,
      votes: [],
@@ -24,12 +23,12 @@ class Survey extends Component {
 
   loadChoice = () => {
    console.log(this.props);
-    axios.get("/api/survey/" + this.props.match.params.id)
+    axios.get("/api/survey/" + this.props.match.params.surveyid)
         .then((response) => {
           console.log(response);
             const result = response.data;
             let choice = [];
-            let participant = window.location.pathname.split("/").pop();
+            let participant = this.props.match.params.participantid;
             let name = result.name;
             let description = result.description;
             let votesarray = [];
@@ -48,27 +47,11 @@ class Survey extends Component {
 
             });
             console.log(this.state);
-            // this.loadAdmin();
         })
         .catch(err => {
             console.log(err.message);
         })
   };
-
-  // loadAdmin = event => {
-      
-  //     axios.get("/api/admin/ewart@email.com")
-  //         .then((response) => {
-  //             console.log(response);   
-
-  //             this.setState({
-  //                 admin: response.data.name  
-  //             });
-  //         })
-  //         .catch(err => {
-  //             console.log(err.message);
-  //         })
-  // };
 
  handleInputChange = (event) => {
    const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -100,7 +83,7 @@ class Survey extends Component {
            for (let i = 0; i < this.state.votes.length; i++) {
                payload.push(parseInt(this.state.votes[i].vote));
            }
-           NotificationManager.success(`Thank you for casting your votes!  ${this.state.admin} will be in touch with you about the results.`, 'Success!', 5000);
+           NotificationManager.success(`Thank you for casting your votes!`, 'Success!', 5000);
            const surveyInput = [payload, this.state.participant];
            axios.post("/api/admin/admin/" + this.state.participant, surveyInput).then((response) => {
                console.log(response);
@@ -109,14 +92,12 @@ class Survey extends Component {
            });
 
          this.setState({
-             admin: "",
              name: "",
              participant: "",
              description: "",
              totalPoints: 0,
              votes: [],
-             options: [],
-             admin: []
+             options: []
          });
 
          this.props.history.push("/");

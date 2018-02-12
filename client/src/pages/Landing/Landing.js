@@ -4,7 +4,45 @@ import { Link } from "react-router-dom";
 
 class Landing extends Component {
 
-render() {
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    const payload = this.state;
+    axios.post("/api/admin", payload)
+        .then((response) => {
+            sessionStorage.setItem('id', response.data._id);
+            sessionStorage.setItem('email', response.data.email);
+            sessionStorage.setItem('name', response.data.name);
+            this.props.history.push("/User");
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
+
+handleAdminLogin = event => {
+    event.preventDefault();
+    axios.get("/api/admin/" + this.state.email)
+        .then((response) => {
+            if (response.data.password === this.state.password) {
+                sessionStorage.setItem('id', response.data._id);
+                this.props.history.push("/User");
+            } else {
+                console.log("Invalid password");
+            }
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
+
+    render() {
     return (
       <div id="landing">
         <Row>

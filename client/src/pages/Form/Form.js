@@ -54,6 +54,7 @@ class Form extends Component {
           console.log(res);
           const surveyId = res.data.surveys[res.data.surveys.length -1];
           this.props.history.push("/Verify/" + surveyId);
+          
           })
         .catch(err => console.log(err));
     };
