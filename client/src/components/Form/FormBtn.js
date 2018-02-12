@@ -1,5 +1,5 @@
 import React from "react";
-import "./Slider.css";
+import "./Form.css";
 
 export const FormBtn = props =>
   <button {...props} className="btn">
