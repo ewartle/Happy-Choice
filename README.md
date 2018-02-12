@@ -1,4 +1,4 @@
-# ![Logo](client/public/images/happy-choice-logo.PNG)  Happy Choice   #
+# ![Logo](/client/public/images/happy-choice-logo.PNG)  Happy Choice   #
 ### **The Creators:**  
 * Project Manager: Miki Collins
 * Front-end: Lisa Ewart & Julie Shockley
@@ -27,8 +27,10 @@ Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, He
 2) On GitHub, clone this directory.
 3) In bash on your local machine:
    * navigate to the Happy Choice directory, clone the GitHub directory to your local machine by running the following command in bash:  
-   `git clone "https://github.com/ewartle/Happy-Choice.git"
-   npm install`    (installs the required packages locally for the app)
+   ```
+   git clone "https://github.com/ewartle/Happy-Choice.git"
+   npm install
+   ```    (installs the required packages locally for the app)
    * to launch the program in bash:  
    `npm run dev`      
    This should open up a page in your browswer with the landing page of the Happy!Choice app.   
