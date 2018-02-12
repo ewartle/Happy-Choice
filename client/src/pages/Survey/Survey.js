@@ -37,7 +37,6 @@ class Survey extends Component {
                 choice.push(result.choice[i].toString());
                 votesarray.push({vote: 0 });
             }
-
             this.setState({
                 choice: choice,
                 participant: participant,
@@ -70,10 +69,7 @@ class Survey extends Component {
 
    this.setState(newState);
    console.log(newState);
-   if (this.state.totalPoints===101){
-    NotificationManager.warning('Your vote total cannot exceed 100 points.', 'Warning', 5000);
-
-  }
+   
   };
 
   handleFormSubmit = event => {
@@ -87,6 +83,7 @@ class Survey extends Component {
            const surveyInput = [payload, this.state.participant];
            axios.post("/api/admin/admin/" + this.state.participant, surveyInput).then((response) => {
                console.log(response);
+               
            }).catch((err) => {
                console.log(err.message);
            });
@@ -99,12 +96,19 @@ class Survey extends Component {
              votes: [],
              options: []
          });
+         
 
-         this.props.history.push("/");
+         setTimeout(this.loadPage, 2000);
+       
+        
         } else {
-NotificationManager.error('Your vote total cannot exceed 100 points.  Please reallocate your votes.', 'Error', 5000); 
+    NotificationManager.error('Your vote total cannot exceed 100 points.  Please reallocate your votes.', 'Error', 5000); 
        }
   };
+
+   loadPage = event => {
+     this.props.history.push("/");
+   }
 
  render(){
     return(
@@ -117,14 +121,7 @@ NotificationManager.error('Your vote total cannot exceed 100 points.  Please rea
                             <h5>Description:</h5>
                             <p>{this.state.description}</p>
                      
-                                  <div className="section">
-                          <h5>Here are your Options:</h5>
-                            <ul> 
-                            {this.state.choice.map((choice, i) => (
-                                        <li> <i className="material-icons">check</i> <strong> {this.state.choice[i]} </strong> </li>
-                                        ))}
-                            </ul>
-                     </div>    
+                      
                      <div className="divider"></div>
                           <div className="section">
                             <h5>Instructions</h5>
@@ -143,7 +140,7 @@ NotificationManager.error('Your vote total cannot exceed 100 points.  Please rea
                             {this.state.votes.map((votes, i) => (
                             <tr><td>
                                 <div className ="range-field range">
-                                 <h6> Your votes for {this.state.choice[i]}: {this.state.votes[i].vote} </h6> 
+                                 <h5> <i className="material-icons">check</i> <strong> {this.state.choice[i]} </strong>: {this.state.votes[i].vote} </h5> 
                                   <Input
                                   id={i}
                                   min = "0"

@@ -19,7 +19,8 @@ class Result extends Component {
      LastRoundVote: [],
      WinnersIndex: [],
      numberOfScores: 0, 
-     winnersCount: 0
+     winnersCount: 0,
+     finalChoiceLanguage: ""
   };
 
  componentDidMount() {
@@ -118,6 +119,7 @@ class Result extends Component {
              let NumberOfChoices = resultSurvey.choice.length;
              let choice = [];
              let name = resultSurvey.name;
+             let finalChoiceLanguage = "";
              let finalChoice = "";
              let finalChoice1 = "";
              for (let i = 0; i < resultSurvey.choice.length; i++) {
@@ -125,7 +127,7 @@ class Result extends Component {
              }
           if (this.state.winnersCount === 1){
               finalChoice = choice[this.state.WinnersIndex]
-             } 
+            } 
           else if (this.state.winnersCount === 2) {
               finalChoice = choice[this.state.WinnersIndex[1]]; 
               finalChoice1 = choice[this.state.WinnersIndex[0]]
@@ -136,7 +138,8 @@ class Result extends Component {
                  name: name,
                  finalChoice: finalChoice,
                  numberOfChoices: NumberOfChoices,
-                 finalChoice1: finalChoice1
+                 finalChoice1: finalChoice1,
+                 finalChoiceLanguage: finalChoiceLanguage
              });
             console.log(this.state);
          })
@@ -145,6 +148,14 @@ class Result extends Component {
          })
   
  };
+
+// loadFinalChoiceLanguage = () => { 
+
+// finalChoiceLanguage = `Congratulations!  Your group's maximized happiness choice is: ${this.state.finalChoice}!`
+
+// this.setState({
+             //                 finalChoiceLanguage: finalChoiceLanguage
+            // });
 
    render(){
     return(
@@ -155,7 +166,7 @@ class Result extends Component {
              
             <Col size = "m12"> 
                <div className="section">
-               <h2> <i className="large material-icons" >check</i>Your Group Selected: {this.state.finalChoice} {this.state.finalChoice1} </h2>
+               <h2> <i className="large material-icons" >check</i> {this.state.finalChoiceLanguage}  </h2>
 
                 <h5> Decision:  {this.state.name} </h5>
                 <h5> Congratulations!  Your group has made a decision.</h5>  
