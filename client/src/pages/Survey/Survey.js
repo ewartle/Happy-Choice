@@ -37,9 +37,7 @@ loadChoice = () => {
                 votesarray.push({vote: 0 });
                 
             }
-           //for (let i = 0; i < result.participant.length; i++) {
-             //participant.push(result.participant[i].toString());
-           // }
+           
             this.setState({
                 choice: choice,
                 participant: participant,
@@ -89,8 +87,6 @@ loadAdmin = event => {
    this.setState(newState);
     console.log(newState)
 
- 
-
 };
 
   handleFormSubmit= event => {
@@ -100,19 +96,13 @@ loadAdmin = event => {
           for (let i = 0; i<this.state.votes.length; i++) {
               payload.push(parseInt(this.state.votes[i].vote));
           }
-          console.log(payload); 
-          const surveyInput = [payload, this.state.participant];
-          console.log(payload.toString());
-          console.log("props", this.props);
-          console.log("state", this.state);
+         NotificationManager.success(`Thank you for casting your votes!  ${this.state.admin} will be in touch with you about the results.`, 'Success!', 5000);
+           const surveyInput = [payload, this.state.participant];
           axios.post("/api/admin/admin/"+this.state.participant, surveyInput).then((response)=>{
             console.log(response)}).catch((err)=> {
             console.log(err.message);
           });
-
-
-          NotificationManager.success(`Thank you for casting your votes!  ${this.state.admin} will be in touch with you about the results.`, 'Success!', 5000);
-         this.setState({
+          this.setState({
             admin: "",
             name: "",
             participant: "",
@@ -133,8 +123,6 @@ loadAdmin = event => {
        }
   };
 
- 
-
   render(){
     return(
       <div>
@@ -154,7 +142,8 @@ loadAdmin = event => {
                                         <li> <i className="material-icons">check</i> <strong> {this.state.choice[i]} </strong> </li>
                                         ))}
                             </ul>
-                     </div>                                   <div className="divider"></div>
+                     </div>    
+                     <div className="divider"></div>
                           <div className="section">
                             <h5>Instructions</h5>
                             <p> You have 100 points total that you can allocate to the following options.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.</p>
@@ -171,7 +160,7 @@ loadAdmin = event => {
                           <tbody>
                             {this.state.votes.map((votes, i) => (
                             <tr><td>
-                                <div className ="range-field">
+                                <div className ="range-field range">
                                  <h6> Your votes for {this.state.choice[i]}: {this.state.votes[i].vote} </h6> 
                                   <Input
                                   id={i}
@@ -181,11 +170,9 @@ loadAdmin = event => {
                                   name="votes"
                                   onChange={this.handleInputChange}
                                   type="range"
+                                  defaultValue = "0" 
                                    
-                                  
-                                  />  
-
-                                  
+                                  /> 
                                     </div>
                             </td></tr>  
                              ))}
@@ -206,8 +193,8 @@ loadAdmin = event => {
               <FormBtn onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
              
             </div>
-                                         <div className="divider"></div>
-              <div>
+                <div className="divider"></div>
+            <div>
                  <NotificationContainer/>
               </div>
             </Col>
@@ -218,7 +205,6 @@ loadAdmin = event => {
      
     );
   }
-
 }
 export default Survey;
 
