@@ -11,3 +11,4 @@ export const Panel = ({ children }) => {
     </div>
   );
 };
+

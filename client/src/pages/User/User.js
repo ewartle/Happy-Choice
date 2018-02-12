@@ -1,15 +1,29 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
-import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../../components/List";
 import RedirectBtn from "../../components/RedirectBtn";
+import axios from "axios";
 
 class User extends Component {
   state = {
     name: "",
     surveys: {}
   };
+
+componentDidMount() {
+    this.loadSurveys();
+  }
+
+loadSurveys = () => {
+    axios.get("/api/admin/adminpage/"+ sessionStorage.getItem("id"))
+        .then((response) => {
+            this.setState({ surveys: response.data.surveys})
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+};
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -39,7 +53,7 @@ class User extends Component {
             <List>
               {this.state.surveys.map(survey => (
                 <ListItem key={survey._id}>
-                  <Link to={"/Result/" + survey._id}>
+                  <Link to={"/Result/"+survey._id}>
                     <strong>
                       {survey.name}
                     </strong>
