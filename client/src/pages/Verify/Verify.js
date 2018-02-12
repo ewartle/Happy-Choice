@@ -20,14 +20,11 @@ import 'react-notifications/lib/notifications.css';
 
 componentWillMount() {
     this.loadChoice();
-    // this.loadAdmin();
 };
 
 loadChoice = () => {
     axios.get("/api/admin/results/" + this.props.match.params.id)
         .then((response) => {
-          console.log("=================Database return=================")
-          console.log(response);
             const result = response.data;
             let choice = [];
             let participant = [];
@@ -50,23 +47,9 @@ loadChoice = () => {
                 participant: participant,
                 name: name,
                 description: description,
-                surveyId: response.data._id
-            });
-            console.log("=====================State=====================")
-            console.log(this.state);
-        })
-        .catch(err => {
-            console.log(err.message);
-        })
-};
-
-loadAdmin = event => {
-    axios.get("/api/admin/ewart@email.com")
-        .then((response) => {
-            console.log(response);   
-            this.setState({
-                admin: response.data.name,
-                adminEmail: response.data.email  
+                surveyId: response.data._id,
+                admin: sessionStorage.getItem("name"),
+                adminEmail: sessionStorage.getItem("email")
             });
         })
         .catch(err => {
@@ -85,7 +68,6 @@ sendEmail = event => {
     
     axios.post("/send", NodeMailerInput)
       .then((response)=>{
-         console.log(response);
       })
       .catch((err)=> {
          console.log(err);
