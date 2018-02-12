@@ -23,7 +23,7 @@ render() {
       <Route exact path="/User" component={User} /> 
       <Route exact path="/Survey" component={Survey} /> 
       <Route path="/Result/:id" component={Result} /> 
-      <Route path="/Survey/:id" component={Survey} />
+      <Route path="/Survey/:surveyid/:participantid" component={Survey} />
       <Route path="/Verify/:id" component={Verify} />
  
        
