@@ -26,9 +26,9 @@ Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, He
 1) Create a directory on your local machine to store the Happy!Choice app.
 2) On GitHub, clone this directory.
 3) In bash on your local machine:
-*    (a) navigate to the Happy!Choice directory, clone the GitHub directory to your local machine by running the following command in bash:  git clone <paste GitHub Happy!Choice address>
-*    (b) in bash: npm init –y
-*    (c) to launch the program in bash:  node server.js    This should open up a page in your browswer with the landing page of the Happy!Choice app.   
+  *    (a) navigate to the Happy!Choice directory, clone the GitHub directory to your local machine by running the following command in bash:  git clone <paste GitHub Happy!Choice address>
+  *    (b) in bash: npm init –y
+  *    (c) to launch the program in bash:  node server.js .     This should open up a page in your browswer with the landing page of the Happy!Choice app.   
 4) In the browser, Create an account by entering your Name, email and password, then press ‘Create Account.’
 5) Use your email and password to sign in to your new account.
 6) Click ‘Create New Survey’ to describe a decision, list choices and enter your own email address multiple times to simulate multiple voters to be invited.  Then click ‘Send’ to email the decision to each instance of your email.
