@@ -3,7 +3,6 @@ import { Col, Row, Container } from "../../components/Grid";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 import axios from "axios";
 
-// update inputs???????????????????????????????
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -23,21 +22,7 @@ handleInputChange = event => {
        [name]: value
      });
   };
-
- //    handleFormSubmit = event => {
- //     event.preventDefault();
- //     const payload = this.state;
- //     console.log(payload);
- //     axios.post("/api/admin/" + sessionStorage.getItem("id"), payload)
- //         .then((response) => {
- //             console.log(response);
-
- //         })
- //         .catch((err) => {
- //             console.log(err.message);
- //         })
- // };
-  
+ 
  handleFormSubmit = event => {
     event.preventDefault();
     let input = document.getElementsByClassName("choices");

@@ -4,14 +4,6 @@ const calculateSurveyResults = require('../calculate.js');
 // Defining methods for the surveyController
 module.exports = {
 
-
-    // findAll: function(req, res) {
-    //   db.Survey
-    //     .find(req.query)
-    //     .sort({ date: -1 })
-    //     .then(dbModel => res.json(dbModel))
-    //     .catch(err => res.status(422).json(err));
-    // },
     findById: function(req, res) {
         console.log("Hit the survey get survey ");
         Survey
@@ -39,4 +31,5 @@ module.exports = {
             })
             .catch(err => res.status(422).json(err));
     }
+
 };

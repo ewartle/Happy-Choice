@@ -8,12 +8,7 @@ module.exports = {
             .then(dbAdmin => res.json(dbAdmin))
             .catch(err => res.status(422).json(err));
     },
-    // findById: function(req, res) {
-    //   db.Admin
-    //     .findById(req.params.id)
-    //     .then(dbAdmin => res.json(dbAdmin))
-    //     .catch(err => res.status(422).json(err));
-    // },
+
     findAll: function(req, res) {
         Admin
             .findById({ _id: req.params.id })
@@ -42,9 +37,6 @@ module.exports = {
     },
 
     createsurvey: function(req, res) {
-        // console.log("Hit the survey create POST route")
-        // console.log(req.body);
-        // console.log(req.params.id);
         const survey = {
             name: req.body.name,
             description: req.body.description,
@@ -79,16 +71,12 @@ module.exports = {
             for (let i = 0; i < part.length; i++) {
                 parts.push({ email: part[i] });
             }
-            // console.log(parts);
-            // console.log(typeof(parts));
             let partId;
             part.forEach(email => {
                 Participant
                     .create({ email: email })
                     .then(response => {
                         partId = response._id;
-                        // console.log("participant res" + response)
-
                     })
                     .then(() => {
                         Survey
@@ -136,6 +124,4 @@ module.exports = {
             })
             .catch(err => res.status(422).json(err.message));
     }
-
-
 };

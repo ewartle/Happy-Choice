@@ -131,13 +131,14 @@ sendEmail = event => {
                <FormBtn className = 'btn btn-success '><Link to="/User" style={{ color: "white"}} > Back to User Page</Link></FormBtn> 
                          
             <NotificationContainer/>
-           
+
            </Container>
          
        </div>
-      
+
      );
    }
  
  }
+
  export default Verify;
