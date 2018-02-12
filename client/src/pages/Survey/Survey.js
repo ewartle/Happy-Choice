@@ -172,8 +172,9 @@ NotificationManager.error('Your vote total cannot exceed 100 points.  Please rea
                                   onChange={this.handleInputChange}
                                   type="range"
                                   defaultValue = "0" 
+
                                    
-                                  /> 
+                                  /> <span className ="thumb"></span>
                                     </div>
                             </td></tr>  
                              ))}

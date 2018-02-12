@@ -7,16 +7,19 @@ import 'react-notifications/lib/notifications.css';
 class Result extends Component {
   
  state = {
-
      name: "",
      finalChoice: "",
      choice: [],
      participant: [],
      emails: [],
      RoundResult: [],
-     IndexMax: 0,
+     MaxScore: 0,
      numberOfRounds: 0, 
-     numberOfChoices: 0  
+     numberOfChoices: 0,
+     LastRoundVote: [],
+     WinnersIndex: [],
+     numberOfScores: 0, 
+     winnersCount: 0
   };
 
  componentDidMount() {
@@ -24,36 +27,51 @@ class Result extends Component {
   
 }
 
-
   loadVotes = () => {
       axios.get('/api/survey/calculate/' + this.props.match.params.id).then((response) => {
-              console.log("this is from resultspage", response.data);
+              console.log(response.data);
+              //let RoundResult = [[1, 3, 5, 2], [6, 6, 6, 8], [9, 9, 7, 8]];
               let RoundResult = [];
-
-              for (let i = 0; i < response.data.length; i++) {
+             for (let i = 0; i < response.data.length; i++) {
                   RoundResult.push(response.data[i]);
               }
-              console.log(RoundResult);
-              let max_opt_score = 0;
-              let NumberOfRounds = RoundResult.length;
+              let maxScore = 0;
+              let NumberofRounds = RoundResult.length;
               let NumberofScores=RoundResult[0].length;
-              let LastRoundVote = RoundResult[NumberOfRounds - 1];
-              let Maximum = Math.max(...LastRoundVote);
-              let IndexMax = LastRoundVote.indexOf(Maximum);
-              var opt_scores_ttls = NumberofScores;
-             //initial max value is first element of array
-              for (i=0; i<NumberofScores; i++) {
-                if (opt_scores_ttls[i]>max_opt_score) {
-                    max_opt_score = opt_scores_ttls[i]; 
-                    max_opt_score_index = i;
+              let LastRoundVote = RoundResult[NumberofRounds - 1];
+              let winners_ct=0;
+              let winners = [];
+            
+
+             //determines the maximum score in the last round
+              for (let i=0; i<NumberofScores; i++) {
+                if (LastRoundVote[i]>maxScore) {
+                    maxScore = LastRoundVote[i]; 
+                    let maxScoreIndex = i;
+                };
+              };
+              //loops through the last round to see if more than one score matches the maximum
+              for (var i=0; i<NumberofScores; i++) {
+                  if (LastRoundVote[i]===maxScore) {
+                  winners.push(i);
+                  winners_ct++;
                 }
               }
+         
+              for (let i=0; i<NumberofRounds; i++) {
+                 for (let j = 0; j<NumberofScores; j++) {
+                  RoundResult[i][j]=RoundResult[i][j].toFixed(2);
+                }
 
-
+              };
               this.setState({
-                  IndexMax: IndexMax,
                   RoundResult: RoundResult,
-                  numberOfRounds: NumberOfRounds
+                  numberOfRounds: NumberofRounds,
+                  LastRoundVote: LastRoundVote,
+                  WinnersIndex: winners,
+                  MaxScore: maxScore,
+                  numberOfScores: NumberofScores,
+                  winnersCount: winners_ct
               });
 
               console.log(this.state);
@@ -93,25 +111,39 @@ class Result extends Component {
 
  loadInfo = () => {
      axios.get("/api/survey/" + this.props.match.params.id)
+
          .then((responseSurvey) => {
+          console.log(responseSurvey);
              const resultSurvey = responseSurvey.data;
              let NumberOfChoices = resultSurvey.choice.length;
              let choice = [];
              let name = resultSurvey.name;
+             let finalChoice = "";
+             let finalChoice1 = "";
              for (let i = 0; i < resultSurvey.choice.length; i++) {
                  choice.push(resultSurvey.choice[i].toString());
              }
-             this.setState({
+          if (this.state.winnersCount === 1){
+              finalChoice = choice[this.state.WinnersIndex]
+             } 
+          else if (this.state.winnersCount === 2) {
+              finalChoice = choice[this.state.WinnersIndex[1]]; 
+              finalChoice1 = choice[this.state.WinnersIndex[0]]
+            }
+           
+          this.setState({
                  choice: choice,
                  name: name,
-                 finalChoice: choice[this.state.IndexMax],
-                 numberOfChoices: NumberOfChoices
+                 finalChoice: finalChoice,
+                 numberOfChoices: NumberOfChoices,
+                 finalChoice1: finalChoice1
              });
-             console.log(this.state);
+            console.log(this.state);
          })
          .catch(err => {
              console.log(err);
          })
+  
  };
 
    render(){
@@ -123,7 +155,7 @@ class Result extends Component {
              
             <Col size = "m12"> 
                <div className="section">
-               <h2> <i className="large material-icons" >check</i>Your Group Selected: {this.state.finalChoice} </h2>
+               <h2> <i className="large material-icons" >check</i>Your Group Selected: {this.state.finalChoice} {this.state.finalChoice1} </h2>
 
                 <h5> Decision:  {this.state.name} </h5>
                 <h5> Congratulations!  Your group has made a decision.</h5>  
