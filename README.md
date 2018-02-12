@@ -7,6 +7,7 @@
 For groups choosing between numerous options, Happy Choice puts the power of an advanced decision making algorithm in the palm of your hand.  Happy Choice finds the best option that maximizes total group satisfaction.   
 ### **How it works:**
 A group member inputs a decision to be made and describes each of the nominated choices.  Invitations to vote on the decision are emailed to group members.  Voters then allocate their 100 preference points between the available choices and submit their ballots.   Happy Choice takes if from there. 
+
 Votes are tallied for each choice and the lowest scoring choices are eliminated on succeeding rounds.   Voters do not lose points allocated to choices that are eliminated, since these point are reallocated to their remaining preferences.  Points can only be lost by a voter, if the voter is indifferent to the remaining choices (i.e. they have scored every remaining choice as a zero).   Happy Choice continues to execute voting rounds until two choices are left: a winner and a second place.  Finally, the results of each of the rounds are displayed to all group members.
 ### **Technologies Deployed:**
 Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, Heroku, Node Mailer
