@@ -25,6 +25,8 @@ class SignIn extends Component {
       .then(response => {
         if (response.data.password === this.state.password) {
           sessionStorage.setItem("id", response.data._id);
+          sessionStorage.setItem('email', response.data.email);
+          sessionStorage.setItem('name', response.data.name);
           this.props.history.push("/User");
         } else {
           console.log("Invalid password");
