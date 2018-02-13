@@ -86,7 +86,7 @@ class Survey extends Component {
            for (let i = 0; i < this.state.votes.length; i++) {
                payload.push(parseInt(this.state.votes[i].vote));
            }
-           NotificationManager.success(`Thank you for casting your votes!`, 'Success!', 5000);
+           NotificationManager.success(`Thank you for voting!`, 'Success!', 5000);
            const surveyInput = [payload, this.state.participant];
            axios.post("/api/admin/admin/" + this.state.participant, surveyInput).then((response) => {
                console.log(response);
@@ -109,7 +109,7 @@ class Survey extends Component {
        
         
         } else {
-    NotificationManager.error('Your vote total cannot exceed 100 points.  Please reallocate your votes.', 'Error', 5000); 
+    NotificationManager.error('Vote total cannot exceed 100 points.  Please reallocate your votes.', 'Error', 5000); 
        }
   };
 

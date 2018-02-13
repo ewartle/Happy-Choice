@@ -5,47 +5,9 @@ import axios from "axios";
 
 class Landing extends Component {
 
-//   handleInputChange = event => {
-//     const { name, value } = event.target;
-//     this.setState({
-//       [name]: value
-//     });
-//   };
-
-//   handleFormSubmit = event => {
-//     event.preventDefault();
-//     const payload = this.state;
-//     axios.post("/api/admin", payload)
-//         .then((response) => {
-//             sessionStorage.setItem('id', response.data._id);
-//             sessionStorage.setItem('email', response.data.email);
-//             sessionStorage.setItem('name', response.data.name);
-//             this.props.history.push("/User");
-//         })
-//         .catch(err => {
-//             console.log(err.message);
-//         })
-// };
-
-// handleAdminLogin = event => {
-//     event.preventDefault();
-//     axios.get("/api/admin/" + this.state.email)
-//         .then((response) => {
-//             if (response.data.password === this.state.password) {
-//                 sessionStorage.setItem('id', response.data._id);
-//                 this.props.history.push("/User");
-//             } else {
-//                 console.log("Invalid password");
-//             }
-//         })
-//         .catch(err => {
-//             console.log(err.message);
-//         })
-// };
-
     render() {
     return (
-      <div id="landing">
+      <div id="landing"><img id="sun" src="/sun4.png" alt="avatar default"/>
         <Row>
           <Col size="m12">
             <h1>Happy Choice</h1>

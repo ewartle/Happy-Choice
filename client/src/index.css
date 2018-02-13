@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #455a64;
+  background-color: #1a237e;
   color: #263238;
   
 }
@@ -30,17 +30,18 @@ button:visited,
   border-radius: 10px;
   line-height: 18px;
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 .container {
-  background-color: #eceff1;
+  background-color: #fafafa;
   padding: 50px;
   border: 2px solid #263238;
 }
 
 
 .table1{
-  background-color: #ffecb3;
+  background-color: #fafafa;
   border: 3px solid #ffc107;
   width: 90%;
   margin-left:auto; 
@@ -50,7 +51,7 @@ button:visited,
 }
 
 .surveyTable{
-  background-color: #ffecb3;
+  background-color: #fafafa;
   border: 3px solid #ffc107;
   width: 90%;
   margin-left:auto; 
@@ -103,7 +104,7 @@ td {
 
 
 nav {
-  background-color: #455a64;
+  background-color: #1a237e;
   border: none;
   margin-bottom: 20px;
   -webkit-box-shadow: none;
@@ -182,4 +183,12 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   color: black;
 }
 
+#sun {
+  width: 400px;
+}
 
+.col>img {
+  max-width: 400px;
+  display: block;
+  margin: auto;
+}
