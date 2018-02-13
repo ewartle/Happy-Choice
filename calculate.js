@@ -3,9 +3,9 @@ console.log("what calculate receives",survey);
   var options_ct = 0;
   var participant_ct = 0;
   var participants = survey.participant;
-  console.log(participants[0].score[[0]]);
+  console.log(participants[0].score);
   var participants_opt_scores = participants.map((participant) => {
-    var participantScores = participant.score[[0]];
+    var participantScores = participant.score;
     participant_ct = survey.participant.length;
     options_ct = participantScores.length;
     return participantScores;
