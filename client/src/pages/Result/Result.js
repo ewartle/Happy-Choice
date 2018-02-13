@@ -156,30 +156,26 @@ class Result extends Component {
     return(
         <div>
           <Container>
-           <Row>
-               <Col size="m5">
-                     <img src="/sun.png" alt="avatar default"/>
-                </Col>
-                <Col size="m7">
-                    <br/>
-                    <br/>
-                      <h5> Decision:  {this.state.name} </h5>
-                      <h5> Participants (by email): </h5>
-                          <ul>
+          <Row>
+                 <Col size="m5">
+                   <img src="/sun.png" alt="sun"/>
+                  </Col>
+                  <Col size="m2"></Col>
+                  <Col size="m5">             
+                     <h4> Decision:  {this.state.name} </h4>
+                            <h5>Participants (by email):  </h5>
+                            <ul>
                               {this.state.emails.map((emails, i) => (
                                   <li> {emails}  </li>
                               ))}
                           </ul>
-                           
-                </Col>
-         
-        </Row>
-         
+                  </Col>
+          </Row>
         <Row>
               <div className="divider"></div> 
             <Col size = "m12"> 
                <h3 className = "center-align"> <i className="large material-icons" >check</i> Your Group's Happy Choice: </h3>
-               <h1 className = "final center-align">{this.state.finalChoice} {this.state.and} {this.state.finalChoice1} </h1>
+               <h1 class = "center-align" id = "final">{this.state.finalChoice} {this.state.and} {this.state.finalChoice1} </h1>
                      
                      
              <h3 className = "center-align"> Voting Results</h3>
@@ -189,7 +185,7 @@ class Result extends Component {
                   <tr>
                     <th> Options </th>
                     {this.state.RoundResult.map((RoundResult, j) => (
-                    <th> Round Result:  {j+1}      
+                    <th> Rnd {j+1}      
                     </th> 
                     ))} 
                   </tr>

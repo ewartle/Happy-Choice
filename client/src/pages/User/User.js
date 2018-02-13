@@ -8,7 +8,6 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
       surveys: {},
       admin: ""
       };
@@ -29,54 +28,67 @@ loadSurveys = () => {
     
 };
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
+//For Future Development
+// closeSurvey = id => {
+ // axios.post("type route here")
+ //  .then(res => this.loadSurveys())
+ //  .catch(err => console.log(err));
+//};
 
   render() {
     return (
       <Container>
         <Row>
+
           <Col size="m12">
             <img src="/sun.png" alt="avatar default"/>
             <h4>{this.state.name}</h4>
           </Col>
           </Row>
           <div className="divider"></div>
-          <Row>
-          <Col size="m12">
-            <button className="btn"><Link to="/Form">
-              Add New Survey</Link>
-            </button>
+         <Row>
+        
+          <Col size="m6">
+          <div id = "surveyContainer">
+            <h3>Your Surveys  </h3>
+               <button className="btn"><Link to="/Form"> Add New Survey</Link></button>
+              <div id="surveys">
+              {this.state.surveys.length ? (
+                <List>
+                  {this.state.surveys.map(survey => (
+                    <ListItem key={survey._id}>
+                      <Link to={"/Result/" + survey._id}>
+                        <strong>
+                          {survey.name}
+                        </strong>
+                      </Link>
+                     {/* <button onClick={() => this.closeSurvey(survey._id)}>Close</button>*/}
+                    </ListItem>
+                  ))}
+                </List>
+
+              ) : (
+                <strong>No Active Surveys</strong>
+              )}
+              </div>
+            </div>
           </Col>
+       <Col size = "m6">
+          <div class="card grey lighten-2" id="welcomeCard">
+            <div class="card-content black-text">
+              <span class="card-title">Welcome {this.state.admin}! </span>
+              <p>On this page you can find all of your active surveys. Click to see the results.</p>  
+              <br/>
+              <p>If you have a new decision you want your group to make, click the "New Survey" button and add the required information.  Your group's maximized happiness is just a click away!</p>
+              
+            </div>
+          </div>
+
+          </Col>
+
+       
         </Row>
-        
-        <div className="section">
-        <Row>
-          <Col size="m12" />
-          <h3>{this.state.admin}'s Surveys</h3>
-          {this.state.surveys.length ? (
-            <List>
-              {this.state.surveys.map(survey => (
-                <ListItem key={survey._id}>
-                  <Link to={"/Result/" + survey._id}>
-                    <strong>
-                      {survey.name}
-                    </strong>
-                  </Link>
-                </ListItem>
-              ))}
-            </List>
-          ) : (
-            <strong>No Active Surveys</strong>
-          )}
-        </Row>
-        </div>
-        
-      </Container>
+  </Container>
     );
   }
 }
