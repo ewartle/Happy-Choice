@@ -3,12 +3,24 @@ body {
   padding: 0;
   font-family: sans-serif;
   background-color: #1a237e;
-  color: #263238;
+  color: #000;
   
 }
 
 a {
-  color: #263238;
+  color: #000;
+}
+
+#surveys {
+  padding-left: 45px;
+}
+
+#surveyContainer  {
+  padding-left: 35px;
+}
+
+#welcomeCard {
+  margin: 3.5rem 0 1rem 0;
 }
 
 button:active,
@@ -22,7 +34,7 @@ button,
 button:visited,
 .btn {
   background-color: #ffc107;
-  color: #263238;
+  color: #000;
   padding: 10px;
   margin: 15px;
   border-width: 2px;
@@ -36,22 +48,20 @@ button:visited,
 .container {
   background-color: #fafafa;
   padding: 50px;
-  border: 2px solid #263238;
+  border: 2px solid #000;
 }
 
-
 .table1{
-  background-color: #fafafa;
+  background-color: #eeeeee;
   border: 3px solid #ffc107;
   width: 90%;
   margin-left:auto; 
   margin-right:auto;
 
-
 }
 
 .surveyTable{
-  background-color: #fafafa;
+  background-color: #e0e0e0;
   border: 3px solid #ffc107;
   width: 90%;
   margin-left:auto; 
@@ -60,10 +70,7 @@ button:visited,
   margin-bottom: 30px;
   font-size: 20px;
 
-
 }
-
-
 
 .shadow1 {
   max-width: 750px;
@@ -85,15 +92,18 @@ td {
   
 }
 
+#description {
+  margin: 0px;
+}
 
 .range {
   border: 0px #ffecb3;
   margin: 25px;
 }
 
-.final {
-  color: #ffd740;
-  font-size: 50px;
+#final {
+  color: #1a237e;
+  font-size: 60px;
   font-style: bold;
 }
 
@@ -132,6 +142,10 @@ p > a {
   text-decoration: underline;
 }
 
+#black {
+  color: black;
+  text-decoration: underline;
+} 
 
 .shadow {
   margin: 0 auto;
@@ -139,7 +153,7 @@ p > a {
   background-color: white;
   -webkit-box-shadow: 0px 5px 15px 10px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 5px 15px 10px rgba(0, 0, 0, 0.2);    
-  border: 2px solid #263238;
+  border: 2px solid #000;
 }
 
 
@@ -150,7 +164,7 @@ input[type=range]{
 input[type=range]::-webkit-slider-runnable-track {
     width: 225px;
     height: 5px;
-    background: #607d8b;
+    background: #bdbdbd;
     border: none;
     margin-left:auto; 
     margin-right:auto;
@@ -164,18 +178,18 @@ input[type=range]::-webkit-slider-thumb {
     height: 12px;
     width: 12px;
     border-radius: 50%;
-    background: #455a64;
+    background: #1a237e;
     margin-top: -4px;
 }
 
 input[type=range]:focus {
     outline: none;
     border: none;
-    background: #607d8b;
+    background: #1a237e;
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #607d8b;
+    background: #bdbdbd;
     border: none;
 }
 
@@ -191,4 +205,5 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   max-width: 400px;
   display: block;
   margin: auto;
+  width: 100%;
 }

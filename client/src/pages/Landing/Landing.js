@@ -12,7 +12,8 @@ class Landing extends Component {
           <Col size="m12">
             <h1>Happy Choice</h1>
             <h2>Happier decisions for groups</h2>
-            <p>Happy Choice is an app that maximizes total satisfaction over groups through instant runoff voting. <Link to="/Information">More information...</Link></p>
+            <p>Happy Choice maximizes total satisfaction over groups through instant runoff voting.</p>
+            <p> <Link to="/Information">More information...</Link></p>
             <button className="btn">
               <Link to="/CreateAcct">Create Account</Link>
             </button>
