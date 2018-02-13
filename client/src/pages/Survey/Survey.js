@@ -147,7 +147,9 @@ class Survey extends Component {
                           <tbody>
                             {this.state.votes.map((votes, i) => (
                             <tr><td>
-                                <div className ="range-field range left-align" >
+
+                            <div className ="range left-align" >
+                                
                                  <i className="material-icons" >check</i>  {this.state.choice[i]}: {this.state.votes[i].vote}  
                                
                                   <Input 
@@ -162,7 +164,8 @@ class Survey extends Component {
 
                                    
                                   /> 
-                                    </div>
+                                </div>
+                                   
                             </td></tr>  
                              ))}
                             </tbody>

@@ -9,7 +9,8 @@ class User extends Component {
     super(props);
     this.state = {
       name: "",
-      surveys: {}
+      surveys: {},
+      admin: ""
       };
   }
   
@@ -20,11 +21,12 @@ componentDidMount() {
 loadSurveys = () => {
     axios.get("/api/admin/adminpage/"+ sessionStorage.getItem("id"))
         .then((response) => {
-            this.setState({ surveys: response.data.surveys})
+            this.setState({ surveys: response.data.surveys, admin: sessionStorage.getItem("name")})
         })
         .catch(err => {
             console.log(err.message);
         })
+    
 };
 
   handleInputChange = event => {
@@ -52,7 +54,7 @@ loadSurveys = () => {
         <div className="section">
         <Row>
           <Col size="m12" />
-          <h3>Active Surveys</h3>
+          <h3>{this.state.admin}'s Surveys</h3>
           {this.state.surveys.length ? (
             <List>
               {this.state.surveys.map(survey => (
@@ -70,31 +72,35 @@ loadSurveys = () => {
           )}
         </Row>
         </div>
-        <div className="divider"></div>
-        <div className="section">
-        <Row>
-          <Col size="m12" />
-          <h3>Closed Surveys</h3>
-          {this.state.surveys.length ? (
-            <List>
-              {this.state.surveys.map(survey => (
-                <ListItem key={survey._id}>
-                  <Link to={"/Result/" + survey._id}>
-                    <strong>
-                      {survey.name}
-                    </strong>
-                  </Link>
-                </ListItem>
-              ))}
-            </List>
-          ) : (
-            <strong>No Closed Surveys</strong>
-          )}
-        </Row>
-        </div>
+        
       </Container>
     );
   }
 }
 
 export default User;
+
+//Future Development:  Add button to allow surveys to display as active and closed
+
+//<div className="divider"></div>
+ //       <div className="section">
+//        <Row>
+//          <Col size="m12" />
+//          <h3>Closed Surveys</h3>
+//          {this.state.surveys.length ? (
+//            <List>
+//              {this.state.surveys.map(survey => (
+//                <ListItem key={survey._id}>
+//                  <Link to={"/Result/" + survey._id}>
+//                    <strong>
+//                      {survey.name}
+//                    </strong>
+//                  </Link>
+//                </ListItem>
+//              ))}
+//            </List>
+ //         ) : (
+//            <strong>No Closed Surveys</strong>
+//          )}
+//        </Row>
+//        </div>
