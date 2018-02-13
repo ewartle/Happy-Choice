@@ -8,7 +8,6 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
       surveys: {},
       admin: ""
       };
@@ -29,32 +28,31 @@ loadSurveys = () => {
     
 };
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
+//For Future Development
+// closeSurvey = id => {
+ // axios.post("type route here")
+ //  .then(res => this.loadSurveys())
+ //  .catch(err => console.log(err));
+//};
 
   render() {
     return (
       <Container>
         <Row>
-          <Col size="m6">
+          <Col size="m4">
             <img src="/sun.png" alt="avatar default"/>
-            <h4>{this.state.name}</h4>
-          </Col>
-          <Col size="m6">
-            <button className="btn"><Link to="/Form">
-              Add New Survey</Link>
-            </button>
+         
+         
+         
           </Col>
         </Row>
         <div className="divider"></div>
         <div className="section">
         <Row>
-          <Col size="m12" />
-          <h3>{this.state.admin}'s Surveys</h3>
+          <Col size="m6">
+          <h3>{this.state.admin}'s Surveys    <button className="btn"><Link to="/Form">
+              Add New Survey</Link>
+            </button></h3>
           {this.state.surveys.length ? (
             <List>
               {this.state.surveys.map(survey => (
@@ -64,12 +62,27 @@ loadSurveys = () => {
                       {survey.name}
                     </strong>
                   </Link>
+                 {/* <button onClick={() => this.closeSurvey(survey._id)}>Close</button>*/}
                 </ListItem>
               ))}
             </List>
           ) : (
             <strong>No Active Surveys</strong>
           )}
+          </Col>
+          <Col size = "m6">
+
+ 
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Welcome {this.state.admin}! </span>
+              <p>On this page you can find all of your active surveys.  Click to see the results.  Do you have a new decision you want your group to make?  Click the "New Survey" button, add the information about your decision and your group member's emails and press send.  Your group's maximized happiness is just a click away!</p>
+            </div>
+            
+          </div>
+
+          </Col>
+
         </Row>
         </div>
         
