@@ -66,6 +66,11 @@ class Survey extends Component {
         array.push(parseInt(newState.votes[i].vote));
    }
    newState.totalPoints = array.reduce(reducer);
+   if (this.state.totalPoints >100) {
+  document.getElementById("pointsCounter").style.color="red";
+  } else {
+    document.getElementById("pointsCounter").style.color="black";
+  }
 
    this.setState(newState);
    console.log(newState);
@@ -139,7 +144,7 @@ class Survey extends Component {
                          <table className = "surveyTable shadow1">
                           <thead>
                             <tr >
-                             <th><h5 className = "pointsCounter"> Total Points:  {this.state.totalPoints} 
+                             <th><h5 id = "pointsCounter"> Total Points:  {this.state.totalPoints} 
     
                              </h5></th>
                             </tr>
