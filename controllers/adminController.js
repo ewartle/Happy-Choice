@@ -39,10 +39,11 @@ module.exports = {
         const survey = {
             name: req.body.name,
             description: req.body.description,
-            choice: req.body.choice
+            choice: req.body.choice,
         };
         let surveyId;
         let participants = req.body.participant;
+        let score = req.body.score;
         Survey
             .create(survey)
             .then(function(dbSurvey) {
@@ -52,7 +53,7 @@ module.exports = {
                 Admin.findOneAndUpdate({ _id: req.params.id }, { $push: { surveys: dbSurvey._id } }, { new: true })
                     .then((dbAdmin) => {
                         // console.log("Successfully updated Admin");
-                        createParticipants(surveyId, participants, function ( err ) {
+                        createParticipants(surveyId, participants, score, function ( err ) {
                             if ( err ) res.json( err );
                             res.json(dbAdmin);
                         });
@@ -66,9 +67,9 @@ module.exports = {
                 res.status(422).json(err);
             })
 
-        const createParticipants = (srvyid, emails, cb) => {
+        const createParticipants = (srvyid, emails, score, cb) => {
             const participants = emails.map( ( email ) => {
-                return { email: email };
+                return { email: email, score: score };
             });
             Participant
                 .create( participants )
@@ -96,7 +97,7 @@ module.exports = {
         console.log("Hit the survey create POST route");
         console.log(req.body);
         Participant
-            .findOneAndUpdate({ _id: req.body[1] }, { $push: { score: req.body[0] } })
+            .findOneAndUpdate({ _id: req.body[1] }, { $set: { score: req.body[0] } })
             .then((dbAdmin) => {
                 console.log("Successfully updated Survey");
                 res.json(dbAdmin);

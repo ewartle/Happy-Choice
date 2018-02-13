@@ -12,7 +12,8 @@ class Form extends Component {
       choices: [],
       participants: [],
       choiceInputs: ["input-0"],
-      emailInputs: ["input-0"]
+      emailInputs: ["input-0"],
+      score: []
     };
   }
  
@@ -30,6 +31,7 @@ class Form extends Component {
       let newChoice = input[i].value;
       if (newChoice) {
       this.state.choices.push(newChoice);
+      this.state.score.push(0);
       }
     }
 
@@ -45,7 +47,8 @@ class Form extends Component {
       name: this.state.name,
       description: this.state.description,
       choice: this.state.choices,
-      participant: this.state.participants
+      participant: this.state.participants,
+      score: this.state.score
     };
     console.log(formData);
     if (this.state.name && this.state.description) {
