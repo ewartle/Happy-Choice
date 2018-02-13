@@ -78,41 +78,41 @@ sendEmail = event => {
   render(){
      return(
        <div>
-         <Container>
+         <Container className>
            <Row>
               <Col size="m12">
-                <ul className ="collection with-header">
-                  <li className ="collection-header"><h3 className = "center-align">{this.state.name} </h3></li>
-                     
-                      <li className = "collection-item"><div> Description:  {this.state.description}</div></li>
-              
-                 </ul> 
+                  <h3><div class="card-panel  amber  center-align">{this.state.name}</div></h3>
+                    <h5 className = "left-align">Description:  {this.state.description}</h5>
               </Col>
             </Row>
             <Row>
-              <div className = "col m12"> 
-                 <ul className ="collection with-header">
-                  <li className ="collection-header"><h4>Options</h4></li>
+              <div className = "col m6"> 
+                 <ul className ="collection with-header" style={{ border: "1px solid #ffc107"}}>
+                  <li className ="collection-header" style={{ "borderBottom": "1px solid #ffc107"}}><h5>Options</h5></li>
                      {this.state.choice.map((choice, i) => (
-                      <li className = "collection-item"><div> <i className="material-icons">check</i> Option {i+ 1}:  {choice}</div></li>
+                      <li className = "collection-item"><h6> <i className="material-icons">check</i> Option {i+ 1}:  {choice}</h6></li>
                     ))}
                  </ul>             
              </div>
-             </Row>
-             <Row>
-                <div className = "col m12">      
-                    <ul className ="collection with-header">
-                       <li className ="collection-header" ><h4>Participants</h4></li>
+             
+                <div className = "col m6">  
+               
+                <ul className ="collection with-header" style={{ border: "1px solid #ffc107"}}>
+                       <li className ="collection-header" style={{ "borderBottom": "1px solid #ffc107"}}><h5>Participants</h5></li>
                             {this.state.emails.map((emails, i) => (
-                                         <li className = "collection-item" key={this.state.emails._id}><div> {emails}</div>
-                                              <FormBtn className = 'btn btn-success' id = {i} onClick={this.sendEmail} style={{ margin: "15px"}}>Send Survey</FormBtn>
-                                         </li>
+                                       
+                                        
+                                         <li className = "collection-item dismissable" key={this.state.emails._id}> <h6>{emails}</h6>
+                                        
+                                       
+                                         <FormBtn className = 'btn btn-success' id = {i} onClick={this.sendEmail} >Send Survey</FormBtn> </li>    
+                                        
+                                         
                                  ))}
                     </ul>
-                       
-                   </div>
-               </Row>  
-             
+              </div>
+            </Row>  
+               
                <FormBtn className = 'btn btn-success '><Link to="/User" > Back to User Page</Link></FormBtn> 
                          
             <NotificationContainer/>

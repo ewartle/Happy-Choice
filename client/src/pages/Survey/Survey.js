@@ -37,7 +37,6 @@ class Survey extends Component {
                 choice.push(result.choice[i].toString());
                 votesarray.push({vote: 0 });
             }
-
             this.setState({
                 choice: choice,
                 participant: participant,
@@ -70,10 +69,9 @@ class Survey extends Component {
 
    this.setState(newState);
    console.log(newState);
-   if (this.state.totalPoints===101){
-    NotificationManager.warning('Your vote total cannot exceed 100 points.', 'Warning', 5000);
+    
 
-  }
+
   };
 
   handleFormSubmit = event => {
@@ -87,6 +85,7 @@ class Survey extends Component {
            const surveyInput = [payload, this.state.participant];
            axios.post("/api/admin/admin/" + this.state.participant, surveyInput).then((response) => {
                console.log(response);
+               
            }).catch((err) => {
                console.log(err.message);
            });
@@ -99,52 +98,59 @@ class Survey extends Component {
              votes: [],
              options: []
          });
+         
 
-         this.props.history.push("/");
+         setTimeout(this.loadPage, 1000);
+       
+        
         } else {
-NotificationManager.error('Your vote total cannot exceed 100 points.  Please reallocate your votes.', 'Error', 5000); 
+    NotificationManager.error('Your vote total cannot exceed 100 points.  Please reallocate your votes.', 'Error', 5000); 
        }
   };
+
+   loadPage = event => {
+     this.props.history.push("/");
+   }
 
  render(){
     return(
       <div>
         <Container>
           <Row>
-            <Col size="m12">
-                    <h1> {this.state.name} </h1>
-                    <div className="divider"></div>
-                            <h5>Description:</h5>
-                            <p>{this.state.description}</p>
-                     
-                                  <div className="section">
-                          <h5>Here are your Options:</h5>
-                            <ul> 
-                            {this.state.choice.map((choice, i) => (
-                                        <li> <i className="material-icons">check</i> <strong> {this.state.choice[i]} </strong> </li>
-                                        ))}
-                            </ul>
-                     </div>    
-                     <div className="divider"></div>
-                          <div className="section">
+            <Col size="m5">
+           <img src="/sun.png" alt="avatar default"/>
+            </Col>
+          <Col size="m7">
+              <br/>
+              <br/>
+             <h2> {this.state.name} </h2>
+                    <h5>Description:  </h5>
+                    <p>{this.state.description}</p>
+          </Col>
+        </Row>
+        <Row>
+        <Col size = "m12">
+        <div className="divider"></div>
+                         
                             <h5>Instructions</h5>
-                            <p> You have 100 points total that you can allocate to the following options.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.</p>
-                          </div> 
-                          <div className="divider"></div>
-                          <div className="section">
-                             
-                         <table className = "highlight">
+                            <p> You have 100 votes that you can allocate to the options listed below.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.  Remember, your total votes cannot exceed 100!</p>
+                    
+     
+                         <table className = "surveyTable shadow1">
                           <thead>
-                            <tr>
-                             <th><h5>Vote Here!</h5></th>
+                            <tr >
+                             <th><h5 className = "pointsCounter"> Total Points:  {this.state.totalPoints} 
+    
+                             </h5></th>
                             </tr>
                           </thead>
                           <tbody>
                             {this.state.votes.map((votes, i) => (
                             <tr><td>
-                                <div className ="range-field range">
-                                 <h6> Your votes for {this.state.choice[i]}: {this.state.votes[i].vote} </h6> 
-                                  <Input
+                                <div className ="range-field range left-align" >
+                                 <i className="material-icons" >check</i>  {this.state.choice[i]}: {this.state.votes[i].vote}  
+                               
+                                  <Input 
                                   id={i}
                                   min = "0"
                                   max = "100"
@@ -153,6 +159,7 @@ NotificationManager.error('Your vote total cannot exceed 100 points.  Please rea
                                   onChange={this.handleInputChange}
                                   type="range"
                                   defaultValue = "0" 
+
                                    
                                   /> 
                                     </div>
@@ -160,23 +167,14 @@ NotificationManager.error('Your vote total cannot exceed 100 points.  Please rea
                              ))}
                             </tbody>
                               </table> 
-                      </div>      
-                     
-   <div className="section"> 
-
-      <div className="chip">
-       Total Points:  {this.state.totalPoints} 
-      </div>
-  </div>
-       <div className="section"> 
-              
-              <FormBtn onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
+                                          
+   
+               
+              <FormBtn className = "surveyButton" onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
              
-            </div>
-                <div className="divider"></div>
-            <div>
+            
                  <NotificationContainer/>
-              </div>
+          
             </Col>
                 </Row>  
           </Container>
