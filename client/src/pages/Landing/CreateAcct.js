@@ -56,6 +56,7 @@ class CreateAcct extends Component {
                 <Input
                   value={this.state.password}
                   onChange={this.handleInputChange}
+                  type="password"
                   name="password"
                   placeholder="Password"
                 />

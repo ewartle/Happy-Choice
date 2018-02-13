@@ -54,6 +54,7 @@ class SignIn extends Component {
                   value={this.state.password}
                   onChange={this.handleInputChange}
                   name="password"
+                  type="password"
                   placeholder="Password"
                 />
                 <FormBtn onClick={this.handleAdminLogin}>Sign In</FormBtn>
