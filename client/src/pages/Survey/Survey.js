@@ -4,6 +4,8 @@ import { Col, Row, Container } from "../../components/Grid";
 import axios from "axios"
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { Link } from "react-router-dom";
+
 
 class Survey extends Component {
    
@@ -66,9 +68,9 @@ class Survey extends Component {
         array.push(parseInt(newState.votes[i].vote));
    }
    newState.totalPoints = array.reduce(reducer);
-   if (this.state.totalPoints >100) {
+   if (this.state.totalPoints >=101) {
   document.getElementById("pointsCounter").style.color="red";
-  } else {
+  } else if(this.state.totalPoints <=100) {
     document.getElementById("pointsCounter").style.color="black";
   }
 
@@ -121,25 +123,23 @@ class Survey extends Component {
     return(
       <div>
         <Container>
-          <Row>
-            <Col size="m5">
-           <img src="/sun.png" alt="avatar default"/>
-            </Col>
-          <Col size="m7">
-              <br/>
-              <br/>
-             <h2> {this.state.name} </h2>
-                    <h5>Description:  </h5>
-                    <p>{this.state.description}</p>
-          </Col>
-        </Row>
-        <Row>
-        <Col size = "m12">
-        <div className="divider"></div>
-                         
-                            <h5>Instructions</h5>
-                            <p> You have 100 votes that you can allocate to the options listed below.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.  Remember, your total votes cannot exceed 100!</p>
-                    
+              <Row>
+                 <Col size="m5">
+                   <img src="/sun.png" alt="sun"/>
+                  </Col>
+                  <Col size="m2"></Col>
+                  <Col size="m5">             
+                     <h2> {this.state.name} </h2>
+                            <h5>Description:  </h5>
+                            <p id="description">{this.state.description}</p>
+                  </Col>
+              </Row>
+              <Row>
+                  <Col size = "m12">
+                      <div className="divider"></div>
+                         <h5>Instructions</h5>
+                         <p> You have 100 votes that you can allocate to the options listed below.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.  Remember, you only have 100 votes.
+                         Click <Link to="/Information" id="black">here</Link> for more information. </p>                          
      
                          <table className = "surveyTable shadow1">
                           <thead>
