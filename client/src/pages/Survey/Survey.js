@@ -109,7 +109,7 @@ class Survey extends Component {
        
         
         } else {
-    NotificationManager.error('Your vote total cannot exceed 100 points.  Please reallocate your votes.', 'Error', 5000); 
+    NotificationManager.error('Vote total cannot exceed 100 points.  Please reallocate your votes.', 'Error', 5000); 
        }
   };
 
