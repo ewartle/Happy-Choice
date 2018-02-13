@@ -10,6 +10,19 @@ a {
   color: #263238;
 }
 
+button,
+button:active,
+button:hover,
+button:focus,
+button:visited,
+.btn,
+.btn:active,
+.btn:hover,
+.btn:focus,
+.btn:visited {
+  -webkit-appearance: none;
+}
+
 button:active,
 button:hover,
 button:focus,
