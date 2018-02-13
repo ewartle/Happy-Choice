@@ -40,17 +40,20 @@ loadSurveys = () => {
     return (
       <Container>
         <Row>
-          <Col size="m6">
+          <Col size="m12">
             <img src="/sun.png" alt="avatar default"/>
             <h4>{this.state.name}</h4>
           </Col>
-          <Col size="m6">
+          </Row>
+          <div className="divider"></div>
+          <Row>
+          <Col size="m12">
             <button className="btn"><Link to="/Form">
               Add New Survey</Link>
             </button>
           </Col>
         </Row>
-        <div className="divider"></div>
+        
         <div className="section">
         <Row>
           <Col size="m12" />
