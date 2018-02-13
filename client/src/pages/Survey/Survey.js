@@ -98,7 +98,7 @@ class Survey extends Component {
          });
          
 
-         setTimeout(this.loadPage, 2000);
+         setTimeout(this.loadPage, 1000);
        
         
         } else {
@@ -115,33 +115,40 @@ class Survey extends Component {
       <div>
         <Container>
           <Row>
-            <Col size="m12">
-                    <h1> {this.state.name} </h1>
-                    <div className="divider"></div>
-                            <h5>Description:</h5>
-                            <p>{this.state.description}</p>
-                     
-                      
-                     <div className="divider"></div>
-                          <div className="section">
+            <Col size="m5">
+           <img src="/sun.png" alt="avatar default"/>
+            </Col>
+          <Col size="m7">
+              <br/>
+              <br/>
+             <h2> {this.state.name} </h2>
+                    <h5>Description:  </h5>
+                    <p>{this.state.description}</p>
+          </Col>
+        </Row>
+        <Row>
+        <Col size = "m12">
+        <div className="divider"></div>
+                         
                             <h5>Instructions</h5>
-                            <p> You have 100 points total that you can allocate to the following options.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.</p>
-                          </div> 
-                          <div className="divider"></div>
-                          <div className="section">
-                             
-                         <table className = "highlight">
+                            <p> You have 100 votes that you can allocate to the options listed below.  To allocate, click on the ball and slide to the appropriate number.  Once you have designated your allocations, click the submit button.  Remember, your total votes cannot exceed 100!</p>
+                    
+     
+                         <table className = "surveyTable shadow1">
                           <thead>
-                            <tr>
-                             <th><h5>Vote Here!</h5></th>
+                            <tr >
+                             <th><h5> Total Points:  {this.state.totalPoints} 
+    
+                             </h5></th>
                             </tr>
                           </thead>
                           <tbody>
                             {this.state.votes.map((votes, i) => (
                             <tr><td>
-                                <div className ="range-field range">
-                                 <h5> <i className="material-icons">check</i> <strong> {this.state.choice[i]} </strong>: {this.state.votes[i].vote} </h5> 
-                                  <Input
+                                <div className ="range-field range left-align" >
+                                 <i className="material-icons" >check</i>  {this.state.choice[i]}: {this.state.votes[i].vote}  
+                               
+                                  <Input 
                                   id={i}
                                   min = "0"
                                   max = "100"
@@ -152,29 +159,20 @@ class Survey extends Component {
                                   defaultValue = "0" 
 
                                    
-                                  /> <span className ="thumb"></span>
+                                  /> 
                                     </div>
                             </td></tr>  
                              ))}
                             </tbody>
                               </table> 
-                      </div>      
-                     
-   <div className="section"> 
-
-      <div className="chip">
-       Total Points:  {this.state.totalPoints} 
-      </div>
-  </div>
-       <div className="section"> 
-              
-              <FormBtn onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
+                                          
+   
+               
+              <FormBtn className = "surveyButton" onClick={this.handleFormSubmit}>Submit Survey</FormBtn>
              
-            </div>
-                <div className="divider"></div>
-            <div>
+            
                  <NotificationContainer/>
-              </div>
+          
             </Col>
                 </Row>  
           </Container>

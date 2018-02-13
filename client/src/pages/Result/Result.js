@@ -32,10 +32,10 @@ class Result extends Component {
       axios.get('/api/survey/calculate/' + this.props.match.params.id).then((response) => {
               console.log(response.data);
               //let RoundResult = [[1, 3, 5, 2], [6, 6, 6, 8], [9, 9, 7, 8]];
-              let RoundResult = [];
+             let RoundResult = [];
              for (let i = 0; i < response.data.length; i++) {
                   RoundResult.push(response.data[i]);
-              }
+             }
               let maxScore = 0;
               let NumberofRounds = RoundResult.length;
               let NumberofScores=RoundResult[0].length;
@@ -122,6 +122,7 @@ class Result extends Component {
              let finalChoiceLanguage = "";
              let finalChoice = "";
              let finalChoice1 = "";
+             let and = "";
              for (let i = 0; i < resultSurvey.choice.length; i++) {
                  choice.push(resultSurvey.choice[i].toString());
              }
@@ -131,6 +132,7 @@ class Result extends Component {
           else if (this.state.winnersCount === 2) {
               finalChoice = choice[this.state.WinnersIndex[1]]; 
               finalChoice1 = choice[this.state.WinnersIndex[0]]
+              and = "and"
             }
            
           this.setState({
@@ -139,7 +141,8 @@ class Result extends Component {
                  finalChoice: finalChoice,
                  numberOfChoices: NumberOfChoices,
                  finalChoice1: finalChoice1,
-                 finalChoiceLanguage: finalChoiceLanguage
+                 and: and
+                
              });
             console.log(this.state);
          })
@@ -149,37 +152,39 @@ class Result extends Component {
   
  };
 
-// loadFinalChoiceLanguage = () => { 
-
-// finalChoiceLanguage = `Congratulations!  Your group's maximized happiness choice is: ${this.state.finalChoice}!`
-
-// this.setState({
-             //                 finalChoiceLanguage: finalChoiceLanguage
-            // });
-
    render(){
     return(
         <div>
           <Container>
+           <Row>
+               <Col size="m5">
+                     <img src="/sun.png" alt="avatar default"/>
+                </Col>
+                <Col size="m7">
+                    <br/>
+                    <br/>
+                      <h5> Decision:  {this.state.name} </h5>
+                      <h5> Participants (by email): </h5>
+                          <ul>
+                              {this.state.emails.map((emails, i) => (
+                                  <li> {emails}  </li>
+                              ))}
+                          </ul>
+                           
+                </Col>
+         
+        </Row>
          
         <Row>
-             
+              <div className="divider"></div> 
             <Col size = "m12"> 
-               <div className="section">
-               <h2> <i className="large material-icons" >check</i> {this.state.finalChoiceLanguage}  </h2>
-
-                <h5> Decision:  {this.state.name} </h5>
-                <h5> Congratulations!  Your group has made a decision.</h5>  
-              </div>            
-            </Col>
-          </Row>
-         <Row>
-             
-            <Col size = "m12"> 
-               <div className="section">
-             <h3> Voting Results</h3>
+               <h3 className = "center-align"> <i className="large material-icons" >check</i> Your Group's Happy Choice: </h3>
+               <h1 className = "final center-align">{this.state.finalChoice} {this.state.and} {this.state.finalChoice1} </h1>
+                     
+                     
+             <h3 className = "center-align"> Voting Results</h3>
             
-            <table className="highlight" id = "resultTable">
+            <table className="highlight table1">
                   <thead>
                   <tr>
                     <th> Options </th>
@@ -200,23 +205,10 @@ class Result extends Component {
                      ))}
                   </tbody>
               </table> 
-                  </div>
+                 
             </Col>
           </Row> 
-          <Row>
-              <Col size="m12">
-                    <div className="section">
-                      <h4> Participants (by email) </h4>
-                    </div>
-                    <ul className="collection">
-                        {this.state.emails.map((emails, i) => (
-                            <li className = "collection-item">
-                             {emails}                  
-                            </li>
-                        ))}
-                    </ul>
-              </Col>
-         </Row>
+          
          <Row>
                 <button><Link to="/User"> Back to User Page</Link></button> 
          </Row>  

@@ -10,11 +10,3 @@ input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):
 }
 
 
-
-input[type=range]+.thumb,
-input[type=range] + .thumb .value,
-input[type=range]::-webkit-slider-thumb,
-input[type=range]::-moz-range-thumb,
-input[type=range]::-ms-thumb {
-   color: #455a64;
-}
