@@ -69,7 +69,9 @@ class Survey extends Component {
 
    this.setState(newState);
    console.log(newState);
-   
+    
+
+
   };
 
   handleFormSubmit = event => {
@@ -137,7 +139,7 @@ class Survey extends Component {
                          <table className = "surveyTable shadow1">
                           <thead>
                             <tr >
-                             <th><h5> Total Points:  {this.state.totalPoints} 
+                             <th><h5 className = "pointsCounter"> Total Points:  {this.state.totalPoints} 
     
                              </h5></th>
                             </tr>
