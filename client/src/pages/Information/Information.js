@@ -18,13 +18,14 @@ render() {
             <li>* Can maximizes total satisfaction over groups through instant runoff voting.</li>
             <li>* Can handle many options.</li>
             <li>* Allows participants to express not only their preference order, but also their degree of satisfaction with each option.</li>
-            <li>* Everyone has a say in each round.</li>
-            <li>* Points are reallocated propoerinately in each round-not lost if a participant’s option is eliminated.</li>
+            <li>* Everyone may have a say in each round.</li>
+            <li>* Points are reallocated proportionately in each round -not lost if a participant’s option is eliminated.</li>
+            <li>* Points are only lost if the voter scores all the remaining choices with a zero.</li>
             <li>* Instantaneous with a computer (no need for multiple rounds of voting)</li>
             </ul>
             <h4>Example</h4>
             <div className="divider"></div>
-            <h5>Set up choices for the decision, and invite each member of the group to complete a survey via email.</h5>
+            <h5>Define the decision, set up choices then invite voters to complete a survey via email.</h5>
             <ul>Where shall the family go on vacation?
             <li>* Johnny wants to go to Legoland</li>
             <li>* Jenny wants to go to Disney World</li>
@@ -42,7 +43,7 @@ render() {
             <p>Sanibel has fewest votes and will be eliminated. Votes cast for Sanibel will be redistributed proportionately over other options favored by the individual participant. Clearwater has a slight edge over Disney.</p>
             <p><img src="/R1-graph.png" alt="round 1 graph of votes" width="90%" /></p>
             <h5>Round 2 runoff votes are counted without Sanibel</h5>
-            <p>Legoland now has fewest votes and will be eliminated. Votes cast for Legoland will be redistributed proportionately over other options favored by the individual participants. Clearwater now has a strong edge over Disney World.</p>
+            <p>Legoland now has the fewest votes and will be eliminated. Legoland votes are redistributed over other options favored by the individual participants. Clearwater now has a strong edge over Disney World.</p>
             <p><img src="/R2-graph.png" alt="round 2 graph of votes" width="90%" /></p>
             <h5>Round 3 runoff votes are counted without Sanibel or Legoland</h5>
             <p>Disney World is the clear best compromise for a vacation.</p>
