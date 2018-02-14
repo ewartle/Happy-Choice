@@ -14,7 +14,7 @@ Javascript, React, Materialize, HTML, CSS, Express, MongoDB, Mongoose, AXIOS, He
 ### **Try out this app:**
 
 * *Test on the Heroku server*
-1) Copy & paste this link into your browser:  https://testhappy.herokuapp.com
+1) Copy & paste this link into your browser:  https://happy-choice.herokuapp.com
 2) Create an account by entering your Name, email and password, then press ‘Create Account.’
 3) Use your email and password to sign in to your new account.
 4) Click ‘Create New Survey’ to describe a decision, list choices, enter the emails of voters to be invited then submit the survey.  You will then be redirected to a page where you can click ‘Send’ to email the decision to each participant.
