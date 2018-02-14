@@ -1,4 +1,4 @@
-# ![Happy Choice Logo](/client/public/sunhalf1.png)  Happy Choice   #
+# ![Happy Choice Logo](/client/public/happy-choice-logo.png)  Happy Choice   #
 ### **The Creators:**  
 * Project Manager: Miki Collins
 * Front-end: Lisa Ewart & Julie Shockley
